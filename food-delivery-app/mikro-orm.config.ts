@@ -17,7 +17,7 @@ export default {
     pattern: /^[\w-]+\d+\.(ts|js)$/,
   },
   seeder: {
-    defaultSeeder: 'TestE2eSeeder',
+    defaultSeeder: process.env.seeder,
     path: 'seeders',
     pathTs: 'seeders',
     emit: 'ts',
