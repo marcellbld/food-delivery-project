@@ -6,11 +6,11 @@
       </div>
       <div class="custom-card-body">
         <div data-testid="form-registration">
-          <form class="card-body" (ngSubmit)="onClickSignUp()" [formGroup]="form">
+          <form class="card-body" (ngSubmit)="onClickCreate()" [formGroup]="form">
 
             <label for="restaurantName" class="form-label small-caps required">Name</label>
             <input type="text" id="restaurantName" class="form-control" [class.is-invalid]="restaurantNameError" formControlName="restaurantName">
-            <div data-testid="restaurant-name-validation" class="invalid-feedback" *ngIf="restaurantNameError">
+            <div data-testid="restaurantName-validation" class="invalid-feedback" *ngIf="restaurantNameError">
               {{restaurantNameError}}
             </div>
 
@@ -22,6 +22,7 @@
 
             <label for="categories" class="form-label small-caps">Categories</label>
             <ng-select 
+            id="categories"
             [items]="categoryList"
             [multiple]="true"
             bindLabel="name"

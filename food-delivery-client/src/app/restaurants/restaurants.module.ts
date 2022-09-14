@@ -16,9 +16,9 @@ import { CreateRestaurantItemPageComponent } from './components/create-restauran
   ],
   imports: [
     CommonModule,
-    RestaurantsRoutingModule,
     SharedModule,
     NgSelectModule,
+    RestaurantsRoutingModule,
   ],
   providers: [CurrencyPipe],
 })

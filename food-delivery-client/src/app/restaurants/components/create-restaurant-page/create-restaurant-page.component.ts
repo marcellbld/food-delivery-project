@@ -14,6 +14,7 @@ import { UserService } from '../../../core/services/user/user.service';
 import { RestaurantNameTakenValidator } from '../../validators/restaurant-name-taken.validator';
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { debounceTime, distinctUntilChanged, Subscription } from 'rxjs';
+import { RestaurantI } from 'src/app/shared/models/restaurant/restaurant.interface';
 
 @Component({
   selector: 'app-create-restaurant-page',
@@ -80,7 +81,7 @@ export class CreateRestaurantPageComponent implements OnInit {
     );
   }
 
-  onClickSignUp(): void {
+  onClickCreate(): void {
     if (!this.form.valid) return;
 
     this.apiProgress = true;
@@ -93,9 +94,9 @@ export class CreateRestaurantPageComponent implements OnInit {
         file: this.uploadedImage,
       })
       .subscribe({
-        next: () => {
+        next: (restaurant: RestaurantI) => {
           this.createSuccess = true;
-          this.router.navigate(['']);
+          this.router.navigate([`restaurants/${restaurant.id}`]);
         },
         error: () => {
           this.apiProgress = false;
