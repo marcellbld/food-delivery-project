@@ -1,9 +1,9 @@
 import { environment } from '../../../environments/environment';
 
 export function getRestaurantImageUrl(image: string | undefined): string {
-  const filename = image || 'default.jpg';
-
-  return `${environment.apiUrl}/uploads/restaurants/${filename}`;
+  return image
+    ? `${environment.apiUrl}/uploads/restaurants/${image}`
+    : 'assets/images/restaurant-default.jpg';
 }
 
 export function getRestaurantItemImageUrl(image: string | undefined): string {
