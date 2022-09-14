@@ -5,3 +5,8 @@
     border-left: none;
   }
 }
+
+.router-link-active {
+  pointer-events: none;
+  color:rgb(194, 194, 194) !important;
+}

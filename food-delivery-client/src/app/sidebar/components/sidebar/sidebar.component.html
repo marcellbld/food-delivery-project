@@ -33,7 +33,7 @@
       <a 
         data-testid="cart-restaurant-link"
         *ngIf="!isCartEmpty()"
-        class="nav-link text-dark rounded-pill py-1"
+        class="btn btn-dark rounded-pill py-1"
         [routerLink]="['/restaurants/'+cart?.restaurant?.id]"
         routerLinkActive="router-link-active"
         [routerLinkActiveOptions]="{exact:true}"
@@ -41,12 +41,13 @@
         <i class="bi bi-arrow-right-short me-1"></i>
         <span>{{cart?.restaurant?.name}}</span>
       </a>
+      
     </div>
     <div class="offcanvas-body">
       <div class="d-flex flex-column align-items-center">
         <ng-container *ngIf="!isCartEmpty();else emptyCart">
           <app-cart-item-block *ngFor="let cartItem of cart?.cartItems" [cartItem]="cartItem"
-            class="mb-2"
+            class="mb-2 w-100"
           >
             {{cartItem.item.id}}
           </app-cart-item-block>

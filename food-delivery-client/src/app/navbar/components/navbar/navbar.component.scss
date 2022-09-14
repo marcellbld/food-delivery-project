@@ -2,6 +2,13 @@
 background-color: #ffffff;
 }
 
+.nav-btn-icon {
+  font-size: 1.3rem;
+}
+.nav-btn-text {
+  font-size: 1.15rem;
+}
+
 @media (max-width: 768px) {
   .nav-button {
     // border-bottom: 1px solid #ccc;
@@ -21,6 +28,10 @@ background-color: #ffffff;
   }
   .nav-button a i{
     margin-right: 5px;
+  }
+
+  .navbar-toggler {
+    height: 2em;
   }
 }
 @media (min-width: 768px) {

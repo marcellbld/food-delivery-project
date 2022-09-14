@@ -65,6 +65,9 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "proxyConfig": "proxy/proxy.conf.json"
+          },
           "configurations": {
             "production": {
               "browserTarget": "food-delivery-client:build:production"

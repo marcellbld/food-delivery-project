@@ -7,7 +7,7 @@ import { User } from '../src/users/entities/user.model';
 import { UserRole } from '../src/users/user-role';
 import { Cart } from '../src/cart/entities/cart.model';
 import { CartItem } from '../src/cart/entities/cart-item.model';
-import { hashPassword } from 'src/auth/utils/auth-helper';
+import { hashPassword } from '../src/auth/utils/auth-helper';
 
 export class ProdSeeder extends Seeder {
   async run(em: EntityManager): Promise<void> {

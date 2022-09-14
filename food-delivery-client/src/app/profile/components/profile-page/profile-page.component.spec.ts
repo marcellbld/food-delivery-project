@@ -323,18 +323,6 @@ describe('ProfilePageComponent', () => {
     });
   });
   describe('Class', () => {
-    // beforeEach(() => {
-    //   authService.isLoggedIn.mockReturnValue(true);
-    //   authService.loggedInUser.mockReturnValue({
-    //     id: 1,
-    //     username: 'user1',
-    //     role: UserRole.User,
-    //     createdAt: new Date('now'),
-    //   });
-    //   cartService.selfPurchasedCarts = [purchasedCartMock, purchasedCart2Mock];
-
-    //   fixture.detectChanges();
-    // });
     describe('onChangePassword', () => {
       it('should call userService.update with correct params when form is valid', () => {
         const spyObj = jest.spyOn(userService, 'update');

@@ -41,7 +41,7 @@ export class AppModule {
   }
   private async setupOrm() {
     const env = process.env.NODE_ENV;
-    if (env === 'development') {
+    if (env === 'development' || env === 'prod') {
       await this.orm.getSchemaGenerator().refreshDatabase();
       await this.orm.getSeeder().seed();
     }

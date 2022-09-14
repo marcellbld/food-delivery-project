@@ -1,0 +1,15 @@
+.custom-card {
+  height: 100px;
+}
+
+.custom-card-image-container {
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.custom-card-image {
+  width: auto;
+  height: inherit;
+}

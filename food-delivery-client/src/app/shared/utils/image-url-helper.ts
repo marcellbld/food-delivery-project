@@ -7,7 +7,7 @@ export function getRestaurantImageUrl(image: string | undefined): string {
 }
 
 export function getRestaurantItemImageUrl(image: string | undefined): string {
-  const filename = image || 'burger.png';
-
-  return `${environment.apiUrl}/uploads/restaurant-items/${filename}`; //TEMP
+  return image
+    ? `${environment.apiUrl}/uploads/restaurant-items/${image}`
+    : 'assets/images/restaurant-default.jpg';
 }
