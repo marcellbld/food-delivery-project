@@ -1,0 +1,72 @@
+<div class="d-flex flex-column align-items-center h-100">
+  <div class="custom-card mt-4">
+    <div class="custom-card-inner d-flex flex-column h-100 px-4 pb-4 pt-2">
+      <div class="text-center small-caps mb-2" data-testid="header-profile">
+        <span class="fs-1">Profile</span>
+      </div>
+      <div class="custom-card-body">
+        <div class="mb-2" data-testid="data-row-username">
+          <span>Username: <span class="text-primary">{{loggedInUsername}}</span></span>
+        </div>
+        <div data-testid="data-row-account-type">
+          <span>Account type: <span
+            [ngClass]="loggedInUserRole === 'USER' ? 'text-primary' : 'text-orange'">{{loggedInUserRole}}</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="custom-card mt-4">
+    <div class="custom-card-inner d-flex flex-column h-100 px-4 pb-4 pt-2">
+      <div class="text-center small-caps mb-2" data-testid="header-edit-profile">
+        <span class="fs-1">Edit profile</span>
+      </div>
+      <div class="custom-card-body">
+        <div>
+          <span class="small-caps text-black-50">Change Password</span>
+        </div>
+        <form (ngSubmit)="onChangePassword()" [formGroup]="changePasswordForm">
+
+          <label for="password" class="form-label small-caps required mt-2">Password</label>
+          <input type="text" id="password" class="form-control" type="password" [class.is-invalid]="passwordError" formControlName="password">
+          <div data-testid="password-validation" class="invalid-feedback" *ngIf="passwordError">
+            {{passwordError}}
+          </div>
+
+          <label for="passwordConfirm" class="form-label small-caps required mt-2">Password Confirmation</label>
+          <input type="text" id="passwordConfirm" class="form-control" type="password" [class.is-invalid]="passwordConfirmError" formControlName="passwordConfirm">
+          <div data-testid="passwordConfirm-validation" class="invalid-feedback" *ngIf="passwordConfirmError">
+            {{passwordConfirmError}}
+          </div>
+        
+          <div class="text-center mt-3 w-100">
+            <app-button [disabled]="isChangePasswordBtnDisabled()" [apiProgress]="changePasswordApiProgress">Submit</app-button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="custom-card mt-4">
+    <div class="custom-card-inner d-flex flex-column h-100 px-4 pb-4 pt-2">
+      <div class="text-center small-caps mb-2" data-testid="header-order-history">
+        <span class="fs-1">Order history</span>
+      </div>
+      <div class="custom-card-body">
+        <div>
+          <span class="small-caps text-black-50">Past orders</span>
+        </div>
+        <ul class="d-flex flex-column px-0">
+          <ng-container *ngIf="!purchasedCarts || purchasedCarts.length === 0; else pastOrderCartList">
+            <li class="d-block text-center"><span>Empty</span></li>
+          </ng-container>
+          <ng-template #pastOrderCartList>
+            <li class="d-block" *ngFor="let pastOrderCart of purchasedCarts; let i = index">
+              <app-past-order-row 
+                class="my-1"
+                [cart]="pastOrderCart"></app-past-order-row>
+            </li>
+        </ng-template>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

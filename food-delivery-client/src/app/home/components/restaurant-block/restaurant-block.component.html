@@ -1,0 +1,52 @@
+<div class="custom-card">
+  <div class="custom-card-inner d-flex flex-column h-100">
+    <div style="position: relative;">
+      <div class="custom-card-image-container">
+        <img [src]='getRestaurantImageUrl()'
+        class="custom-card-image"
+        />
+      </div>
+      <div class="bottomright">
+        <button type="button" class="store-btn btn-circle btn-md pb-2" (click)="navigateToRestaurantPage()"><i class="bi bi-shop"></i></button>
+      </div>
+      <div class="bottomdeco">
+      </div>
+    </div>
+    <div class="custom-card-body">
+      <div *ngIf="clicked">
+        <span class="small-caps text-black-50">Restaurant</span>
+      </div>
+      <p class="fs-5 pt-1 mb-1">  {{restaurant?.name}}</p>
+      <p class="text-secondary">{{restaurant?.description}}</p>
+      <hr class="my-0" *ngIf="clicked">
+      <div *ngIf="clicked">
+        <span class="small-caps text-black-50">Categories</span>
+      </div>
+      <div class="d-flex align-items-center" style="height: 3rem;">
+        <ng-container *ngIf="(restaurant?.categories && restaurant?.categories!.length > 0);else noCategories">
+          <div class="scrolling-wrapper">
+            <app-category
+            *ngFor="let category of restaurant?.categories" [category]="category"
+              class="item m-1"></app-category>
+          </div>
+        </ng-container>
+        <ng-template #noCategories>
+          <ng-container *ngIf="clicked">
+            <span><small>No Categories</small></span>
+          </ng-container>
+        </ng-template>
+      </div>
+      <hr class="my-0" *ngIf="clicked">
+      <div *ngIf="clicked">
+        <span class="small-caps text-black-50">Popular Items</span>
+      </div>
+      <div class="scrolling-wrapper my-2" *ngIf="clicked">
+        <app-restaurant-item-block *ngFor="let restaurantItem of popularRestaurantItems | async"
+          class="item mx-1"
+          style="width: 125px;"
+          [restaurantItem]="restaurantItem">
+        </app-restaurant-item-block>
+      </div>
+    </div>
+  </div>
+</div>

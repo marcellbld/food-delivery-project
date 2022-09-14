@@ -1,0 +1,28 @@
+<div class="d-flex flex-column align-items-center h-100">
+  <div class="custom-card mt-4">
+    <div class="custom-card-inner d-flex flex-column h-100 px-4 pb-4 pt-2">
+      <div class="text-center small-caps mb-2">
+        <span class="fs-1">Login</span>
+      </div>
+      <div class="custom-card-body">
+        <div data-testid="form-login">
+          <form (ngSubmit)="onClickLogin()" [formGroup]="form">
+            <label for="username" class="form-label small-caps">Username</label>
+            <input type="text" id="username" class="form-control" formControlName="username">
+          
+            <label for="password" class="form-label small-caps">Password</label>
+            <input type="text" id="password" class="form-control" type="password" formControlName="password">
+            
+            <div data-testid="login-error" class="text-red error-text text-center" *ngIf="loginError">
+              <p>{{loginError}}</p>
+            </div>
+          
+            <div class="text-center mt-3 w-100">
+              <app-button [disabled]="isDisabled()" [apiProgress]="apiProgress">Login</app-button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

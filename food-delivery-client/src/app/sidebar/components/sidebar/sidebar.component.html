@@ -1,0 +1,122 @@
+<div class="offcanvas offcanvas-end pt-2" tabindex="-1" id="sidebarRight" aria-labelledby="offcanvasRightLabel">
+  <div class="offcanvas-header border-bottom mx-4">
+    <h5 class="small-caps text-black-50 mb-0" data-testid="header-profile">
+      <i class="bi bi-person-fill me-1"></i>
+      <span>Profile</span>
+    </h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-header mx-4">
+    <div class="d-flex flex-column w-100">
+      <span class="fs-6 mb-3" data-testid="logged-in-text">Logged in as <span class="text-primary">{{loggedInUsername}}</span></span>
+    
+      <div class="d-flex flex-row justify-content-around">
+        <button type="button" data-testid="edit-profile-button" class="btn btn-primary text-light rounded-pill py-1"
+        [routerLink]="['/profile']">
+          <i class="bi bi-pencil-fill me-1"></i>
+          <span>Edit Profile</span>
+        </button>
+        <button type="button" data-testid="logout-button" data-bs-dismiss="offcanvas"  class="btn btn-danger text-light rounded-pill py-1" (click)="clickLogOutButton()">
+          <i class="bi bi-door-closed-fill me-1"></i>
+          <span>Logout</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <ng-container *ngIf="loggedInUserRole === 'USER'; else ownerPanel">
+  
+    <div class="offcanvas-header border-bottom mx-4">
+      <h5 class="small-caps text-black-50 mb-0" data-testid="header-cart">
+        <i class="bi bi-cart-fill me-1"></i>
+        <span>Cart</span>
+      </h5>
+      <a 
+        data-testid="cart-restaurant-link"
+        *ngIf="!isCartEmpty()"
+        class="nav-link text-dark rounded-pill py-1"
+        [routerLink]="['/restaurants/'+cart?.restaurant?.id]"
+        routerLinkActive="router-link-active"
+        [routerLinkActiveOptions]="{exact:true}"
+        style="font-size: 0.925rem;">
+        <i class="bi bi-arrow-right-short me-1"></i>
+        <span>{{cart?.restaurant?.name}}</span>
+      </a>
+    </div>
+    <div class="offcanvas-body">
+      <div class="d-flex flex-column align-items-center">
+        <ng-container *ngIf="!isCartEmpty();else emptyCart">
+          <app-cart-item-block *ngFor="let cartItem of cart?.cartItems" [cartItem]="cartItem"
+            class="mb-2"
+          >
+            {{cartItem.item.id}}
+          </app-cart-item-block>
+        </ng-container>
+        <ng-template #emptyCart>
+          <p>Empty Cart</p>
+        </ng-template>
+        
+      </div>
+    </div>
+    <div class="offcanvas-header border-bottom mx-4">
+      <h5 class="small-caps text-black-50 mb-0" data-testid="header-checkout">
+        <i class="bi bi-bag-fill me-1"></i>
+        <span>Checkout</span>
+      </h5>
+    </div>
+    <div class="offcanvas-header mx-4 d-flex flex-row justify-content-between">
+      <div class="d-flex flex-column w-100 align-items-center">
+        <h6 data-testid="total-cost-text">Total: <span class="text-success">{{getTotalCost() || 0 | currency:'USD'}}</span></h6>
+      
+        <div class="d-flex flex-row justify-content-around">
+          <button type="button" data-testid="checkout-btn" class="btn btn-primary text-light rounded-pill py-1"
+          (click)="clickOnCheckoutButton()"
+          [disabled]="isCartEmpty()">
+            <i class="bi bi-wallet-fill me-1"></i>
+            <span>Checkout</span>
+          </button>
+        </div>
+      </div>
+      <div class="d-flex flex-column align-items-center">
+        <button type="button"
+          data-testid="cart-delete-btn"
+          class="btn btn-red p-3 py-2"
+          (click)="clickOnDeleteButton()"
+          [disabled]="isCartEmpty()">
+          <i class="bi bi-trash3-fill"></i>
+        </button>
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #ownerPanel>
+    <div class="offcanvas-header border-bottom mx-4">
+      <h5 class="small-caps text-black-50 mb-0" data-testid="header-cart">
+        <i class="bi bi-building me-1"></i>
+        <span>Restaurants</span>
+      </h5>
+      <a 
+        data-testid="cart-restaurant-link"
+        class="btn btn-dark rounded-pill py-1"
+        [routerLink]="['/restaurants/create']"
+        routerLinkActive="router-link-active"
+        [routerLinkActiveOptions]="{exact:true}"
+        style="font-size: 0.925rem;">
+        <i class="bi bi-plus-circle-fill me-1"></i>
+        <span>Create</span>
+      </a>
+    </div>
+    <div class="offcanvas-body">
+      <div class="d-flex flex-column align-items-center">
+        <ng-container *ngIf="hasSelfRestaurants();else emptySelfRestaurants">
+          <app-self-restaurant-block *ngFor="let restaurant of selfRestaurants" [restaurant]="restaurant"
+            class="mb-2 w-100"
+          >
+          </app-self-restaurant-block>
+        </ng-container>
+        <ng-template #emptySelfRestaurants>
+          <p>You don't own restaurant.</p>
+        </ng-template>
+      </div>
+    </div>
+  </ng-template>
+</div>
+

@@ -1,0 +1,47 @@
+.custom-card {
+  width: 320px;
+  max-width: 320px;
+}
+
+.error-text {
+  font-size: 0.9rem;
+}
+
+.required:after {
+  content:" *";
+  color: red;
+}
+
+.bg-primary {
+  background-color: red;
+}
+
+.bg-secondary {
+  background-color: rgb(0, 47, 255);
+}
+
+.category-chip {
+  border-radius: 20px;
+}
+
+.ng-value-icon.left {
+  border-right: none !important;
+}
+
+.ng-value-icon.left:hover {
+  color: rgb(221, 221, 221);
+  background: none !important;
+}
+
+span.with-icon {
+  z-index: 5;
+  position: absolute;
+  height: 100%;
+  width: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+input.with-icon {
+  padding-left: 25px;
+}

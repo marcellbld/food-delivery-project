@@ -1,0 +1,84 @@
+<div>
+  <div class="custom-card">
+    <div class="custom-card-inner d-flex flex-column h-100">
+      <div style="position: relative;">
+        <div class="custom-card-image-container">
+          <img [src]='getRestaurantImageUrl()'
+          class="custom-card-image"
+          />
+        </div>
+        <div class="bottomdeco">
+        </div>
+      </div>
+      <div class="custom-card-body py-2">
+        <div>
+          <span class="small-caps text-black-50">Restaurant</span>
+        </div>
+        <p class="fs-5 pt-1 mb-1">  {{restaurant?.name}}</p>
+        <p class="text-secondary">{{restaurant?.description}}</p>
+      </div>
+    </div>
+  </div>
+  <div class="custom-card my-3">
+    <div class="custom-card-inner d-flex flex-column h-100">
+      <div class="custom-card-body py-2">
+        <div>
+          <span class="small-caps text-black-50">Categories</span>
+        </div>
+        <div class="d-flex align-items-center" style="height: 3rem;">
+          <ng-template  [ngIf]="restaurant?.categories && restaurant?.categories!.length > 0" [ngIfElse]="noCategories">
+            <div class="scrolling-wrapper">
+              <app-category
+              *ngFor="let category of restaurant?.categories" [category]="category"
+                class="item m-1"></app-category>
+            </div>
+          </ng-template>
+          <ng-template #noCategories>
+              <span><small>No Categories</small></span>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="custom-card my-3" *ngIf="popularRestaurantItems && popularRestaurantItems.length > 0">
+    <div class="custom-card-inner d-flex flex-column h-100">
+      <div class="custom-card-body py-2">
+        <div>
+          <span class="small-caps text-black-50">Popular Items</span>
+        </div>
+        <div class="scrolling-wrapper my-2">
+          <app-restaurant-item-block
+            *ngFor="let restaurantItem of popularRestaurantItems"
+            [restaurantItem]="restaurantItem"
+            class="item mx-1"
+            style="width: 125px"
+            [purchase]="true"
+            ></app-restaurant-item-block>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="custom-card my-3">
+    <div class="custom-card-inner d-flex flex-column h-100">
+      <div class="custom-card-body py-2">
+        <div>
+          <span class="small-caps text-black-50">Items</span>
+        </div>
+        <ng-template [ngIf]="restaurantItems && restaurantItems.length > 0" [ngIfElse]="noItems">
+          <div class="d-flex flex-column">
+            <app-restaurant-item-block
+              *ngFor="let restaurantItem of restaurantItems"
+              class="my-2"
+              [restaurantItem]="restaurantItem"
+              [purchase]="true"
+              [rowLayout]="true"
+              ></app-restaurant-item-block>
+          </div>
+        </ng-template>
+        <ng-template #noItems>
+          <span><small>No Items</small></span>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

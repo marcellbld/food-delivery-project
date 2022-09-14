@@ -1,0 +1,30 @@
+<div class="text-center">
+  <a class="nav-link d-flex flex-row justify-content-between" data-bs-toggle="collapse" [href]='"#"+id' role="button" aria-expanded="false" [attr.aria-controls]="id">
+    <span style="font-size: 0.9rem">{{cart?.purchasedDate ?? 'unknown' | date:'medium'}}</span>
+    <span>
+      <span class="text-success">{{cart?.calculateTotalCost() || 0 | currency:'USD'}}</span>
+      <i id="dropdown-icon" class="bi bi-caret-down-fill ms-1" style="font-size: 0.8rem"></i>
+    </span>
+  </a>
+  <div class="collapse multi-collapse mt-1" [id]="id">
+    <div class="card card-body">
+      <div>
+        <a 
+          data-testid="cart-restaurant-link"
+          class="nav-link text-dark rounded-pill py-0"
+          [routerLink]="['/restaurants/'+cart?.restaurant?.id]"
+          routerLinkActive="router-link-active"
+          [routerLinkActiveOptions]="{exact:true}"
+          style="font-size: 0.925rem;">
+          <i class="bi bi-arrow-right-short me-1"></i>
+          <span>{{cart?.restaurant?.name}}</span>
+        </a>
+      </div>
+      <hr class="my-2">
+      <div 
+      *ngFor="let cartItem of cart?.cartItems"
+      class="d-flex flex-row justify-content-between"
+      ><span>{{cartItem.item.name}}</span><span>({{cartItem.count}})</span><span class="text-success">{{cartItem.price || 0 | currency:'USD'}}</span></div>
+    </div>
+  </div>
+</div>

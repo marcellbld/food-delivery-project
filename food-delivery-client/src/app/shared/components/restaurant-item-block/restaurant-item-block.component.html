@@ -1,0 +1,59 @@
+<div class="custom-card" [ngStyle]="{'height': rowLayout ? '100px' : 'auto'}">
+  <div class="custom-card-inner text-center"  [ngClass]="{'d-flex flex-row h-100' : rowLayout }">
+    <div class="custom-card-image-container"
+      [ngClass]="{'w-auto h-100 d-flex align-items-center justify-content-center' : rowLayout}"
+      style="position: relative;">
+      <img [src]='getRestaurantItemImageUrl()'
+      class="custom-card-image p-1"
+      [ngClass]="{'w-100 h-auto ms-2' : rowLayout}"
+      />
+    </div>
+    <div class="custom-card-body text-center pb-2 flex-grow-1" style="font-size: 0.9rem"
+      [ngClass]="{'d-flex flex-row justify-content-between mx-4': rowLayout}"
+      >
+      <div>
+        <div class="h-100 d-flex flex-column" style="height: 3rem;"
+          [ngClass]="rowLayout ? 'justify-content-around align-items-start': 'justify-content-center align-items-center'">
+          <p class="pt-1 mb-1 text-start">{{restaurantItem?.name}}</p>
+          <p *ngIf="rowLayout" class="text-secondary mb-0 text-start">{{restaurantItem?.description}}</p>
+        </div>
+        <p *ngIf="!rowLayout" class="text-secondary mb-0 fs-6">{{restaurantItem?.price | currency:'USD'}}</p>
+
+      </div>
+      <div
+        *ngIf="purchase"
+        class="d-flex flex-column align-items-center justify-content-center"
+        [ngClass]="{'w-25': rowLayout, 'mt-2': !rowLayout}">
+        <div *ngIf="rowLayout">
+          <p class="text-secondary mb-2 fs-6">{{restaurantItem?.price | currency:'USD'}}</p>
+        </div>
+        <ng-template [ngIf]="!isItemInCart()" [ngIfElse]="purchaseModify">
+          <div
+            class="p-1 d-flex align-items-center justify-content-center border border-dark border-opacity-10 rounded"
+            >
+              <button type="button" class="btn btn-red p-2 py-1 text-nowrap" (click)="clickOnBuyButton()">
+                <i class="bi bi-plus-lg" style='font-size:14px;'></i>
+                <span>Buy</span>
+              </button>
+          </div>
+        </ng-template>
+        <ng-template #purchaseModify>
+          <div
+            class="p-1 d-flex align-items-center justify-content-center border border-dark border-opacity-10 rounded"
+            >
+              <button type="button" class="btn btn-red p-2 py-1" (click)="clickOnModifyButton(false)">
+                <i class="bi bi-dash-lg" style='font-size:14px;'></i>
+              </button>
+              <span class="text-dark fs-4 mx-2">{{cartItem()?.count || 0}}</span>
+              <button type="button" class="btn btn-red p-2 py-1" (click)="clickOnModifyButton(true)">
+                <i class="bi bi-plus-lg" style='font-size:14px;'></i>
+              </button>
+          </div>
+        </ng-template>
+        <div style="height: 1.5rem;">
+          <span *ngIf="isItemInCart()" class="text-red mb-2"><small>{{cartItem()?.price || 0 | currency:'USD'}}</small></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

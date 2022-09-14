@@ -1,0 +1,12 @@
+<div class="d-flex flex-row flex-wrap">
+  <app-restaurant-block
+    *ngFor="let restaurant of restaurants"[restaurant]="restaurant"
+    class="restaurant-block-base m-2"
+    [ngClass]='
+      clickedRestaurantElement == null ? "restaurant-block" :
+      isElementClicked(restaurant.id) ? "restaurant-block-grow" : "restaurant-block-shrink"'
+    (click)="clickOnRestaurantBlock($event)"
+    [attr.data-restaurantid]="restaurant.id"
+    [clicked]='isElementClicked(restaurant.id)'>
+  </app-restaurant-block>
+</div>

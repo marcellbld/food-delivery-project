@@ -1,0 +1,84 @@
+<nav class="navbar navbar-expand-md fixed-top px-0 px-md-4 mb-2" >
+  <div class="container-fluid d-flex flex-column flex-md-row">
+    <div class="pb-2 pb-md-0">
+      <a data-testid="logo" class="navbar-brand d-flex" [routerLink]="['']">
+        <img id="site-logo" class="me-2" height="30" src="/assets/images/logo.png" alt="logo">
+        <span id="site-title" class="my-auto">Food Delivery</span>
+      </a>
+    </div>
+    <div class="d-flex flex-grow-1 w-100 w-md-50 flex-column flex-md-row">
+      <div class="d-flex mx-auto w-100 w-md-50 justify-content-center align-items-center">
+        <form role="search" class="flex-grow-1">
+          <div class="input-group">
+            <input style="font-variant: small-caps" class="form-control" type="search" placeholder="Search" aria-label="Search">
+            <button data-testid="search-button" class="btn btn-dark" type="submit"><i class="bi bi-search"></i></button>
+          </div>
+        </form>
+        <button data-testid="cart-button" class="navbar-toggler ms-2" type="button"
+          data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+          <i class="bi bi-cart-fill me-1"></i>
+        </button>
+        <button class="navbar-toggler ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+      <div class="collapse" id="navbarToggler">
+        <div class="flex-grow-0" >
+          <ul class="navbar-nav ms-auto mb-2 mb-md-0 d-flex align-items-center">
+            <li class="nav-item nav-button small-caps">
+              <div>
+                <a data-testid="home-button" class="nav-link text-dark rounded-pill mx-2 d-md-flex"
+                  [routerLink]="['']"
+                  routerLinkActive="router-link-active"
+                  [routerLinkActiveOptions]="{exact:true}"
+                  style="font-size: 1.2rem;">
+                  <i class="bi bi-house-door-fill me-1"></i>
+                  <span>Home</span>
+                </a>
+              </div>
+            </li>
+            <ng-container *ngIf="!this.isLoggedIn(); else LoggedInPanel">
+              <li class="nav-item nav-button">
+                <a data-testid="login-button" class="nav-link text-primary small-caps d-md-flex"
+                [routerLink]="['login']" routerLinkActive="router-link-active"
+                  style="font-size: 1.2rem;">
+                  <i class="bi bi-arrow-right-square-fill me-1"></i>
+                  <span>Login</span>
+                </a>
+              </li>
+              <li class="nav-item nav-button">
+                <a data-testid="registration-button" class="nav-link text-success small-caps d-md-flex"
+                 [routerLink]="['registration']" routerLinkActive="router-link-active"
+                  style="font-size: 1.2rem;">
+                  <i class="bi bi-person-plus-fill me-1"></i>
+                  <span>Registration</span>
+                </a>
+              </li>
+            </ng-container>
+            <ng-template #LoggedInPanel>
+              <li class="nav-item nav-button">
+                  <a class="nav-link btn text-light rounded-pill py-1 d-md-flex"
+                  [ngClass]="this.loggedInUserRole() === 'USER' ? 'btn-primary' : 'btn-orange'"
+                  [routerLink]="['/profile']" routerLinkActive="router-link-active-primary"
+                  [routerLinkActiveOptions]="{exact:true}"
+                  data-testid="user-button" >
+                    <i class="bi bi-person-fill me-1"></i>
+                    <span>{{this.loggedInUsername()}}</span>
+                  </a>
+              </li>
+              <li class="nav-item nav-button">
+                <div class="collapse navbar-collapse">
+                  <button type="button" data-testid="sidebar-button" 
+                  class="btn btn-link text-dark ms-3"
+                  data-bs-toggle="offcanvas" data-bs-target="#sidebarRight" aria-controls="offcanvasRight">
+                    <i class="bi bi-arrow-bar-left"></i>
+                  </button>
+                </div>
+              </li>
+            </ng-template>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,187 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap-icons/font/bootstrap-icons.css";
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';
+@import url('https://fonts.googleapis.com/css2?family=Aboreto&display=swap');
+
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
+
+html,body {
+  height: 100%;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+body {
+  //#fff9f5
+  background-image: linear-gradient(#fafafa, #fff9f5);
+  background-attachment: fixed;
+}
+.text-red {
+  color: #f5474a;
+}
+.text-orange {
+  color: #f5af47;
+}
+.btn-orange {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: #f5af47;
+  --bs-btn-border-color: #f5af47;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #ca8d32;
+  --bs-btn-hover-border-color: #ca8d32;
+  --bs-btn-focus-shadow-rgb: 245, 71, 74;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #ca8d32;
+  --bs-btn-active-border-color: #ca8d32;
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #fff;
+  --bs-btn-disabled-bg: #bba98e;
+  --bs-btn-disabled-border-color: #bba98e;
+}
+.btn-red {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: #f5474a;
+  --bs-btn-border-color: #f5474a;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #a80e11;
+  --bs-btn-hover-border-color: #a80e11;
+  --bs-btn-focus-shadow-rgb: 245, 71, 74;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #a80e11;
+  --bs-btn-active-border-color: #a80e11;
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #fff;
+  --bs-btn-disabled-bg: #a87c7d;
+  --bs-btn-disabled-border-color: #a87c7d;
+}
+
+.small-caps {
+  font-variant: small-caps
+}
+
+#site-title {
+  font-family: Aboreto;
+}
+
+.w-30 {
+  width: 30% !important;
+}
+
+@media (min-width: 576px) {
+  .w-sm-50 {
+     width:50% !important;
+  }
+  .w-sm-75 {
+     width:50% !important;
+  }
+  .w-sm-100 {
+     width:100% !important;
+  }
+}
+@media (min-width: 768px) {
+  .w-md-50 {
+     width:50% !important;
+  }
+  .w-md-75 {
+     width:50% !important;
+  }
+  .w-md-100 {
+     width:100% !important;
+  }
+}
+@media (min-width: 992px) {
+  .w-lg-50 {
+     width:50% !important;
+  }
+  .w-lg-75 {
+     width:50% !important;
+  }
+  .w-lg-100 {
+     width:100% !important;
+  }
+}
+@media (min-width: 1200px) {
+  .w-xl-50 {
+     width:50% !important;
+  }
+  .w-xl-75 {
+     width:50% !important;
+  }
+  .w-xl-100 {
+     width:100% !important;
+  }
+}
+
+.custom-card {
+    position: relative;
+    background: 
+      linear-gradient( rgba(230, 230, 230, .2),rgba(187, 187, 187,.2)) border-box;
+    border-radius: 25px;
+    border: 1px solid transparent;
+    
+    box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%) !important;
+  }
+  
+  .custom-card-inner {
+    background-color: white;
+    padding: 0px;
+    border-radius: 25px;
+  }
+  
+  .custom-card-image-container {
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+  }
+  .custom-card-image {
+    width: 100%;
+  }
+  
+  .custom-card-body {
+    padding: 0 8px;
+  }
+  
+
+.btn-circle.btn-sm {
+  width: 30px;
+  height: 30px;
+  padding: 6px 0px;
+  border-radius: 15px;
+  font-size: 8px;
+  text-align: center;
+}
+.btn-circle.btn-md {
+  width: 50px;
+  height: 50px;
+  padding: 7px 10px;
+  border-radius: 25px;
+  font-size: 10px;
+  text-align: center;
+}
+.btn-circle.btn-xl {
+  width: 70px;
+  height: 70px;
+  padding: 10px 16px;
+  border-radius: 35px;
+  font-size: 12px;
+  text-align: center;
+}
+
+.scrolling-wrapper {
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: scroll;
+
+  .item {
+    flex: 0 0 auto;
+  }
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

@@ -1,0 +1,61 @@
+<div class="d-flex flex-column align-items-center h-100">
+  <div class="custom-card mt-4">
+    <div class="custom-card-inner d-flex flex-column h-100 px-4 pb-4 pt-2">
+      <div class="text-center small-caps mb-2">
+        <span class="fs-1">Create restaurant</span>
+      </div>
+      <div class="custom-card-body">
+        <div data-testid="form-registration">
+          <form class="card-body" (ngSubmit)="onClickSignUp()" [formGroup]="form">
+
+            <label for="restaurantName" class="form-label small-caps required">Name</label>
+            <input type="text" id="restaurantName" class="form-control" [class.is-invalid]="restaurantNameError" formControlName="restaurantName">
+            <div data-testid="restaurant-name-validation" class="invalid-feedback" *ngIf="restaurantNameError">
+              {{restaurantNameError}}
+            </div>
+
+            <label for="description" class="form-label small-caps required">Description</label>
+            <textarea  id="description" class="form-control" [class.is-invalid]="descriptionError" formControlName="description"></textarea>
+            <div data-testid="description-validation" class="invalid-feedback" *ngIf="descriptionError">
+              {{descriptionError}}
+            </div>
+
+            <label for="categories" class="form-label small-caps">Categories</label>
+            <ng-select 
+            [items]="categoryList"
+            [multiple]="true"
+            bindLabel="name"
+            bindValue="id"
+            [typeahead]="categoriesTypeahead"
+            (focus)="categoriesTypeahead.emit('')"
+            [hideSelected]="true"
+            formControlName="categories"
+            >                        
+            <ng-template ng-label-tmp let-item="item" let-clear="clear">
+              <div class="category-chip py-1 text-white" [ngClass]="item.primary ? 'bg-primary' : 'bg-secondary'">
+                <span class="ng-value-icon left" (click)="clear(item)" aria-hidden="true">×</span>
+                <span class="ng-value-label">{{item.name}}</span>
+              </div>
+          </ng-template>
+        </ng-select>
+            <div>
+              <p class="text-muted"><small>Type to find more categories.</small></p> 
+            </div>
+            
+            <div class="mb-3">
+              <label for="file" class="form-label">Main Image</label>
+              <div class="text-center mb-2" [style.display]="uploadedImageURL ? 'block' : 'none'">
+                <img class="rounded-3" [src]="uploadedImageURL" width="150px">
+              </div>
+              <input class="form-control" type="file" accept='.png, .jpg, .jpeg' id="file" (change)="onUploadedImageChange($event)">
+            </div>
+
+            <div class="text-center mt-3 w-100">
+              <app-button [disabled]="isDisabled()" [apiProgress]="apiProgress">Create</app-button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

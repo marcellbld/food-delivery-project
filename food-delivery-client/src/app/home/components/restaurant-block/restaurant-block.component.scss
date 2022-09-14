@@ -1,0 +1,28 @@
+.bottomright {
+  position: absolute;
+  bottom: 28px;
+  right: 8px;
+}
+.bottomdeco {
+  position: absolute;
+  bottom: -2px;
+  height: 22px;
+  width: 100%;
+  background-color: white;
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+}
+
+.store-btn {
+  // box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 60%) !important;
+  font-size: 1.25rem;
+  border: none;
+  color:white;
+  // border: 1px solid ;
+  // border-color: rgba(255, 255, 255, 1);
+  background: #f5474a;
+}
+
+.store-btn:hover {
+  color:rgb(214, 214, 214);
+}

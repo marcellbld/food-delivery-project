@@ -1,0 +1,52 @@
+<div class="d-flex flex-column align-items-center h-100">
+  <div class="custom-card mt-4">
+    <div class="custom-card-inner d-flex flex-column h-100 px-4 pb-4 pt-2">
+      <div class="text-center small-caps mb-2">
+        <span class="fs-1">Registration</span>
+      </div>
+      <div class="custom-card-body">
+        <div data-testid="form-registration">
+          <form class="card-body" (ngSubmit)="onClickSignUp()" [formGroup]="form">
+            <label for="username" class="form-label small-caps required">Username</label>
+            <input type="text" id="username" class="form-control" [class.is-invalid]="usernameError" formControlName="username">
+            <div data-testid="username-validation" class="invalid-feedback" *ngIf="usernameError">
+              {{usernameError}}
+            </div>
+
+            <label for="password" class="form-label small-caps required mt-2">Password</label>
+            <input type="text" id="password" class="form-control" type="password" [class.is-invalid]="passwordError" formControlName="password">
+            <div data-testid="password-validation" class="invalid-feedback" *ngIf="passwordError">
+              {{passwordError}}
+            </div>
+
+            <label for="passwordConfirm" class="form-label small-caps required mt-2">Password confirmation</label>
+            <input type="text" id="passwordConfirm" class="form-control" type="password" [class.is-invalid]="passwordConfirmError" formControlName="passwordConfirm">
+            <div data-testid="passwordConfirm-validation" class="invalid-feedback" *ngIf="passwordConfirmError">
+              {{passwordConfirmError}}
+            </div>
+
+            <label class="form-label small-caps required mt-2">Account Type</label>
+            <div class="text-center">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" value="User" id="account-type-radio-1" formControlName="accountType">
+                <label class="form-check-label" for="account-type-radio-1">
+                  User
+                </label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" value="Owner" id="account-type-radio-2" formControlName="accountType" >
+                <label class="form-check-label" for="account-type-radio-2">
+                  Owner
+                </label>
+              </div>
+            </div>
+
+            <div class="text-center mt-3 w-100">
+              <app-button [disabled]="isDisabled()" [apiProgress]="apiProgress">Sign Up</app-button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

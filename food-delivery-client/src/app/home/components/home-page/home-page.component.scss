@@ -1,0 +1,26 @@
+@media (min-width: 768px) {
+  .restaurant-block-base {
+    transition: all 0.25s ease;
+  }
+  .restaurant-block {
+    width: 45%;
+  }
+  .restaurant-block-shrink {
+    width: 45%;
+    transition: all 0.5s ease;
+  }
+  .restaurant-block-grow {
+    width: 100%;
+    transition: all 0.5s ease;
+  }
+  
+};
+@media (max-width: 768px) {
+  .restaurant-block {
+    width: 100%;
+  }
+};
+
+.restaurant-block:hover {
+  transform: scale(1.05);
+}
