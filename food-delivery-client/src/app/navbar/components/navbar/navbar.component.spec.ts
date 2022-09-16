@@ -16,7 +16,9 @@ import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { RegistrationPageComponent } from '../../../registration/components/registration-page/registration-page.component';
 import { ProfilePageComponent } from '../../../profile/components/profile-page/profile-page.component';
-import { NgZone } from '@angular/core';
+import { NavbarModule } from '../../navbar.module';
+import { RestaurantService } from '../../../core/services/restaurant/restaurant.service';
+import { CategoryService } from '../../../core/services/category/category.service';
 
 describe('NavbarComponent', () => {
   let component: NavbarComponent;
@@ -40,9 +42,14 @@ describe('NavbarComponent', () => {
           { path: 'profile', component: ProfilePageComponent },
         ]),
         SharedModule,
+        NavbarModule,
       ],
       declarations: [NavbarComponent],
-      providers: [{ provide: AuthService, useValue: authServiceMock }],
+      providers: [
+        { provide: AuthService, useValue: authServiceMock },
+        { provide: RestaurantService, useValue: {} },
+        { provide: CategoryService, useValue: {} },
+      ],
     }).compileComponents();
 
     router = TestBed.inject(Router);
@@ -76,19 +83,9 @@ describe('NavbarComponent', () => {
         const siteTitle = nativeElement.querySelector('span[id="site-title"]');
         expect(siteTitle).toBeTruthy();
       });
-      it('has search form', () => {
-        const searchForm = nativeElement.querySelector('form[role="search"]');
-        expect(searchForm).toBeTruthy();
-      });
-      it('has search input with type of search', () => {
-        const searchInput = nativeElement.querySelector('input[type="search"]');
-        expect(searchInput).toBeTruthy();
-      });
-      it('has search button', () => {
-        const searchButton = nativeElement.querySelector(
-          'button[data-testid="search-button"]'
-        );
-        expect(searchButton).toBeTruthy();
+      it('has search bar', () => {
+        const searchBar = nativeElement.querySelector('app-search-bar');
+        expect(searchBar).toBeTruthy();
       });
       it('has Home link with icon', () => {
         const homeLink = nativeElement.querySelector(
