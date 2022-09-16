@@ -3,12 +3,14 @@ import { RestaurantI } from '../../models/restaurant/restaurant.interface';
 import { getRestaurantImageUrl } from '../../utils/image-url-helper';
 
 @Component({
-  selector: 'app-self-restaurant-block',
-  templateUrl: './self-restaurant-block.component.html',
-  styleUrls: ['./self-restaurant-block.component.scss'],
+  selector: 'app-restaurant-row-block',
+  templateUrl: './restaurant-row-block.component.html',
+  styleUrls: ['./restaurant-row-block.component.scss'],
 })
-export class SelfRestaurantBlockComponent implements OnInit {
+export class RestaurantRowBlockComponent implements OnInit {
   @Input() restaurant: RestaurantI | undefined;
+  @Input() removable = true;
+  @Input() showDescription = false;
 
   constructor() {}
 

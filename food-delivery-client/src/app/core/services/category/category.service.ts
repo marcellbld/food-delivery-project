@@ -32,4 +32,10 @@ export class CategoryService {
   get primaryCategories(): CategoryI[] {
     return this._primaryCategories;
   }
+
+  filterPrimaryCategories(nameFilter: string): CategoryI[] {
+    return this.primaryCategories?.filter((category) =>
+      category.name.includes(nameFilter)
+    );
+  }
 }

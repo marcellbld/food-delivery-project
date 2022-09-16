@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { RestaurantService } from '../../../core/services/restaurant/restaurant.service';
+import { RestaurantItemService } from '../../../core/services/restaurant-item/restaurant-item.service';
 
 import { CurrencyPipe } from '@angular/common';
 import { RestaurantI } from 'src/app/shared/models/restaurant/restaurant.interface';
@@ -23,7 +24,6 @@ export class CreateRestaurantItemPageComponent implements OnInit {
     }),
     description: new FormControl('', [Validators.maxLength(50)]),
     price: new FormControl('', [Validators.required]),
-    restaurant: new FormControl(null, [Validators.required]),
     file: new FormControl(null),
   });
 
@@ -38,6 +38,7 @@ export class CreateRestaurantItemPageComponent implements OnInit {
 
   constructor(
     private readonly restaurantService: RestaurantService,
+    private readonly restaurantItemService: RestaurantItemService,
     private readonly currencyPipe: CurrencyPipe,
     private readonly router: Router,
     private readonly route: ActivatedRoute
@@ -59,12 +60,12 @@ export class CreateRestaurantItemPageComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onClickSignUp(): void {
+  onClickCreate(): void {
     if (!this.form.valid) return;
 
     this.apiProgress = true;
-    this.restaurantService
-      .createItem({
+    this.restaurantItemService
+      .create({
         name: this.itemName?.value!,
         description: this.description?.value!,
         restaurant: this.restaurant?.id!,
@@ -74,7 +75,7 @@ export class CreateRestaurantItemPageComponent implements OnInit {
       .subscribe({
         next: () => {
           this.createSuccess = true;
-          this.router.navigate(['']);
+          this.router.navigate([`/restaurants/${this.restaurant?.id}`]);
         },
         error: () => {
           this.apiProgress = false;

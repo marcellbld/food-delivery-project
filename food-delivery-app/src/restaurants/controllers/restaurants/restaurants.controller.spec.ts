@@ -93,14 +93,14 @@ describe('RestaurantsController', () => {
         .mockResolvedValue(restaurantArrayDtoMock);
     });
     it('should return restaurants', async () => {
-      const restaurants = await controller.findAll(0);
+      const restaurants = await controller.findAll(0, '');
 
       expect(restaurants).toEqual(restaurantArrayDtoMock);
     });
     it('should call restaurantsService.findAll with correct params', async () => {
-      await controller.findAll(5);
+      await controller.findAll(5, '');
 
-      expect(restaurantsService.findAll).toHaveBeenCalledWith(5);
+      expect(restaurantsService.findAll).toHaveBeenCalledWith(5, '');
     });
   });
   describe('findSelfRestaurants', () => {

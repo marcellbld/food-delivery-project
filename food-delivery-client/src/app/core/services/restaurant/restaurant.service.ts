@@ -4,8 +4,6 @@ import { Observable, tap } from 'rxjs';
 import { RestaurantI } from '../../../shared/models/restaurant/restaurant.interface';
 import { AuthService } from '../auth/auth.service';
 import { CreateRestaurantI } from '../../../shared/models/restaurant/create-restaurant.interface';
-import { RestaurantItemI } from '../../../shared/models/restaurant-item/restaurant-item.interface';
-import { CreateRestaurantItemI } from '../../../shared/models/restaurant-item/create-restaurant-item.interface';
 import { UserRole } from '../../../shared/models/user/user.interface';
 
 @Injectable({
@@ -37,8 +35,13 @@ export class RestaurantService {
     }
   }
 
-  findAll(skip: number = 0): Observable<RestaurantI[]> {
-    return this.http.get<RestaurantI[]>(`/api/restaurants?skip=${skip}`);
+  findAll(
+    skip: number = 0,
+    nameFilter: string = ''
+  ): Observable<RestaurantI[]> {
+    return this.http.get<RestaurantI[]>(
+      `/api/restaurants?skip=${skip}&nameFilter=${nameFilter}`
+    );
   }
 
   findOne(id: number): Observable<RestaurantI> {
@@ -66,27 +69,6 @@ export class RestaurantService {
       tap((_: any) => {
         this.loadSelfRestaurants();
       })
-    );
-  }
-
-  createItem(
-    createRestaurantItemI: CreateRestaurantItemI
-  ): Observable<RestaurantItemI> {
-    const formData = new FormData();
-    formData.append('name', createRestaurantItemI.name);
-    formData.append('description', '' + createRestaurantItemI.description);
-    formData.append('restaurant', '' + createRestaurantItemI.restaurant);
-    formData.append('price', createRestaurantItemI.price.toString());
-    if (createRestaurantItemI.file) {
-      formData.append(
-        'file',
-        createRestaurantItemI.file,
-        createRestaurantItemI.file.name
-      );
-    }
-    return this.http.post<RestaurantItemI>(
-      `/api${createRestaurantItemI.restaurant}/items`,
-      formData
     );
   }
 

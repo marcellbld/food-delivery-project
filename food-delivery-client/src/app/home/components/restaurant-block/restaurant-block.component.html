@@ -24,11 +24,13 @@
       </div>
       <div class="d-flex align-items-center" style="height: 3rem;">
         <ng-container *ngIf="(restaurant?.categories && restaurant?.categories!.length > 0);else noCategories">
-          <div class="scrolling-wrapper">
-            <app-category
-            *ngFor="let category of restaurant?.categories" [category]="category"
-              class="item m-1"></app-category>
-          </div>
+          <drag-scroll [scrollbar-hidden]="true">
+            <app-category drag-scroll-item
+              *ngFor="let category of restaurant?.categories"
+              [category]="category"
+              class="mx-1">
+            </app-category>
+          </drag-scroll>
         </ng-container>
         <ng-template #noCategories>
           <ng-container *ngIf="clicked">
@@ -40,13 +42,13 @@
       <div *ngIf="clicked">
         <span class="small-caps text-black-50">Popular Items</span>
       </div>
-      <div class="scrolling-wrapper my-2" *ngIf="clicked">
-        <app-restaurant-item-block *ngFor="let restaurantItem of popularRestaurantItems | async"
-          class="item mx-1"
+      <drag-scroll [scrollbar-hidden]="true" *ngIf="clicked" class="my-2">
+        <app-restaurant-item-block drag-scroll-item *ngFor="let restaurantItem of popularRestaurantItems | async"
+          class="mx-1"
           style="width: 125px;"
           [restaurantItem]="restaurantItem">
         </app-restaurant-item-block>
-      </div>
+      </drag-scroll >
     </div>
   </div>
 </div>

@@ -23,13 +23,18 @@ export class RestaurantsService {
     private readonly categoryRepository: EntityRepository<Category>,
   ) {}
 
-  async findAll(skip: number): Promise<RestaurantDto[]> {
+  async findAll(skip: number, nameFilter: string): Promise<RestaurantDto[]> {
     return this.mapper.mapArray(
-      await this.restaurantRepository.findAll({
-        populate: ['categories'],
-        limit: 10,
-        offset: skip,
-      }),
+      await this.restaurantRepository.find(
+        {
+          name: { $like: `%${nameFilter}%` },
+        },
+        {
+          populate: ['categories'],
+          limit: 10,
+          offset: skip,
+        },
+      ),
       Restaurant,
       RestaurantDto,
     );

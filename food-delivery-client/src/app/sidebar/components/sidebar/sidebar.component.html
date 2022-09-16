@@ -108,10 +108,10 @@
     <div class="offcanvas-body">
       <div class="d-flex flex-column align-items-center">
         <ng-container *ngIf="hasSelfRestaurants();else emptySelfRestaurants">
-          <app-self-restaurant-block *ngFor="let restaurant of selfRestaurants" [restaurant]="restaurant"
+          <app-restaurant-row-block *ngFor="let restaurant of selfRestaurants" [restaurant]="restaurant"
             class="mb-2 w-100"
           >
-          </app-self-restaurant-block>
+          </app-restaurant-row-block>
         </ng-container>
         <ng-template #emptySelfRestaurants>
           <p>You don't own restaurant.</p>

@@ -145,6 +145,7 @@ body {
     background-color: white;
     padding: 0px;
     border-radius: 25px;
+    max-width: 100%;
   }
   
   .custom-card-image-container {
@@ -159,6 +160,7 @@ body {
   
   .custom-card-body {
     padding: 0 8px;
+    max-width: 100%;
   }
   
 
@@ -185,18 +187,4 @@ body {
   border-radius: 35px;
   font-size: 12px;
   text-align: center;
-}
-
-.scrolling-wrapper {
-  -webkit-overflow-scrolling: touch;
-  display: flex;
-  flex-wrap: nowrap;
-  overflow-x: scroll;
-
-  .item {
-    flex: 0 0 auto;
-  }
-  &::-webkit-scrollbar {
-    display: none;
-  }
 }

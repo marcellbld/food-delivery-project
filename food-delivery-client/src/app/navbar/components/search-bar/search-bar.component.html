@@ -1,0 +1,45 @@
+<form [formGroup]="form" id="search-dropdown-group" class="input-group dropdown">
+  <input #searchInput style="font-variant: small-caps" class="form-control"
+    type="search" placeholder="Search" aria-label="Search"
+    formControlName="search"
+    (input)="onInputSearch($event)">
+  <button data-testid="search-button" class="btn btn-dark"
+    type="button" (click)="onClickSearchButton($event)"
+    ><i class="bi bi-search"></i></button>
+    <div #searchDropdown class="dropdown-menu w-100 px-2" data-bs-popper="static"
+    [ngClass]="{'show': showSearchDropdown}">
+      <div *ngIf="!searchText && !loading" class="text-center">
+        <span>Please type to search.</span>
+      </div>
+      <div class="d-flex align-items-center" *ngIf="loading">
+        <strong>Loading...</strong>
+        <div class="spinner-border ms-auto" role="status" aria-hidden="true"></div>
+      </div>
+      <ng-container *ngIf="categories && categories.length > 0">
+        <div>
+          <span class="small-caps text-black-50">Categories</span>
+        </div>
+        <drag-scroll [scrollbar-hidden]="true">
+          <app-category drag-scroll-item *ngFor="let category of categories" [category]="category"
+          class="mx-1"
+          >
+          </app-category>
+        </drag-scroll>
+      </ng-container>
+      <ng-container *ngIf="restaurants && restaurants.length > 0">
+        <div>
+          <span class="small-caps text-black-50">Restaurants</span>
+        </div>
+        <div class="d-flex flex-column">
+          <app-search-restaurant-row-block *ngFor="let restaurant of restaurants" [restaurant]="restaurant"
+          class="my-1 w-100"
+          >
+          </app-search-restaurant-row-block>
+        </div>
+      </ng-container>
+      <div *ngIf="(!categories || categories.length === 0) && (!restaurants || restaurants.length === 0) && searchText !== '' && !loading"
+        class="text-center">
+        <span>No results.</span>
+      </div>
+    </div>
+  </form>

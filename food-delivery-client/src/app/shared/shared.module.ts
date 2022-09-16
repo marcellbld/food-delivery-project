@@ -5,8 +5,10 @@ import { ButtonComponent } from './components/button/button.component';
 import { CategoryComponent } from './components/category/category.component';
 import { RestaurantItemBlockComponent } from './components/restaurant-item-block/restaurant-item-block.component';
 import { CartItemBlockComponent } from './components/cart-item-block/cart-item-block.component';
-import { SelfRestaurantBlockComponent } from './components/self-restaurant-block/self-restaurant-block.component';
+import { RestaurantRowBlockComponent } from './components/restaurant-row-block/restaurant-row-block.component';
 import { RouterModule } from '@angular/router';
+import { ScrollListComponent } from './components/scroll-list/scroll-list.component';
+import { DragScrollModule } from 'ngx-drag-scroll';
 
 @NgModule({
   declarations: [
@@ -14,9 +16,16 @@ import { RouterModule } from '@angular/router';
     CategoryComponent,
     RestaurantItemBlockComponent,
     CartItemBlockComponent,
-    SelfRestaurantBlockComponent,
+    RestaurantRowBlockComponent,
+    ScrollListComponent,
   ],
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule,
+    DragScrollModule,
+  ],
   exports: [
     FormsModule,
     ReactiveFormsModule,
@@ -24,7 +33,8 @@ import { RouterModule } from '@angular/router';
     CategoryComponent,
     RestaurantItemBlockComponent,
     CartItemBlockComponent,
-    SelfRestaurantBlockComponent,
+    RestaurantRowBlockComponent,
+    ScrollListComponent,
   ],
   providers: [CurrencyPipe],
 })

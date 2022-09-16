@@ -10,18 +10,21 @@
       >
       <div class="d-flex flex-column justify-content-center align-items-start border-end flex-grow-1 px-3 px-md-1">
         <div class="h-100 d-flex flex-column align-items-start justify-content-center ps-1" style="height: 3rem;">
-          <span class=" text-start fs-6" data-testid="item-name">{{restaurant?.name}}</span>
+          <span class="text-start fs-6" data-testid="item-name">{{restaurant?.name}}</span>
+          <span class="text-start fs-6 text-secondary" data-testid="item-description"
+            *ngIf="showDescription">{{restaurant?.description}}</span>
         </div>
       </div>
-      <div class="d-flex flex-column justify-content-between ms-2">
-        <button type="button" class="btn btn-primary p-2 py-1" data-testid="restaurant-btn"
+      <div class="d-flex flex-column justify-content-around ms-2 align-items-center">
+        <button type="button" class="btn btn-primary p-2 py-1 my-1" data-testid="restaurant-btn"
           [routerLink]="['/restaurants/'+restaurant?.id]"
           
           >
           <i class="bi bi-arrow-right" style='font-size:14px;'></i>
         </button>
-        <button type="button" class="btn btn-red p-2 py-1" data-testid="delete-btn"
-          >
+        <button type="button" class="btn btn-red p-2 py-1 my-1" data-testid="delete-btn"
+          *ngIf="removable"  
+        >
           <i class="bi bi-trash3-fill" style='font-size:14px;'></i>
         </button>
       </div>

@@ -18,11 +18,11 @@
       </div>
       <div class="custom-card-body">
         <div data-testid="form-registration">
-          <form class="card-body" (ngSubmit)="onClickSignUp()" [formGroup]="form">
+          <form class="card-body" (ngSubmit)="onClickCreate()" [formGroup]="form">
 
             <label for="itemName" class="form-label small-caps required">Name</label>
             <input type="text" id="itemName" class="form-control" [class.is-invalid]="itemNameError" formControlName="itemName">
-            <div data-testid="item-name-validation" class="invalid-feedback" *ngIf="itemNameError">
+            <div data-testid="itemName-validation" class="invalid-feedback" *ngIf="itemNameError">
               {{itemNameError}}
             </div>
 

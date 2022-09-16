@@ -45,8 +45,10 @@ export class RestaurantsController {
   @Get()
   async findAll(
     @Query('skip', new DefaultValuePipe(0), ParseIntPipe) skip: number,
+    @Query('nameFilter', new DefaultValuePipe(''))
+    nameFilter: string,
   ): Promise<RestaurantDto[]> {
-    return await this.restaurantsService.findAll(skip);
+    return await this.restaurantsService.findAll(skip, nameFilter);
   }
 
   @Get('self')

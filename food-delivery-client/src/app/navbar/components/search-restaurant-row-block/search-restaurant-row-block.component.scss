@@ -1,0 +1,31 @@
+.custom-card {
+  height: 100px;
+}
+
+.custom-card-image-container {
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.custom-card-image {
+  width: auto;
+  height: inherit;
+}
+
+.custom-card:hover {
+  background-color: rgb(197, 197, 197);
+  cursor: pointer;
+}
+.custom-card:hover > .custom-card-inner {
+  background-color: #dfdede;
+}
+
+#description {
+  // display:inline-block;
+  // overflow: hidden;
+  // text-overflow: ellipsis;
+  // white-space: nowrap;
+  max-width:85%;
+}

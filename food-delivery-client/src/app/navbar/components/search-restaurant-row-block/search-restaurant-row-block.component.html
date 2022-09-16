@@ -1,0 +1,16 @@
+<div class="custom-card" style="height: 60px;">
+  <div class="custom-card-inner text-center d-flex h-100 align-items-center justify-content-between px-2">
+    <div class="custom-card-image-container px-0"
+    style="width: 50px; height: 50px; min-width:50px; max-width:50px;">
+      <img [src]='getRestaurantImageUrl()'
+      class="custom-card-image"
+      />
+    </div>
+    <div class="custom-card-body d-flex flex-column align-items-start justify-content-between px-2 h-75 w-100" style="font-size: 0.9rem"
+      >
+      <div id="name" class="text-start fs-6" data-testid="item-name">{{restaurant?.name}}</div>
+      <div id="description" class="text-start d-inline-block text-nowrap text-truncate fs-6 text-secondary" data-testid="item-description"
+        >{{restaurant?.description}}</div>
+    </div>
+  </div>
+</div>

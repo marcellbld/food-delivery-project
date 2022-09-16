@@ -14,7 +14,7 @@ import { UserService } from '../../../core/services/user/user.service';
 import { RestaurantNameTakenValidator } from '../../validators/restaurant-name-taken.validator';
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { debounceTime, distinctUntilChanged, Subscription } from 'rxjs';
-import { RestaurantI } from 'src/app/shared/models/restaurant/restaurant.interface';
+import { RestaurantI } from '../../../shared/models/restaurant/restaurant.interface';
 
 @Component({
   selector: 'app-create-restaurant-page',
@@ -79,6 +79,12 @@ export class CreateRestaurantPageComponent implements OnInit {
           console.log(this.file);
         })
     );
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => {
+      subscription.unsubscribe();
+    });
   }
 
   onClickCreate(): void {
@@ -172,9 +178,8 @@ export class CreateRestaurantPageComponent implements OnInit {
       this.categoryList = this.categoryService.primaryCategories;
     } else {
       this.categoryService.findSecondaries(nameFilter).subscribe((result) => {
-        const primaries = this.categoryService.primaryCategories?.filter(
-          (category) => category.name.includes(nameFilter)
-        );
+        const primaries =
+          this.categoryService.filterPrimaryCategories(nameFilter);
 
         this.categoryList = primaries.concat(result);
       });

@@ -81,23 +81,28 @@ describe('RestaurantsService', () => {
   describe('findAll', () => {
     beforeEach(() => {
       jest
-        .spyOn(restaurantRepository, 'findAll')
+        .spyOn(restaurantRepository, 'find')
         .mockResolvedValue([restaurantMock, restaurant2Mock]);
     });
 
     it('should return all restaurants as RestaurantDto', async () => {
-      const restaurants = await service.findAll(0);
+      const restaurants = await service.findAll(0, '');
 
       expect(restaurants).toEqual([restaurantDtoMock, restaurant2DtoMock]);
     });
-    it('should call restaurantRepository.findAll with correct params', async () => {
+    it('should call restaurantRepository.find with correct params', async () => {
       const skip = 10;
-      await service.findAll(skip);
-      expect(restaurantRepository.findAll).toHaveBeenCalledWith({
-        populate: ['categories'],
-        limit: 10,
-        offset: skip,
-      });
+      await service.findAll(skip, '');
+      expect(restaurantRepository.find).toHaveBeenCalledWith(
+        {
+          name: { $like: '%%' },
+        },
+        {
+          populate: ['categories'],
+          limit: 10,
+          offset: skip,
+        },
+      );
     });
   });
   describe('findByOwner', () => {

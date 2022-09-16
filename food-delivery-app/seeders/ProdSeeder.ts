@@ -58,7 +58,7 @@ export class ProdSeeder extends Seeder {
         name: 'Test Restaurant',
         description: 'Test Restaurant Description',
         owner: owners[0],
-        categories: [2, 3],
+        categories: [1, 2, 3, 4],
       }),
     );
     restaurants.push(
@@ -74,6 +74,30 @@ export class ProdSeeder extends Seeder {
         id: 3,
         name: 'Test Restaurant 3',
         description: 'Test Restaurant Description 3',
+        owner: owners[0],
+      }),
+    );
+    restaurants.push(
+      em.create(Restaurant, {
+        id: 4,
+        name: 'Mc Donalds',
+        description: 'Mc Donalds Description',
+        owner: owners[0],
+      }),
+    );
+    restaurants.push(
+      em.create(Restaurant, {
+        id: 5,
+        name: 'Burger King (Corvin)',
+        description: 'Burger King (Corvin) Description',
+        owner: owners[0],
+      }),
+    );
+    restaurants.push(
+      em.create(Restaurant, {
+        id: 6,
+        name: 'Pesti Pipi',
+        description: 'Pesti Pipi Description',
         owner: owners[0],
       }),
     );

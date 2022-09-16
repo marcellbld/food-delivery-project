@@ -1,9 +1,13 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
+  EventEmitter,
   HostListener,
   NgZone,
   OnInit,
+  ViewChild,
 } from '@angular/core';
 import { UserRole } from '../../../shared/models/user/user.interface';
 import { AuthService } from '../../../core/services/auth/auth.service';
