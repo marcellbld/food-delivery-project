@@ -1,5 +1,6 @@
 import {
   Body,
+  ClassSerializerInterceptor,
   Controller,
   DefaultValuePipe,
   Delete,
@@ -75,7 +76,12 @@ export class RestaurantsController {
     }),
   )
   async create(
-    @Body() createRestaurantDto: CreateRestaurantDto,
+    @Body({
+      transform: (val) => {
+        return { ...val, categories: JSON.parse(val.categories) };
+      },
+    })
+    createRestaurantDto: CreateRestaurantDto,
     @UserParam() userDto: UserDto,
     @UploadedFile(
       new ParseFilePipeBuilder()
@@ -106,16 +112,42 @@ export class RestaurantsController {
   @Patch(':id')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.Admin, UserRole.Owner)
+  @UsePipes(ValidationPipe)
+  @UseInterceptors(
+    FileInterceptor('file', {
+      dest: './dist/public/uploads/restaurants',
+    }),
+  )
   async update(
     @Param('id') id: number,
-    @Body() updateRestaurantDto: UpdateRestaurantDto,
+    @Body({
+      transform: (val) => {
+        return { ...val, categories: JSON.parse(val.categories) };
+      },
+    })
+    updateRestaurantDto: UpdateRestaurantDto,
     @UserParam() userDto: UserDto,
+    @UploadedFile(
+      new ParseFilePipeBuilder()
+        .addFileTypeValidator({ fileType: 'jpg|jpeg|png' })
+        .addMaxSizeValidator({ maxSize: 250000 })
+        .build({
+          errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
+          fileIsRequired: false,
+        }),
+    )
+    file: Express.Multer.File,
   ): Promise<RestaurantDto> {
+    const filename = file?.filename ?? null;
     if (
       userDto.role === UserRole.Admin ||
       (await this.restaurantsService.compareOwner(userDto.id, id))
     ) {
-      return await this.restaurantsService.update(id, updateRestaurantDto);
+      return await this.restaurantsService.update(
+        id,
+        updateRestaurantDto,
+        filename,
+      );
     } else throw new ForbiddenException('Cannot update this restaurant');
   }
 
@@ -206,16 +238,36 @@ export class RestaurantsController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.Admin, UserRole.Owner)
   @UsePipes(ValidationPipe)
+  @UseInterceptors(
+    FileInterceptor('file', {
+      dest: './dist/public/uploads/restaurant-items',
+    }),
+  )
   async updateItem(
     @Param('id') id: number,
     @Body() updateRestaurantItemDto: UpdateRestaurantItemDto,
     @UserParam() userDto: UserDto,
+    @UploadedFile(
+      new ParseFilePipeBuilder()
+        .addFileTypeValidator({ fileType: 'jpg|jpeg|png' })
+        .addMaxSizeValidator({ maxSize: 250000 })
+        .build({
+          errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
+          fileIsRequired: false,
+        }),
+    )
+    file: Express.Multer.File,
   ): Promise<RestaurantItemDto> {
+    const filename = file?.filename ?? null;
+
     if (
       userDto.role === UserRole.Admin ||
       (await this.restaurantsService.compareOwner(userDto.id, id))
     ) {
-      return this.restaurantItemsService.update(updateRestaurantItemDto);
+      return this.restaurantItemsService.update(
+        updateRestaurantItemDto,
+        filename,
+      );
     } else throw new ForbiddenException('Cannot update this item');
   }
 

@@ -11,6 +11,7 @@ import { CategoryService } from '../../../core/services/category/category.servic
 import { CategoryI } from '../../../shared/models/category/category.interface';
 import { RestaurantI } from '../../../shared/models/restaurant/restaurant.interface';
 import { RestaurantService } from '../../../core/services/restaurant/restaurant.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search-bar',
@@ -34,7 +35,8 @@ export class SearchBarComponent implements OnInit {
 
   constructor(
     private restaurantService: RestaurantService,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -43,9 +45,13 @@ export class SearchBarComponent implements OnInit {
         .get('search')!
         .valueChanges.pipe(distinctUntilChanged(), debounceTime(200))
         .subscribe(() => {
-          this.search(this.searchText);
+          this.searchByText(this.searchText);
         })
     );
+    this.router.events.subscribe((_) => {
+      this.showSearchDropdown = false;
+      this.search.reset();
+    });
   }
 
   ngOnDestroy(): void {
@@ -64,6 +70,10 @@ export class SearchBarComponent implements OnInit {
     return this.loadingRestaurants || this.loadingCategories;
   }
 
+  get search() {
+    return this.form.get('search')!;
+  }
+
   onInputSearch($event: any) {
     const searchText = this.searchText;
 
@@ -80,7 +90,7 @@ export class SearchBarComponent implements OnInit {
     this.showSearchDropdown = true;
   }
 
-  private search(searchText: string) {
+  private searchByText(searchText: string) {
     if (searchText === '') {
       this.restaurants = [];
       this.categories = [];

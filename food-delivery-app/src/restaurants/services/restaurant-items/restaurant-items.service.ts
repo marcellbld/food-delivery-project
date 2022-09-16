@@ -80,9 +80,10 @@ export class RestaurantItemsService {
 
   async update(
     updateRestaurantItemDto: UpdateRestaurantItemDto,
+    imageFileName: string,
   ): Promise<RestaurantItemDto> {
     const restaurantItem = await this.restaurantItemRepository.findOne({
-      id: updateRestaurantItemDto.id,
+      id: +updateRestaurantItemDto.id,
     });
     if (!restaurantItem)
       throw new BadRequestException("Restaurant Item doesn't exists");
@@ -95,6 +96,8 @@ export class RestaurantItemsService {
     restaurantItem.price = updateRestaurantItemDto.price
       ? parseFloat(updateRestaurantItemDto.price)
       : restaurantItem.price;
+
+    restaurantItem.image = imageFileName ?? restaurantItem.image;
 
     await this.restaurantItemRepository.persistAndFlush(restaurantItem);
 

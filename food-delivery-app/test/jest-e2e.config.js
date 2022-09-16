@@ -7,4 +7,5 @@ module.exports = {
     '^.+\\.(t|j)s$': 'ts-jest',
   },
   setupFilesAfterEnv: ['./test/jest-e2e.setup.ts'],
+  testTimeout: 10000,
 };

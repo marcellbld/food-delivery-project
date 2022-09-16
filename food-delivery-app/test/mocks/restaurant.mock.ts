@@ -8,7 +8,7 @@ export const restaurantMock = () => ({
   createdAt: new Date(1000000000000),
   modifiedAt: new Date(1200000000000),
   owner: UserMocks.userMock(),
-  categories: { toArray: jest.fn() } as any,
+  categories: { toArray: jest.fn(), set: jest.fn() } as any,
   items: { toArray: jest.fn() } as any,
   carts: { toArray: jest.fn() } as any,
 });
@@ -21,7 +21,7 @@ export const restaurant2Mock = () => ({
   createdAt: new Date(1100000000000),
   modifiedAt: new Date(1300000000000),
   owner: UserMocks.userMock(),
-  categories: { toArray: jest.fn() } as any,
+  categories: { toArray: jest.fn(), set: jest.fn() } as any,
   items: { toArray: jest.fn() } as any,
   carts: { toArray: jest.fn() } as any,
 });

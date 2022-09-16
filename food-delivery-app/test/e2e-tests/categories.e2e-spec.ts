@@ -14,6 +14,9 @@ describe('CategoriesController (e2e)', () => {
 
   beforeAll(async () => {
     app = (await getApplication()).app;
+  });
+
+  beforeAll(async () => {
     await resetDb();
   });
 

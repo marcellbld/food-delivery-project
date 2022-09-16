@@ -191,12 +191,15 @@ describe('RestaurantItemsService', () => {
         .mockReturnValue(restaurantItemMock);
     });
     it('should find item, update then return as RestaurantItemDto', async () => {
-      const item = await service.update({
-        id: 1,
-        name: 'Updated Name',
-        description: 'Updated Description',
-        price: '99.99',
-      });
+      const item = await service.update(
+        {
+          id: '1',
+          name: 'Updated Name',
+          description: 'Updated Description',
+          price: '99.99',
+        },
+        null,
+      );
 
       expect(item).toEqual({
         ...restaurantItemDtoMock,
@@ -206,22 +209,28 @@ describe('RestaurantItemsService', () => {
       });
     });
     it('should call restaurantItemRepository.findOne with correct params', async () => {
-      await service.update({
-        id: 1,
-        name: 'Updated Name',
-        description: 'Updated Description',
-        price: '99.99',
-      });
+      await service.update(
+        {
+          id: '1',
+          name: 'Updated Name',
+          description: 'Updated Description',
+          price: '99.99',
+        },
+        null,
+      );
 
       expect(restaurantItemRepository.findOne).toHaveBeenCalledWith({ id: 1 });
     });
     it('should call restaurantItemRepository.persistAndFlush with correct params', async () => {
-      await service.update({
-        id: 1,
-        name: 'Updated Name',
-        description: 'Updated Description',
-        price: '99.99',
-      });
+      await service.update(
+        {
+          id: '1',
+          name: 'Updated Name',
+          description: 'Updated Description',
+          price: '99.99',
+        },
+        null,
+      );
 
       expect(restaurantItemRepository.persistAndFlush).toHaveBeenCalledWith({
         ...restaurantItemMock,
@@ -234,12 +243,15 @@ describe('RestaurantItemsService', () => {
       restaurantItemRepository.findOne = jest.fn().mockResolvedValueOnce(null);
 
       await expect(
-        service.update({
-          id: 1,
-          name: 'Updated Name',
-          description: 'Updated Description',
-          price: '99.99',
-        }),
+        service.update(
+          {
+            id: '1',
+            name: 'Updated Name',
+            description: 'Updated Description',
+            price: '99.99',
+          },
+          null,
+        ),
       ).rejects.toThrowError(BadRequestException);
     });
   });

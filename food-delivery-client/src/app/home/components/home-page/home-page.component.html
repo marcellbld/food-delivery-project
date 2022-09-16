@@ -1,7 +1,7 @@
-<div class="d-flex flex-row flex-wrap">
+<div class="d-flex flex-row justify-content-center align-items-start flex-wrap">
   <app-restaurant-block
     *ngFor="let restaurant of restaurants"[restaurant]="restaurant"
-    class="restaurant-block-base m-2"
+    class="restaurant-block-base"
     [ngClass]='
       clickedRestaurantElement == null ? "restaurant-block" :
       isElementClicked(restaurant.id) ? "restaurant-block-grow" : "restaurant-block-shrink"'

@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-
 import { RestaurantService } from '../../../core/services/restaurant/restaurant.service';
 import { RestaurantItemService } from '../../../core/services/restaurant-item/restaurant-item.service';
-
-import { CurrencyPipe } from '@angular/common';
-import { RestaurantI } from 'src/app/shared/models/restaurant/restaurant.interface';
+import { RestaurantI } from '../../../shared/models/restaurant/restaurant.interface';
+import { RestaurantItemI } from '../../../shared/models/restaurant-item/restaurant-item.interface';
+import { getRestaurantItemImageUrl } from '../../../shared/utils/image-url-helper';
 
 @Component({
   selector: 'app-create-restaurant-item-page',
@@ -36,12 +35,14 @@ export class CreateRestaurantItemPageComponent implements OnInit {
 
   restaurant: RestaurantI | undefined;
 
+  editRestaurantItem: RestaurantItemI | undefined;
+
   constructor(
     private readonly restaurantService: RestaurantService,
     private readonly restaurantItemService: RestaurantItemService,
-    private readonly currencyPipe: CurrencyPipe,
     private readonly router: Router,
-    private readonly route: ActivatedRoute
+    private readonly route: ActivatedRoute,
+    private readonly window: Window
   ) {
     const restaurantId = this.route.snapshot.params['id'];
     this.restaurantService.findSelf().subscribe((result) => {
@@ -58,11 +59,40 @@ export class CreateRestaurantItemPageComponent implements OnInit {
     };
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const state = this.window.history.state;
+    const restaurantItem = state.restaurantItem;
+    this.editRestaurantItem = restaurantItem;
 
-  onClickCreate(): void {
+    if (!this.editRestaurantItem && this.router.url.endsWith('/edit-item')) {
+      this.router.navigate(['/']);
+      return;
+    }
+    this.setupEditData();
+  }
+
+  setupEditData(): void {
+    if (this.editRestaurantItem) {
+      this.itemName?.setValue(this.editRestaurantItem.name);
+      this.description?.setValue(this.editRestaurantItem.description);
+      this.price?.setValue('' + this.editRestaurantItem.price);
+      this.uploadedImageURL = getRestaurantItemImageUrl(
+        this.editRestaurantItem.image
+      );
+    }
+  }
+
+  onClickSubmit(): void {
     if (!this.form.valid) return;
 
+    if (this.editRestaurantItem) {
+      this.update();
+    } else {
+      this.create();
+    }
+  }
+
+  create(): void {
     this.apiProgress = true;
     this.restaurantItemService
       .create({
@@ -82,6 +112,28 @@ export class CreateRestaurantItemPageComponent implements OnInit {
         },
       });
   }
+  update(): void {
+    this.apiProgress = true;
+    this.restaurantItemService
+      .update({
+        id: +this.editRestaurantItem?.id!,
+        name: this.itemName?.value!,
+        description: this.description?.value!,
+        restaurant: this.restaurant?.id!,
+        price: +this.price?.value!,
+        file: this.uploadedImage,
+      })
+      .subscribe({
+        next: () => {
+          this.createSuccess = true;
+          this.router.navigate([`/restaurants/${this.restaurant?.id}`]);
+        },
+        error: () => {
+          this.apiProgress = false;
+        },
+      });
+  }
+
   onUploadedImageChange($event: any) {
     const file = $event.srcElement.files[0];
 
@@ -152,8 +204,10 @@ export class CreateRestaurantItemPageComponent implements OnInit {
     return;
   }
 
-  transformAmount(element: any) {
-    const fl = parseFloat(this.price?.value!);
-    this.price?.setValue(this.currencyPipe.transform(fl, 'USD', ''));
+  get title(): string {
+    return this.editRestaurantItem ? 'Edit item' : 'Create item';
+  }
+  get buttonText(): string {
+    return this.editRestaurantItem ? 'Edit' : 'Create';
   }
 }

@@ -1,7 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { BehaviorSubject, Observable, Subject, tap, throwError } from 'rxjs';
+import {
+  delay,
+  Observable,
+  of,
+  Subject,
+  Subscription,
+  tap,
+  throwError,
+} from 'rxjs';
 import { LoginResponseI } from '../../../shared/models/login-response.interface';
 import { AuthUserI } from '../../../shared/models/user/auth-user.interface';
 import { UserI } from '../../../shared/models/user/user.interface';
@@ -16,6 +24,8 @@ export class AuthService {
 
   private loginSubject = new Subject<boolean>();
   loginChange$ = this.loginSubject.asObservable();
+
+  tokenSubscription = new Subscription();
 
   constructor(
     private http: HttpClient,
@@ -46,6 +56,8 @@ export class AuthService {
     this.setLoginResponse(null);
 
     this.loginSubject.next(false);
+
+    this.tokenSubscription.unsubscribe();
   }
 
   login(user: AuthUserI): Observable<LoginResponseI> {
@@ -84,5 +96,18 @@ export class AuthService {
     }
     this._token = result.access_token;
     this._loggedInUser = result.user;
+    this.expirationCounter(
+      this.jwtHelperService.getTokenExpirationDate(this._token)!.valueOf() -
+        new Date().valueOf()
+    );
+  }
+
+  private expirationCounter(timeout: number) {
+    this.tokenSubscription.unsubscribe();
+    this.tokenSubscription = of(null)
+      .pipe(delay(timeout))
+      .subscribe((_) => {
+        this.logout();
+      });
   }
 }

@@ -217,7 +217,7 @@ describe('RestaurantsController (e2e)', () => {
         .send({
           name: 'New Restaurant',
           description: 'New Restaurant Description',
-          categories: [1, 3],
+          categories: '[1,3]',
         })
         .expect(201)
         .then((res: request.Response) => {
@@ -227,7 +227,10 @@ describe('RestaurantsController (e2e)', () => {
             name: 'New Restaurant',
             description: 'New Restaurant Description',
             createdAt: expect.anything(),
-            categories: [{ id: 1 }, { id: 3 }],
+            categories: [
+              { id: 1, name: 'Primary 1', primary: true },
+              { id: 3, name: 'Secondary 1', primary: false },
+            ],
             image: null,
           });
         });
@@ -241,7 +244,7 @@ describe('RestaurantsController (e2e)', () => {
           name: 'New Restaurant 2',
           owner: 4,
           description: 'New Restaurant Description 2',
-          categories: [1, 3],
+          categories: '[1,3]',
         })
         .expect(201)
         .then((res: request.Response) => {
@@ -251,7 +254,10 @@ describe('RestaurantsController (e2e)', () => {
             name: 'New Restaurant 2',
             description: 'New Restaurant Description 2',
             createdAt: expect.anything(),
-            categories: [{ id: 1 }, { id: 3 }],
+            categories: [
+              { id: 1, name: 'Primary 1', primary: true },
+              { id: 3, name: 'Secondary 1', primary: false },
+            ],
             image: null,
           });
         });
@@ -264,7 +270,7 @@ describe('RestaurantsController (e2e)', () => {
         .send({
           name: 'New Restaurant 3',
           description: 'New Restaurant Description 3',
-          categories: [1, 3],
+          categories: '[1,3]',
         })
         .expect(403);
     });
@@ -274,7 +280,7 @@ describe('RestaurantsController (e2e)', () => {
         .send({
           name: 'New Restaurant 3',
           description: 'New Restaurant Description 3',
-          categories: [1, 3],
+          categories: '[1,3]',
         })
         .expect(401);
     });
@@ -286,7 +292,7 @@ describe('RestaurantsController (e2e)', () => {
         .send({
           name: 'Test Restaurant',
           description: 'New Restaurant Description',
-          categories: [1, 3],
+          categories: '[1,3]',
         })
         .expect(400);
     });
@@ -297,7 +303,7 @@ describe('RestaurantsController (e2e)', () => {
         .set('Authorization', 'Bearer ' + token)
         .send({
           description: 'New Restaurant Description 3',
-          categories: [1, 3],
+          categories: '[1,3]',
         })
         .expect(400);
     });
@@ -313,7 +319,7 @@ describe('RestaurantsController (e2e)', () => {
         .set('Authorization', 'Bearer ' + token)
         .send({
           description: 'Updated Description',
-          categories: [4],
+          categories: '[4]',
         })
         .expect(200)
         .then((res) => {
@@ -335,7 +341,7 @@ describe('RestaurantsController (e2e)', () => {
         .set('Authorization', 'Bearer ' + token)
         .send({
           description: 'Updated Description',
-          categories: [1],
+          categories: '[1]',
         })
         .expect(200)
         .then((res) => {
@@ -357,7 +363,7 @@ describe('RestaurantsController (e2e)', () => {
         .set('Authorization', 'Bearer ' + token)
         .send({
           description: 'Updated Description',
-          categories: [1],
+          categories: '[1]',
         })
         .expect(400);
     });
@@ -368,7 +374,7 @@ describe('RestaurantsController (e2e)', () => {
         .set('Authorization', 'Bearer ' + token)
         .send({
           description: 'Updated Description',
-          categories: [4],
+          categories: '[4]',
         })
         .expect(403);
     });
@@ -379,7 +385,7 @@ describe('RestaurantsController (e2e)', () => {
         .set('Authorization', 'Bearer ' + token)
         .send({
           description: 'Updated Description',
-          categories: [4],
+          categories: '[4]',
         })
         .expect(403);
     });
@@ -388,7 +394,7 @@ describe('RestaurantsController (e2e)', () => {
         .patch(UPDATE_RESTAURANT_URL)
         .send({
           description: 'Updated Description',
-          categories: [4],
+          categories: '[4]',
         })
         .expect(401);
     });
@@ -683,7 +689,7 @@ describe('RestaurantsController (e2e)', () => {
         .patch(UPDATE_RESTAURANT_ITEM_URL)
         .set('Authorization', 'Bearer ' + token)
         .send({
-          id: 1,
+          id: '1',
           name: 'Updated Item Name',
           description: 'Updated Item Description',
           price: '10.54',
@@ -714,7 +720,7 @@ describe('RestaurantsController (e2e)', () => {
         .patch(UPDATE_RESTAURANT_ITEM_URL)
         .set('Authorization', 'Bearer ' + token)
         .send({
-          id: 1,
+          id: '1',
           name: 'Updated Item Name 2',
           description: 'Updated Item Description 2',
           price: '20.54',
@@ -745,7 +751,7 @@ describe('RestaurantsController (e2e)', () => {
         .patch(UPDATE_RESTAURANT_ITEM_URL)
         .set('Authorization', 'Bearer ' + token)
         .send({
-          id: 1,
+          id: '1',
           name: 'Updated Item Name 3',
           description: 'Updated Item Description 3',
           price: '30.54',
@@ -758,7 +764,7 @@ describe('RestaurantsController (e2e)', () => {
         .patch(UPDATE_RESTAURANT_ITEM_URL)
         .set('Authorization', 'Bearer ' + token)
         .send({
-          id: 1,
+          id: '1',
           name: 'Updated Item Name 3',
           description: 'Updated Item Description 3',
           price: '30.54',
@@ -769,7 +775,7 @@ describe('RestaurantsController (e2e)', () => {
       return request(app.getHttpServer())
         .patch(UPDATE_RESTAURANT_ITEM_URL)
         .send({
-          id: 1,
+          id: '1',
           name: 'Updated Item Name 3',
           description: 'Updated Item Description 3',
           price: '30.54',

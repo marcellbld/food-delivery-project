@@ -5,6 +5,8 @@ import { RestaurantService } from '../../../core/services/restaurant/restaurant.
 import { RestaurantI } from '../../../shared/models/restaurant/restaurant.interface';
 import { RestaurantItemI } from '../../../shared/models/restaurant-item/restaurant-item.interface';
 import { RestaurantItemService } from '../../../core/services/restaurant-item/restaurant-item.service';
+import { AuthService } from '../../../core/services/auth/auth.service';
+import { UserRole } from '../../../shared/models/user/user.interface';
 
 @Component({
   selector: 'app-restaurant-page',
@@ -20,6 +22,7 @@ export class RestaurantPageComponent implements OnInit {
     private readonly route: ActivatedRoute,
     private readonly router: Router,
     private readonly restaurantService: RestaurantService,
+    private readonly authService: AuthService,
     private readonly restaurantItemService: RestaurantItemService
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => {
@@ -27,8 +30,25 @@ export class RestaurantPageComponent implements OnInit {
     };
   }
 
+  isUserRoleOwnerOrAdmin(): boolean | undefined {
+    const role = this.authService.loggedInUser()?.role;
+    return role && (role === UserRole.Admin || role === UserRole.Owner);
+  }
+
   ngOnInit(): void {
     this.getRestaurant();
+  }
+
+  onClickEditButton(): void {
+    this.router.navigate([`/restaurants/edit`], {
+      state: { restaurant: this.restaurant },
+      replaceUrl: true,
+    });
+  }
+  onClickCreateItemButton(): void {
+    this.router.navigateByUrl(
+      `/restaurants/${this.restaurant!.id}/create-item`
+    );
   }
 
   getRestaurantImageUrl(): string {

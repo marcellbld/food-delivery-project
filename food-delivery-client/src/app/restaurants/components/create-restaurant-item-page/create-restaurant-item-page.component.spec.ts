@@ -72,6 +72,7 @@ describe('CreateRestaurantItemPageComponent', () => {
         { provide: RestaurantService, useValue: restaurantServiceMock },
         { provide: UserService, useValue: userServiceMock },
         { provide: ActivatedRoute, useValue: activatedRouteMock },
+        { provide: Window, useValue: { history: { state: {} } } },
       ],
     }).compileComponents();
 
@@ -179,10 +180,10 @@ describe('CreateRestaurantItemPageComponent', () => {
         expect(button?.disabled).toBeFalsy();
       });
       it('should call onClickCreate when click the Create button', () => {
-        jest.spyOn(component, 'onClickCreate');
+        jest.spyOn(component, 'onClickSubmit');
 
         button.click();
-        expect(component.onClickCreate).toHaveBeenCalled();
+        expect(component.onClickSubmit).toHaveBeenCalled();
       });
     });
     describe('Invalid input', () => {
@@ -215,10 +216,10 @@ describe('CreateRestaurantItemPageComponent', () => {
         expect(button?.disabled).toBeTruthy();
       });
       it('should not call onClickCreate when click the Create button', () => {
-        jest.spyOn(component, 'onClickCreate');
+        jest.spyOn(component, 'onClickSubmit');
 
         button.click();
-        expect(component.onClickCreate).not.toHaveBeenCalled();
+        expect(component.onClickSubmit).not.toHaveBeenCalled();
       });
     });
   });
@@ -300,7 +301,7 @@ describe('CreateRestaurantItemPageComponent', () => {
           component.form.get('description')?.setValue('Item Description');
           component.form.get('price')?.setValue('12.34');
 
-          component.onClickCreate();
+          component.onClickSubmit();
 
           expect(restaurantItemService.create).toHaveBeenCalledWith({
             name: 'New Item Name',
@@ -311,7 +312,7 @@ describe('CreateRestaurantItemPageComponent', () => {
           });
         }));
         it('should not call restaurantItemService.create when form is invalid', async () => {
-          component.onClickCreate();
+          component.onClickSubmit();
 
           expect(restaurantItemService.create).not.toHaveBeenCalled();
         });
@@ -320,7 +321,7 @@ describe('CreateRestaurantItemPageComponent', () => {
           component.form.get('description')?.setValue('Item Description');
           component.form.get('price')?.setValue('12.34');
 
-          component.onClickCreate();
+          component.onClickSubmit();
 
           fixture.detectChanges();
           tick();

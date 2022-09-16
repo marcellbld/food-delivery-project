@@ -1,0 +1,9 @@
+<div style="position: relative;">
+  <span class="with-icon my-auto">
+    <i class="bi bi-currency-dollar" aria-hidden="true"></i>
+  </span>
+  <input type="text" id="price" class="form-control with-icon" 
+    [class.is-invalid]="priceError"
+    [formControl]="priceFormControl"
+    (blur)="transformAmount($event)" data-type="currency" (keypress)="$event.key !== '-'" (paste)="$event.preventDefault();">
+</div>

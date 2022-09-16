@@ -5,6 +5,7 @@ import { RestaurantI } from '../../../shared/models/restaurant/restaurant.interf
 import { AuthService } from '../auth/auth.service';
 import { CreateRestaurantI } from '../../../shared/models/restaurant/create-restaurant.interface';
 import { UserRole } from '../../../shared/models/user/user.interface';
+import { UpdateRestaurantI } from 'src/app/shared/models/restaurant/update-restaurant.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -57,7 +58,7 @@ export class RestaurantService {
     formData.append('name', createRestaurant.name);
     formData.append('description', createRestaurant.description);
     formData.append('owner', '' + createRestaurant.owner);
-    //formData.append('categories', JSON.stringify(createRestaurant.categories));
+    formData.append('categories', JSON.stringify(createRestaurant.categories));
     if (createRestaurant.file) {
       formData.append(
         'file',
@@ -70,6 +71,29 @@ export class RestaurantService {
         this.loadSelfRestaurants();
       })
     );
+  }
+
+  update(updateRestaurant: UpdateRestaurantI): Observable<RestaurantI> {
+    console.log(updateRestaurant.categories);
+
+    const formData = new FormData();
+    formData.append('id', updateRestaurant.id);
+    formData.append('description', updateRestaurant.description);
+    formData.append('categories', JSON.stringify(updateRestaurant.categories));
+    if (updateRestaurant.file) {
+      formData.append(
+        'file',
+        updateRestaurant.file,
+        updateRestaurant.file.name
+      );
+    }
+    return this.http
+      .patch<RestaurantI>(`/api/restaurants/${updateRestaurant.id}`, formData)
+      .pipe(
+        tap((_: any) => {
+          this.loadSelfRestaurants();
+        })
+      );
   }
 
   isRestaurantNameTaken(name: string): Observable<boolean> {

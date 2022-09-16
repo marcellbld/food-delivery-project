@@ -9,5 +9,5 @@ export function getRestaurantImageUrl(image: string | undefined): string {
 export function getRestaurantItemImageUrl(image: string | undefined): string {
   return image
     ? `${environment.apiUrl}/uploads/restaurant-items/${image}`
-    : 'assets/images/restaurant-default.jpg';
+    : 'assets/images/restaurant-item-default.jpg';
 }

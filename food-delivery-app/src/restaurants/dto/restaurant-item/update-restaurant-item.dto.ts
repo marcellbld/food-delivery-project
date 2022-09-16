@@ -1,8 +1,8 @@
 import { IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class UpdateRestaurantItemDto {
-  @IsNumber()
-  id!: number;
+  @IsString()
+  id!: string;
   @IsOptional()
   @IsString()
   name?: string;

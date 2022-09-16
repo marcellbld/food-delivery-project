@@ -85,6 +85,21 @@ export class RestaurantsService {
   ): Promise<RestaurantDto> {
     try {
       const restaurant = this.restaurantRepository.create(createRestaurantDto);
+
+      if (
+        createRestaurantDto.categories &&
+        createRestaurantDto.categories.length > 0
+      ) {
+        let categories = [];
+        categories = await this.categoryRepository.find({
+          id: { $in: createRestaurantDto.categories },
+        });
+
+        restaurant.categories.set(categories);
+      } else {
+        restaurant.categories.set([]);
+      }
+
       await this.restaurantRepository.persistAndFlush(restaurant);
 
       return this.mapper.map(restaurant, Restaurant, RestaurantDto);
@@ -98,6 +113,7 @@ export class RestaurantsService {
   async update(
     id: number,
     updateRestaurantDto: UpdateRestaurantDto,
+    image: string,
   ): Promise<RestaurantDto> {
     const restaurant = await this.restaurantRepository.findOne(
       { id },
@@ -108,12 +124,20 @@ export class RestaurantsService {
     restaurant.description =
       updateRestaurantDto.description ?? restaurant.description;
 
-    if (updateRestaurantDto.categories) {
-      const categories = await this.categoryRepository.find({
+    restaurant.image = image ?? restaurant.image;
+
+    if (
+      updateRestaurantDto.categories &&
+      updateRestaurantDto.categories.length > 0
+    ) {
+      let categories = [];
+      categories = await this.categoryRepository.find({
         id: { $in: updateRestaurantDto.categories },
       });
 
       restaurant.categories.set(categories);
+    } else {
+      restaurant.categories.set([]);
     }
 
     await this.restaurantRepository.persistAndFlush(restaurant);

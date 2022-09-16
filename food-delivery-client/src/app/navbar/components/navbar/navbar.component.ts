@@ -11,6 +11,7 @@ import {
 } from '@angular/core';
 import { UserRole } from '../../../shared/models/user/user.interface';
 import { AuthService } from '../../../core/services/auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',

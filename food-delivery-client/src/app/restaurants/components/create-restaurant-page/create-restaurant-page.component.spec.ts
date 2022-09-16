@@ -2,7 +2,6 @@ import {
   ComponentFixture,
   discardPeriodicTasks,
   fakeAsync,
-  flush,
   TestBed,
   tick,
 } from '@angular/core/testing';
@@ -80,6 +79,7 @@ describe('CreateRestaurantPageComponent', () => {
         { provide: RestaurantService, useValue: restaurantServiceMock },
         { provide: UserService, useValue: userServiceMock },
         { provide: CategoryService, useValue: categoryServiceMock },
+        { provide: Window, useValue: { history: { state: {} } } },
       ],
     }).compileComponents();
 
@@ -202,11 +202,11 @@ describe('CreateRestaurantPageComponent', () => {
       it('should enables the button', () => {
         expect(button?.disabled).toBeFalsy();
       });
-      it('should call onClickCreate when click the Create button', () => {
-        jest.spyOn(component, 'onClickCreate');
+      it('should call onClickSubmit when click the Create button', () => {
+        jest.spyOn(component, 'onClickSubmit');
 
         button.click();
-        expect(component.onClickCreate).toHaveBeenCalled();
+        expect(component.onClickSubmit).toHaveBeenCalled();
       });
     });
     describe('Invalid input', () => {
@@ -236,11 +236,11 @@ describe('CreateRestaurantPageComponent', () => {
       it('should disables the button', () => {
         expect(button?.disabled).toBeTruthy();
       });
-      it('should not call onClickCreate when click the Create button', () => {
-        jest.spyOn(component, 'onClickCreate');
+      it('should not call onClickSubmit when click the Create button', () => {
+        jest.spyOn(component, 'onClickSubmit');
 
         button.click();
-        expect(component.onClickCreate).not.toHaveBeenCalled();
+        expect(component.onClickSubmit).not.toHaveBeenCalled();
       });
     });
   });
@@ -335,7 +335,7 @@ describe('CreateRestaurantPageComponent', () => {
     });
   });
   describe('Class', () => {
-    describe('onClickCreate', () => {
+    describe('onClickSubmit', () => {
       it('should call restaurantService.create with correct params when form is valid', () => {
         restaurantService.isRestaurantNameTaken = jest
           .fn()
@@ -351,7 +351,7 @@ describe('CreateRestaurantPageComponent', () => {
           .get('categories')
           ?.setValue([primaryCategory2Mock.id] as never);
 
-        component.onClickCreate();
+        component.onClickSubmit();
 
         expect(restaurantService.create).toHaveBeenCalledWith({
           name: 'New Restaurant Name',
@@ -362,7 +362,7 @@ describe('CreateRestaurantPageComponent', () => {
         });
       });
       it('should not call restaurantService.create when form is invalid', async () => {
-        component.onClickCreate();
+        component.onClickSubmit();
 
         expect(restaurantService.create).not.toHaveBeenCalled();
       });
@@ -378,7 +378,7 @@ describe('CreateRestaurantPageComponent', () => {
           .get('categories')
           ?.setValue([primaryCategory2Mock.id] as never);
 
-        component.onClickCreate();
+        component.onClickSubmit();
         fixture.detectChanges();
         tick();
 

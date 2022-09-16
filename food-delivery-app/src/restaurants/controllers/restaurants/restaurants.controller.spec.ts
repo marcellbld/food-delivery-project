@@ -215,6 +215,7 @@ describe('RestaurantsController', () => {
           description: 'Updated Description',
         },
         { ...userDtoMock, role: UserRole.Admin },
+        null,
       );
 
       expect(restaurant).toEqual({
@@ -231,6 +232,7 @@ describe('RestaurantsController', () => {
           description: 'Updated Description',
         },
         userDtoMock,
+        null,
       );
 
       expect(restaurant).toEqual({
@@ -247,6 +249,7 @@ describe('RestaurantsController', () => {
           description: 'Updated Description',
         },
         userDtoMock,
+        null,
       );
 
       expect(restaurantsService.update).toHaveBeenCalledWith(
@@ -254,6 +257,7 @@ describe('RestaurantsController', () => {
         {
           description: 'Updated Description',
         },
+        null,
       );
     });
     it('should call restaurantsService.compareOwner with correct params', async () => {
@@ -265,6 +269,7 @@ describe('RestaurantsController', () => {
           description: 'Updated Description',
         },
         userDtoMock,
+        null,
       );
 
       expect(restaurantsService.compareOwner).toHaveBeenCalledWith(
@@ -282,6 +287,7 @@ describe('RestaurantsController', () => {
             description: 'Updated Description',
           },
           { ...userDtoMock },
+          null,
         ),
       ).rejects.toThrowError(ForbiddenException);
     });
@@ -553,6 +559,7 @@ describe('RestaurantsController', () => {
           price: '99.99',
         },
         { ...userDtoMock, role: UserRole.Admin },
+        null,
       );
 
       expect(item).toEqual(updatedItem);
@@ -568,6 +575,7 @@ describe('RestaurantsController', () => {
           price: '99.99',
         },
         userDtoMock,
+        null,
       );
 
       expect(item).toEqual(updatedItem);
@@ -585,14 +593,18 @@ describe('RestaurantsController', () => {
           price: '99.99',
         },
         userDtoMock,
+        null,
       );
 
-      expect(restaurantItemsService.update).toHaveBeenCalledWith({
-        id: restaurantItemDtoMock.id,
-        name: 'Updated Name',
-        description: 'Updated Description',
-        price: '99.99',
-      });
+      expect(restaurantItemsService.update).toHaveBeenCalledWith(
+        {
+          id: restaurantItemDtoMock.id,
+          name: 'Updated Name',
+          description: 'Updated Description',
+          price: '99.99',
+        },
+        null,
+      );
     });
     it('should call restaurantsService.compareOwner with correct params', async () => {
       restaurantsService.compareOwner = jest.fn().mockReturnValueOnce(true);
@@ -606,6 +618,7 @@ describe('RestaurantsController', () => {
           price: '99.99',
         },
         userDtoMock,
+        null,
       );
 
       expect(restaurantsService.compareOwner).toHaveBeenCalledWith(
@@ -626,6 +639,7 @@ describe('RestaurantsController', () => {
             price: '99.99',
           },
           userDtoMock,
+          null,
         ),
       ).rejects.toThrowError(ForbiddenException);
     });

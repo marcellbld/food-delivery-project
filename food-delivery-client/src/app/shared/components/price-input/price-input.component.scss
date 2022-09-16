@@ -1,0 +1,12 @@
+span.with-icon {
+  z-index: 5;
+  position: absolute;
+  height: 100%;
+  width: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+input.with-icon {
+  padding-left: 25px;
+}

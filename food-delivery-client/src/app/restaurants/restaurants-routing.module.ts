@@ -5,7 +5,9 @@ import { CreateRestaurantPageComponent } from './components/create-restaurant-pa
 import { RestaurantPageComponent } from './components/restaurant-page/restaurant-page.component';
 const routes: Routes = [
   { path: 'create', component: CreateRestaurantPageComponent },
+  { path: 'edit', component: CreateRestaurantPageComponent },
   { path: ':id/create-item', component: CreateRestaurantItemPageComponent },
+  { path: ':id/edit-item', component: CreateRestaurantItemPageComponent },
   { path: ':id', component: RestaurantPageComponent },
   { path: '', redirectTo: '/', pathMatch: 'full' },
 ];

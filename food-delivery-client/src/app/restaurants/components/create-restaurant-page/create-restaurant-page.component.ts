@@ -1,20 +1,19 @@
+import { Component, EventEmitter, OnInit } from '@angular/core';
 import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+  FormGroup,
+  FormControl,
+  Validators,
+  AsyncValidatorFn,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { CategoryI } from '../../../shared/models/category/category.interface';
 import { CategoryService } from '../../../core/services/category/category.service';
 import { RestaurantService } from '../../../core/services/restaurant/restaurant.service';
-import { UserService } from '../../../core/services/user/user.service';
 import { RestaurantNameTakenValidator } from '../../validators/restaurant-name-taken.validator';
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { debounceTime, distinctUntilChanged, Subscription } from 'rxjs';
 import { RestaurantI } from '../../../shared/models/restaurant/restaurant.interface';
+import { getRestaurantImageUrl } from '../../../shared/utils/image-url-helper';
 
 @Component({
   selector: 'app-create-restaurant-page',
@@ -57,13 +56,15 @@ export class CreateRestaurantPageComponent implements OnInit {
 
   uploadedImageURL: string | undefined;
 
+  editRestaurant: RestaurantI | undefined;
+
   constructor(
     private readonly authService: AuthService,
-    private readonly userService: UserService,
     private readonly categoryService: CategoryService,
     private readonly restaurantService: RestaurantService,
     private readonly restaurantNameTakenValidator: RestaurantNameTakenValidator,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly window: Window
   ) {}
 
   ngOnInit(): void {
@@ -76,9 +77,38 @@ export class CreateRestaurantPageComponent implements OnInit {
         .pipe(distinctUntilChanged(), debounceTime(200))
         .subscribe((term) => {
           this.categorySearch(term);
-          console.log(this.file);
         })
     );
+
+    const state = this.window.history.state;
+    const restaurant = state.restaurant;
+    this.editRestaurant = restaurant;
+
+    if (!this.editRestaurant && this.router.url.endsWith('/edit')) {
+      this.router.navigate(['/']);
+      return;
+    }
+
+    if (this.editRestaurant) {
+      this.restaurantName?.clearAsyncValidators();
+      this.restaurantName?.clearValidators();
+      this.restaurantName?.updateValueAndValidity();
+
+      this.setupEditData();
+    }
+  }
+
+  setupEditData(): void {
+    if (this.editRestaurant) {
+      this.restaurantName?.setValue(this.editRestaurant.name);
+      this.description?.setValue(this.editRestaurant.description);
+      this.uploadedImageURL = getRestaurantImageUrl(this.editRestaurant.image);
+
+      this.categoryList.push(...this.editRestaurant.categories);
+      this.categories?.setValue(
+        this.editRestaurant.categories.map((c) => c.id) as never[]
+      );
+    }
   }
 
   ngOnDestroy(): void {
@@ -87,16 +117,26 @@ export class CreateRestaurantPageComponent implements OnInit {
     });
   }
 
-  onClickCreate(): void {
+  onClickSubmit(): void {
+    console.log(this.form.valid);
+
     if (!this.form.valid) return;
 
+    if (this.editRestaurant) {
+      this.update();
+    } else {
+      this.create();
+    }
+  }
+
+  create(): void {
     this.apiProgress = true;
     this.restaurantService
       .create({
         name: this.restaurantName?.value!,
         description: this.description?.value!,
         owner: this.authService.loggedInUser()?.id || -1,
-        categories: this.form.get('categories')?.value as number[],
+        categories: this.categories?.value as number[],
         file: this.uploadedImage,
       })
       .subscribe({
@@ -109,6 +149,27 @@ export class CreateRestaurantPageComponent implements OnInit {
         },
       });
   }
+
+  update(): void {
+    this.apiProgress = true;
+    this.restaurantService
+      .update({
+        id: '' + this.editRestaurant!.id,
+        description: this.description?.value!,
+        categories: this.categories?.value as number[],
+        file: this.uploadedImage,
+      })
+      .subscribe({
+        next: (restaurant: RestaurantI) => {
+          this.createSuccess = true;
+          this.router.navigate([`restaurants/${restaurant.id}`]);
+        },
+        error: (err: any) => {
+          this.apiProgress = false;
+        },
+      });
+  }
+
   onUploadedImageChange($event: any) {
     const file = $event.srcElement.files[0];
 
@@ -184,5 +245,12 @@ export class CreateRestaurantPageComponent implements OnInit {
         this.categoryList = primaries.concat(result);
       });
     }
+  }
+
+  get title(): string {
+    return this.editRestaurant ? 'Edit restaurant' : 'Create restaurant';
+  }
+  get buttonText(): string {
+    return this.editRestaurant ? 'Edit' : 'Create';
   }
 }

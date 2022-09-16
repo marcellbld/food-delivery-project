@@ -9,6 +9,7 @@ import { RestaurantRowBlockComponent } from './components/restaurant-row-block/r
 import { RouterModule } from '@angular/router';
 import { ScrollListComponent } from './components/scroll-list/scroll-list.component';
 import { DragScrollModule } from 'ngx-drag-scroll';
+import { PriceInputComponent } from './components/price-input/price-input.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { DragScrollModule } from 'ngx-drag-scroll';
     CartItemBlockComponent,
     RestaurantRowBlockComponent,
     ScrollListComponent,
+    PriceInputComponent,
   ],
   imports: [
     CommonModule,
@@ -29,12 +31,14 @@ import { DragScrollModule } from 'ngx-drag-scroll';
   exports: [
     FormsModule,
     ReactiveFormsModule,
+    DragScrollModule,
     ButtonComponent,
     CategoryComponent,
     RestaurantItemBlockComponent,
     CartItemBlockComponent,
     RestaurantRowBlockComponent,
     ScrollListComponent,
+    PriceInputComponent,
   ],
   providers: [CurrencyPipe],
 })

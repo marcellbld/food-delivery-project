@@ -233,9 +233,13 @@ describe('RestaurantsService', () => {
     });
 
     it('should find restaurant and update then return as RestaurantDto', async () => {
-      const restaurant = await service.update(1, {
-        description: 'New Description',
-      });
+      const restaurant = await service.update(
+        1,
+        {
+          description: 'New Description',
+        },
+        null,
+      );
 
       expect(restaurant).toEqual({
         ...restaurantDtoMock,
@@ -243,9 +247,13 @@ describe('RestaurantsService', () => {
       });
     });
     it('should call restaurantRepository.findOne with correct params', async () => {
-      await service.update(1, {
-        description: 'New Description',
-      });
+      await service.update(
+        1,
+        {
+          description: 'New Description',
+        },
+        null,
+      );
 
       expect(restaurantRepository.findOne).toHaveBeenCalledWith(
         { id: 1 },
@@ -253,9 +261,13 @@ describe('RestaurantsService', () => {
       );
     });
     it('should call restaurantRepository.persistAndFlush with correct params', async () => {
-      await service.update(1, {
-        description: 'New Description',
-      });
+      await service.update(
+        1,
+        {
+          description: 'New Description',
+        },
+        null,
+      );
 
       expect(restaurantRepository.persistAndFlush).toHaveBeenCalledWith({
         ...restaurantMock,
@@ -266,9 +278,13 @@ describe('RestaurantsService', () => {
       restaurantRepository.findOne = jest.fn().mockResolvedValueOnce(null);
 
       await expect(
-        service.update(1, {
-          description: 'New Description',
-        }),
+        service.update(
+          1,
+          {
+            description: 'New Description',
+          },
+          null,
+        ),
       ).rejects.toThrowError(BadRequestException);
     });
   });

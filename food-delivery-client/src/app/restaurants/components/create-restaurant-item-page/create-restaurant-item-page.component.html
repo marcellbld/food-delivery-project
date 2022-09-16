@@ -14,11 +14,11 @@
   <div class="custom-card mt-4">
     <div class="custom-card-inner d-flex flex-column h-100 px-4 pb-4 pt-2">
       <div class="text-center small-caps mb-2">
-        <span class="fs-1">Create item</span>
+        <span class="fs-1">{{title}}</span>
       </div>
       <div class="custom-card-body">
         <div data-testid="form-registration">
-          <form class="card-body" (ngSubmit)="onClickCreate()" [formGroup]="form">
+          <form class="card-body" (ngSubmit)="onClickSubmit()" [formGroup]="form">
 
             <label for="itemName" class="form-label small-caps required">Name</label>
             <input type="text" id="itemName" class="form-control" [class.is-invalid]="itemNameError" formControlName="itemName">
@@ -33,31 +33,10 @@
             </div>
 
             <label for="price" class="form-label small-caps required">Price</label>
-            <div class="input-group" style="position: relative;">
-              <span class="with-icon my-auto">
-                <i class="bi bi-currency-dollar" aria-hidden="true"></i>
-              </span>
-              <input type="text" id="price" class="form-control with-icon" [class.is-invalid]="priceError" formControlName="price"
-                (blur)="transformAmount($event)" data-type="currency" (keypress)="$event.key !== '-'" (paste)="$event.preventDefault();">
-              
-            </div>
+            <app-price-input [priceFormControl]="$any(form).get('price')" [priceError]="priceError"></app-price-input>
             <div data-testid="price-validation" class="invalid-feedback" *ngIf="priceError">
               {{priceError}}
             </div>
-
-            <!-- <label for="restaurant" class="form-label small-caps required">Restaurant</label>
-            <ng-select
-              id="restaurant"
-              [items]="restaurants"
-              bindLabel="name"
-              bindValue="id"
-              formControlName="restaurant"
-              [class.is-invalid]="restaurantError"
-              >
-            </ng-select>
-            <div data-testid="restaurant-validation" class="invalid-feedback" *ngIf="restaurantError">
-              {{restaurantError}}
-            </div> -->
             
             <div class="mb-3">
               <label for="file" class="form-label">Main Image</label>
@@ -68,7 +47,7 @@
             </div>
 
             <div class="text-center mt-3 w-100">
-              <app-button [disabled]="isDisabled()" [apiProgress]="apiProgress">Create</app-button>
+              <app-button [disabled]="isDisabled()" [apiProgress]="apiProgress">{{buttonText}}</app-button>
             </div>
           </form>
         </div>

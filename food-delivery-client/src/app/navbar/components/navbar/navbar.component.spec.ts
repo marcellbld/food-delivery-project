@@ -2,6 +2,7 @@ import {
   ComponentFixture,
   fakeAsync,
   TestBed,
+  discardPeriodicTasks,
   tick,
 } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -247,13 +248,16 @@ describe('NavbarComponent', () => {
     it('should navigate to / when clicking on Logo and the current url is not /', fakeAsync(() => {
       router.navigate(['login']);
       tick();
+      discardPeriodicTasks();
 
       const logo = nativeElement.querySelector(
         'a[data-testid="logo"]'
       ) as HTMLAnchorElement;
 
       logo.click();
+      fixture.detectChanges();
       tick();
+      discardPeriodicTasks();
 
       expect(location.path()).toEqual('/');
     }));
@@ -266,7 +270,10 @@ describe('NavbarComponent', () => {
       ) as HTMLAnchorElement;
 
       homeButton.click();
+
+      fixture.detectChanges();
       tick();
+      discardPeriodicTasks();
 
       expect(location.path()).toEqual('/');
     }));

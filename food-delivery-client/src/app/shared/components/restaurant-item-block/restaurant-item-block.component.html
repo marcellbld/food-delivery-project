@@ -11,27 +11,27 @@
     <div class="custom-card-body text-center pb-2 flex-grow-1" style="font-size: 0.9rem"
       [ngClass]="{'d-flex flex-row justify-content-between mx-4': rowLayout}"
       >
-      <div>
-        <div class="h-100 d-flex flex-column" style="height: 3rem;"
+      <div class="flex-grow-1">
+          <div class="h-100 d-flex flex-column" style="height: 3rem;"
           [ngClass]="rowLayout ? 'justify-content-around align-items-start': 'justify-content-center align-items-center'">
-          <p class="pt-1 mb-1 text-start">{{restaurantItem?.name}}</p>
-          <p *ngIf="rowLayout" class="text-secondary mb-0 text-start">{{restaurantItem?.description}}</p>
+          <p class="pt-1 mb-1 text-start">{{restaurantItem.name}}</p>
+          <p *ngIf="rowLayout" class="text-secondary mb-0 text-start">{{restaurantItem.description}}</p>
         </div>
-        <p *ngIf="!rowLayout" class="text-secondary mb-0 fs-6">{{restaurantItem?.price | currency:'USD'}}</p>
-
+        <p *ngIf="!rowLayout" class="text-secondary mb-0 fs-6">{{restaurantItem.price | currency:'USD'}}</p>
       </div>
+      
       <div
-        *ngIf="purchase"
+        *ngIf="purchase && !editable"
         class="d-flex flex-column align-items-center justify-content-center"
         [ngClass]="{'w-25': rowLayout, 'mt-2': !rowLayout}">
         <div *ngIf="rowLayout">
-          <p class="text-secondary mb-2 fs-6">{{restaurantItem?.price | currency:'USD'}}</p>
+          <p class="text-secondary mb-2 fs-6">{{restaurantItem.price | currency:'USD'}}</p>
         </div>
         <ng-template [ngIf]="!isItemInCart()" [ngIfElse]="purchaseModify">
           <div
             class="p-1 d-flex align-items-center justify-content-center border border-dark border-opacity-10 rounded"
             >
-              <button type="button" class="btn btn-red p-2 py-1 text-nowrap" (click)="clickOnBuyButton()">
+              <button type="button" class="btn btn-red p-2 py-1 text-nowrap" (click)="onClickBuyButton()">
                 <i class="bi bi-plus-lg" style='font-size:14px;'></i>
                 <span>Buy</span>
               </button>
@@ -41,11 +41,11 @@
           <div
             class="p-1 d-flex align-items-center justify-content-center border border-dark border-opacity-10 rounded"
             >
-              <button type="button" class="btn btn-red p-2 py-1" (click)="clickOnModifyButton(false)">
+              <button type="button" class="btn btn-red p-2 py-1" (click)="onClickModifyButton(false)">
                 <i class="bi bi-dash-lg" style='font-size:14px;'></i>
               </button>
               <span class="text-dark fs-4 mx-2">{{cartItem()?.count || 0}}</span>
-              <button type="button" class="btn btn-red p-2 py-1" (click)="clickOnModifyButton(true)">
+              <button type="button" class="btn btn-red p-2 py-1" (click)="onClickModifyButton(true)">
                 <i class="bi bi-plus-lg" style='font-size:14px;'></i>
               </button>
           </div>
@@ -53,6 +53,10 @@
         <div style="height: 1.5rem;">
           <span *ngIf="isItemInCart()" class="text-red mb-2"><small>{{cartItem()?.price || 0 | currency:'USD'}}</small></span>
         </div>
+      </div>
+      <div class="d-flex flex-column justify-content-around align-item-center ms-2" *ngIf="editable">
+        <button type="button" class="btn btn-circle btn-sm btn-orange pb-1" (click)="onClickEditButton()"><i class="bi bi-pencil-fill"></i></button>
+        <button type="button" class="btn btn-circle btn-sm btn-red pb-1" (click)="onClickDeleteButton()"><i class="bi bi-trash3-fill"></i></button>
       </div>
     </div>
   </div>

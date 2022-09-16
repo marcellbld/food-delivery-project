@@ -3,21 +3,23 @@
     transition: all 0.25s ease;
   }
   .restaurant-block {
-    width: 45%;
+    width: 46%;
+    margin: 2%;
   }
   .restaurant-block-shrink {
-    width: 45%;
+    width: 46%;
+    margin: 2%;
     transition: all 0.5s ease;
   }
   .restaurant-block-grow {
-    width: 100%;
+    width: 96%;
     transition: all 0.5s ease;
   }
   
 };
 @media (max-width: 768px) {
   .restaurant-block {
-    width: 100%;
+    width: 96%;
   }
 };
 

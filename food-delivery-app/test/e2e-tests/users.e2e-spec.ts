@@ -16,6 +16,9 @@ describe('UsersController (e2e)', () => {
 
   beforeAll(async () => {
     app = (await getApplication()).app;
+  });
+
+  beforeAll(async () => {
     await resetDb();
   });
 

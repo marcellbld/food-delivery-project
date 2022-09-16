@@ -7,6 +7,9 @@
           class="custom-card-image"
           />
         </div>
+        <div class="bottomright" *ngIf="isUserRoleOwnerOrAdmin()">
+          <button type="button" class="btn edit-btn btn-circle btn-orange btn-md pb-2" (click)="onClickEditButton()"><i class="bi bi-pencil-fill"></i></button>
+        </div>
         <div class="bottomdeco">
         </div>
       </div>
@@ -27,11 +30,11 @@
         </div>
         <div class="d-flex align-items-center" style="height: 3rem;">
           <ng-template  [ngIf]="restaurant?.categories && restaurant?.categories!.length > 0" [ngIfElse]="noCategories">
-            <div class="scrolling-wrapper">
-              <app-category
+            <drag-scroll [scrollbar-hidden]="true">
+              <app-category drag-scroll-item
               *ngFor="let category of restaurant?.categories" [category]="category"
-                class="item m-1"></app-category>
-            </div>
+                class="m-1"></app-category>
+            </drag-scroll>
           </ng-template>
           <ng-template #noCategories>
               <span><small>No Categories</small></span>
@@ -46,33 +49,41 @@
         <div>
           <span class="small-caps text-black-50">Popular Items</span>
         </div>
-        <div class="scrolling-wrapper my-2">
+        <drag-scroll [scrollbar-hidden]="true" class="my-2">
           <app-restaurant-item-block
+            drag-scroll-item
             *ngFor="let restaurantItem of popularRestaurantItems"
             [restaurantItem]="restaurantItem"
-            class="item mx-1"
+            class="mx-1"
             style="width: 125px"
             [purchase]="true"
             ></app-restaurant-item-block>
-        </div>
+        </drag-scroll>
       </div>
     </div>
   </div>
   <div class="custom-card my-3">
     <div class="custom-card-inner d-flex flex-column h-100">
       <div class="custom-card-body py-2">
+        <div class="text-center" *ngIf="isUserRoleOwnerOrAdmin()">
+          <button type="button" class="btn edit-btn btn-orange btn-md pb-2" (click)="onClickCreateItemButton()"><i class="bi bi-plus me-2"></i>Add item</button>
+        </div>
         <div>
           <span class="small-caps text-black-50">Items</span>
         </div>
         <ng-template [ngIf]="restaurantItems && restaurantItems.length > 0" [ngIfElse]="noItems">
           <div class="d-flex flex-column">
-            <app-restaurant-item-block
+            <div 
               *ngFor="let restaurantItem of restaurantItems"
-              class="my-2"
-              [restaurantItem]="restaurantItem"
-              [purchase]="true"
-              [rowLayout]="true"
+              class="my-2 d-flex flex-row">
+              <app-restaurant-item-block
+                class="flex-grow-1"
+                [restaurantItem]="restaurantItem"
+                [rowLayout]="true"
+                [purchase]="true"
+                [editable]="true"
               ></app-restaurant-item-block>
+            </div>
           </div>
         </ng-template>
         <ng-template #noItems>

@@ -2,14 +2,15 @@
   <div class="custom-card mt-4">
     <div class="custom-card-inner d-flex flex-column h-100 px-4 pb-4 pt-2">
       <div class="text-center small-caps mb-2">
-        <span class="fs-1">Create restaurant</span>
+        <span class="fs-1">{{title}}</span>
       </div>
       <div class="custom-card-body">
         <div data-testid="form-registration">
-          <form class="card-body" (ngSubmit)="onClickCreate()" [formGroup]="form">
+          <form class="card-body" (ngSubmit)="onClickSubmit()" [formGroup]="form">
 
             <label for="restaurantName" class="form-label small-caps required">Name</label>
-            <input type="text" id="restaurantName" class="form-control" [class.is-invalid]="restaurantNameError" formControlName="restaurantName">
+            <input type="text" id="restaurantName" class="form-control" [class.is-invalid]="restaurantNameError" formControlName="restaurantName"
+            [attr.disabled]="editRestaurant === undefined">
             <div data-testid="restaurantName-validation" class="invalid-feedback" *ngIf="restaurantNameError">
               {{restaurantNameError}}
             </div>
@@ -31,13 +32,13 @@
             (focus)="categoriesTypeahead.emit('')"
             [hideSelected]="true"
             formControlName="categories"
-            >                        
+            >
             <ng-template ng-label-tmp let-item="item" let-clear="clear">
               <div class="category-chip py-1 text-white" [ngClass]="item.primary ? 'bg-primary' : 'bg-secondary'">
                 <span class="ng-value-icon left" (click)="clear(item)" aria-hidden="true">×</span>
                 <span class="ng-value-label">{{item.name}}</span>
               </div>
-          </ng-template>
+            </ng-template>
         </ng-select>
             <div>
               <p class="text-muted"><small>Type to find more categories.</small></p> 
@@ -52,7 +53,7 @@
             </div>
 
             <div class="text-center mt-3 w-100">
-              <app-button [disabled]="isDisabled()" [apiProgress]="apiProgress">Create</app-button>
+              <app-button [disabled]="isDisabled()" [apiProgress]="apiProgress">{{buttonText}}</app-button>
             </div>
           </form>
         </div>
