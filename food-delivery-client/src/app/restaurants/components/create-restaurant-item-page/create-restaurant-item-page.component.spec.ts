@@ -72,7 +72,6 @@ describe('CreateRestaurantItemPageComponent', () => {
         { provide: RestaurantService, useValue: restaurantServiceMock },
         { provide: UserService, useValue: userServiceMock },
         { provide: ActivatedRoute, useValue: activatedRouteMock },
-        { provide: Window, useValue: { history: { state: {} } } },
       ],
     }).compileComponents();
 
@@ -84,6 +83,9 @@ describe('CreateRestaurantItemPageComponent', () => {
     userService = TestBed.inject(UserService);
     fixture = TestBed.createComponent(CreateRestaurantItemPageComponent);
     component = fixture.componentInstance;
+
+    component.window = { history: { state: {} } };
+
     fixture.detectChanges();
   });
 

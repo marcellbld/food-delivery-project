@@ -79,7 +79,6 @@ describe('CreateRestaurantPageComponent', () => {
         { provide: RestaurantService, useValue: restaurantServiceMock },
         { provide: UserService, useValue: userServiceMock },
         { provide: CategoryService, useValue: categoryServiceMock },
-        { provide: Window, useValue: { history: { state: {} } } },
       ],
     }).compileComponents();
 
@@ -91,6 +90,9 @@ describe('CreateRestaurantPageComponent', () => {
     categoryService = TestBed.inject(CategoryService);
     fixture = TestBed.createComponent(CreateRestaurantPageComponent);
     component = fixture.componentInstance;
+
+    component.window = { history: { state: {} } };
+
     fixture.detectChanges();
   });
 

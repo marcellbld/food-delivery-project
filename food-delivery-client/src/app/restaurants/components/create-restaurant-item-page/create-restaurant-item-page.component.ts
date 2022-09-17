@@ -6,6 +6,7 @@ import { RestaurantItemService } from '../../../core/services/restaurant-item/re
 import { RestaurantI } from '../../../shared/models/restaurant/restaurant.interface';
 import { RestaurantItemI } from '../../../shared/models/restaurant-item/restaurant-item.interface';
 import { getRestaurantItemImageUrl } from '../../../shared/utils/image-url-helper';
+import { windowRef } from '../../../shared/utils/window-ref';
 
 @Component({
   selector: 'app-create-restaurant-item-page',
@@ -37,12 +38,13 @@ export class CreateRestaurantItemPageComponent implements OnInit {
 
   editRestaurantItem: RestaurantItemI | undefined;
 
+  window = windowRef();
+
   constructor(
     private readonly restaurantService: RestaurantService,
     private readonly restaurantItemService: RestaurantItemService,
     private readonly router: Router,
-    private readonly route: ActivatedRoute,
-    private readonly window: Window
+    private readonly route: ActivatedRoute
   ) {
     const restaurantId = this.route.snapshot.params['id'];
     this.restaurantService.findSelf().subscribe((result) => {

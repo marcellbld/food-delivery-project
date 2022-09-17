@@ -1,10 +1,5 @@
 import { Component, EventEmitter, OnInit } from '@angular/core';
-import {
-  FormGroup,
-  FormControl,
-  Validators,
-  AsyncValidatorFn,
-} from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CategoryI } from '../../../shared/models/category/category.interface';
 import { CategoryService } from '../../../core/services/category/category.service';
@@ -14,6 +9,7 @@ import { AuthService } from '../../../core/services/auth/auth.service';
 import { debounceTime, distinctUntilChanged, Subscription } from 'rxjs';
 import { RestaurantI } from '../../../shared/models/restaurant/restaurant.interface';
 import { getRestaurantImageUrl } from '../../../shared/utils/image-url-helper';
+import { windowRef } from '../../../shared/utils/window-ref';
 
 @Component({
   selector: 'app-create-restaurant-page',
@@ -58,13 +54,14 @@ export class CreateRestaurantPageComponent implements OnInit {
 
   editRestaurant: RestaurantI | undefined;
 
+  window = windowRef();
+
   constructor(
     private readonly authService: AuthService,
     private readonly categoryService: CategoryService,
     private readonly restaurantService: RestaurantService,
     private readonly restaurantNameTakenValidator: RestaurantNameTakenValidator,
-    private readonly router: Router,
-    private readonly window: Window
+    private readonly router: Router
   ) {}
 
   ngOnInit(): void {
