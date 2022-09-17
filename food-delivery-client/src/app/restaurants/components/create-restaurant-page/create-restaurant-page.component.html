@@ -10,7 +10,7 @@
 
             <label for="restaurantName" class="form-label small-caps required">Name</label>
             <input type="text" id="restaurantName" class="form-control" [class.is-invalid]="restaurantNameError" formControlName="restaurantName"
-            [attr.disabled]="editRestaurant === undefined">
+            [attr.disabled]="!editRestaurant">
             <div data-testid="restaurantName-validation" class="invalid-feedback" *ngIf="restaurantNameError">
               {{restaurantNameError}}
             </div>
