@@ -86,7 +86,7 @@ export class RestaurantsController {
     @UploadedFile(
       new ParseFilePipeBuilder()
         .addFileTypeValidator({ fileType: 'jpg|jpeg|png' })
-        .addMaxSizeValidator({ maxSize: 250000 })
+        .addMaxSizeValidator({ maxSize: 2500000 })
         .build({
           errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
           fileIsRequired: false,
@@ -130,7 +130,7 @@ export class RestaurantsController {
     @UploadedFile(
       new ParseFilePipeBuilder()
         .addFileTypeValidator({ fileType: 'jpg|jpeg|png' })
-        .addMaxSizeValidator({ maxSize: 250000 })
+        .addMaxSizeValidator({ maxSize: 2500000 })
         .build({
           errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
           fileIsRequired: false,
@@ -196,7 +196,7 @@ export class RestaurantsController {
     @UploadedFile(
       new ParseFilePipeBuilder()
         .addFileTypeValidator({ fileType: 'jpg|jpeg|png' })
-        .addMaxSizeValidator({ maxSize: 250000 })
+        .addMaxSizeValidator({ maxSize: 2500000 })
         .build({
           errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
           fileIsRequired: false,
@@ -250,7 +250,7 @@ export class RestaurantsController {
     @UploadedFile(
       new ParseFilePipeBuilder()
         .addFileTypeValidator({ fileType: 'jpg|jpeg|png' })
-        .addMaxSizeValidator({ maxSize: 250000 })
+        .addMaxSizeValidator({ maxSize: 2500000 })
         .build({
           errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
           fileIsRequired: false,
