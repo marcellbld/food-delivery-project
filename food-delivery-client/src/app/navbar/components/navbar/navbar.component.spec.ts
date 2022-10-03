@@ -121,7 +121,7 @@ describe('NavbarComponent', () => {
         );
         const icon = loginLink.querySelector('i');
         expect(loginLink).toBeTruthy();
-        expect(loginLink.textContent).toEqual('Login');
+        expect(loginLink.textContent).toEqual('Log In');
         expect(icon).toBeTruthy();
       });
       it('has Registration link with icon', () => {
@@ -130,7 +130,7 @@ describe('NavbarComponent', () => {
         );
         const icon = registrationLink.querySelector('i');
         expect(registrationLink).toBeTruthy();
-        expect(registrationLink.textContent).toEqual('Registration');
+        expect(registrationLink.textContent).toEqual('Sign Up');
         expect(icon).toBeTruthy();
       });
     });

@@ -6,6 +6,7 @@ import { CartService } from './services/cart/cart.service';
 import { RestaurantService } from './services/restaurant/restaurant.service';
 import { RestaurantItemService } from './services/restaurant-item/restaurant-item.service';
 import { AuthStorageService } from './services/auth-storage/auth-storage.service';
+import { ToastService } from './services/toast/toast.service';
 
 @NgModule({
   declarations: [],
@@ -16,7 +17,8 @@ import { AuthStorageService } from './services/auth-storage/auth-storage.service
     UserService,
     RestaurantService,
     RestaurantItemService,
-    CartService
+    CartService,
+    ToastService,
   ],
 })
 export class CoreModule {}

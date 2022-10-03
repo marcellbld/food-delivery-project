@@ -5,6 +5,7 @@ import { Cart } from '../../../shared/models/cart/cart';
 import { UserRole } from '../../../shared/models/user/user.interface';
 import { RestaurantI } from '../../../shared/models/restaurant/restaurant.interface';
 import { RestaurantService } from '../../../core/services/restaurant/restaurant.service';
+import { ToastService } from '../../../core/services/toast/toast.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -15,7 +16,8 @@ export class SidebarComponent implements OnInit {
   constructor(
     private readonly authService: AuthService,
     private readonly cartService: CartService,
-    private readonly restaurantService: RestaurantService
+    private readonly restaurantService: RestaurantService,
+    private readonly toastService: ToastService
   ) {}
 
   ngOnInit(): void {
@@ -61,10 +63,14 @@ export class SidebarComponent implements OnInit {
   }
 
   clickOnDeleteButton(): void {
-    this.cartService.deleteSelfCart(this.cart?.id!).subscribe();
+    this.cartService
+      .deleteSelfCart(this.cart?.id!)
+      .subscribe(() => this.toastService.showSuccessToast('Cart deleted!'));
   }
 
   clickOnCheckoutButton(): void {
-    this.cartService.checkoutCart().subscribe();
+    this.cartService
+      .checkoutCart()
+      .subscribe(() => this.toastService.showSuccessToast('Order Successful!'));
   }
 }

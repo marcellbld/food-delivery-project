@@ -1,17 +1,12 @@
 import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
   Component,
-  ElementRef,
-  EventEmitter,
+  DebugElement,
   HostListener,
   NgZone,
   OnInit,
-  ViewChild,
 } from '@angular/core';
 import { UserRole } from '../../../shared/models/user/user.interface';
 import { AuthService } from '../../../core/services/auth/auth.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -19,7 +14,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
-  constructor(private readonly authService: AuthService, private zone: NgZone) {
+  constructor(
+    private readonly authService: AuthService,
+    private readonly zone: NgZone
+  ) {
     this.zone.runOutsideAngular(() => {
       window.addEventListener('scroll', (e) => {
         let element = document.querySelector('.navbar') as HTMLElement;
@@ -56,6 +54,7 @@ export class NavbarComponent implements OnInit {
 
   @HostListener('show.bs.collapse', ['$event'])
   onBsCollapseShow() {
+    console.log('BS COLLAPSE SHOW');
     this.opened = true;
     let element = document.querySelector('.navbar') as HTMLElement;
     element.classList.add('shadow');
@@ -64,6 +63,7 @@ export class NavbarComponent implements OnInit {
 
   @HostListener('hidden.bs.collapse', ['$event'])
   onBsCollapseHide() {
+    console.log('BS COLLAPSE HIDE');
     this.opened = false;
     if (!this.scrolledDown) {
       let element = document.querySelector('.navbar') as HTMLElement;

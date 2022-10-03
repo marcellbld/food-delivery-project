@@ -35,18 +35,18 @@
             </li>
             <ng-container *ngIf="!this.isLoggedIn(); else LoggedInPanel">
               <li class="nav-item nav-button">
-                <a data-testid="login-button" class="nav-link nav-link-primary d-md-flex"
+                <a data-testid="login-button" class="nav-link nav-link-primary me-1 d-md-flex"
                 [routerLink]="['/login']" routerLinkActive="router-link-active"
                   >
-                    <i class="nav-btn-icon bi bi-arrow-right-square-fill me-1"></i>
-                    <span class="nav-btn-text small-caps my-auto">Login</span>
+                    <i class="nav-btn-icon bi bi-arrow-right-circle-fill me-1"></i>
+                    <span class="nav-btn-text text-nowrap small-caps my-auto">Log In</span>
                 </a>
               </li>
               <li class="nav-item nav-button">
                 <a data-testid="registration-button" class="nav-link nav-link-green d-md-flex"
                  [routerLink]="['/registration']" routerLinkActive="router-link-active">
                   <i class="nav-btn-icon bi bi-person-plus-fill me-1"></i>
-                  <span class="nav-btn-text small-caps my-auto">Registration</span>
+                  <span class="nav-btn-text small-caps text-nowrap my-auto">Sign Up</span>
                 </a>
               </li>
             </ng-container>

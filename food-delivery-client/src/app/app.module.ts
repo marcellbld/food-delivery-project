@@ -9,7 +9,7 @@ import { AppComponent } from './app.component';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { NavbarModule } from './navbar/navbar.module';
 import { SidebarModule } from './sidebar/sidebar.module';
-import { DragScrollModule } from 'ngx-drag-scroll';
+import { ToastsModule } from './toasts/toasts.module';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -25,6 +25,7 @@ export function tokenGetter() {
     RouterModule,
     NavbarModule,
     SidebarModule,
+    ToastsModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

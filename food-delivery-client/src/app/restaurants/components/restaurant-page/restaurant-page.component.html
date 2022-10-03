@@ -81,7 +81,7 @@
                 [restaurantItem]="restaurantItem"
                 [rowLayout]="true"
                 [purchase]="true"
-                [editable]="true"
+                [editable]="isUserRoleOwnerOrAdmin() ? true : false"
               ></app-restaurant-item-block>
             </div>
           </div>
