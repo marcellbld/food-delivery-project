@@ -39,7 +39,11 @@ export class RestaurantItemBlockComponent implements OnInit {
   }
 
   onClickBuyButton(): void {
-    this.cartService.addItemToCart(this.restaurantItem?.id!).subscribe();
+    this.cartService
+      .addItemToCart(this.restaurantItem?.id!)
+      .subscribe((a: any) => {
+        console.log(a);
+      });
   }
   onClickModifyButton(add: boolean): void {
     const cartItem = this.cartItem() as CartItemI;
