@@ -33,12 +33,8 @@ background-color: #ffffff;
   .navbar-toggler {
     height: 2em;
   }
-  .collapse.collapsing {
-    margin-left: 0%;
-    right: -20%;
+  .collapsing {
     transition: all 0.2s ease;
-    position: fixed;
-    height: 100% !important;
 }
 }
 @media (min-width: 768px) {
