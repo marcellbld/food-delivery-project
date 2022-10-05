@@ -18,20 +18,20 @@ export class NavbarComponent implements OnInit {
     private readonly authService: AuthService,
     private readonly zone: NgZone
   ) {
-    this.zone.runOutsideAngular(() => {
-      window.addEventListener('scroll', (e) => {
-        let element = document.querySelector('.navbar') as HTMLElement;
-        this.scrolledDown = window.pageYOffset > element.clientHeight / 2;
-        if (this.scrolledDown) {
-          element.classList.add('shadow');
-          element.classList.add('bg-navbar');
-        } else {
-          if (this.opened) return;
-          element.classList.remove('shadow');
-          element.classList.remove('bg-navbar');
-        }
-      });
-    });
+    // this.zone.runOutsideAngular(() => {
+    //   window.addEventListener('scroll', (e) => {
+    //     let element = document.querySelector('.navbar') as HTMLElement;
+    //     this.scrolledDown = window.pageYOffset > element.clientHeight / 2;
+    //     if (this.scrolledDown) {
+    //       element.classList.add('shadow');
+    //       element.classList.add('bg-navbar');
+    //     } else {
+    //       if (this.opened) return;
+    //       element.classList.remove('shadow');
+    //       element.classList.remove('bg-navbar');
+    //     }
+    //   });
+    // });
   }
 
   ngOnInit(): void {}
