@@ -22,18 +22,18 @@ export class NavbarComponent implements OnInit {
       window.addEventListener('scroll', (e) => {
         let element = document.querySelector('.navbar') as HTMLElement;
         this.scrolledDown = window.pageYOffset > element.clientHeight / 2;
+
         if (this.scrolledDown) {
           element.classList.add('shadow');
           element.classList.add('bg-navbar');
         } else {
-          if (this.opened) return;
+          if (!this.collapsed) return;
           element.classList.remove('shadow');
           element.classList.remove('bg-navbar');
         }
       });
     });
   }
-
   ngOnInit(): void {}
 
   ngOnDestroy(): void {}
@@ -50,25 +50,42 @@ export class NavbarComponent implements OnInit {
   }
 
   scrolledDown: boolean = false;
-  opened: boolean = false;
+  collapsed: boolean = true;
 
-  @HostListener('show.bs.collapse', ['$event'])
-  onBsCollapseShow() {
-    console.log('BS COLLAPSE SHOW');
-    this.opened = true;
-    let element = document.querySelector('.navbar') as HTMLElement;
-    element.classList.add('shadow');
-    element.classList.add('bg-navbar');
-  }
-
-  @HostListener('hidden.bs.collapse', ['$event'])
-  onBsCollapseHide() {
-    console.log('BS COLLAPSE HIDE');
-    this.opened = false;
-    if (!this.scrolledDown) {
+  onClickCollapse() {
+    this.collapsed = !this.collapsed;
+    if (!this.collapsed) {
       let element = document.querySelector('.navbar') as HTMLElement;
-      element.classList.remove('shadow');
-      element.classList.remove('bg-navbar');
+      element.classList.add('shadow');
+      element.classList.add('bg-navbar');
+    } else {
+      if (!this.scrolledDown) {
+        setTimeout(() => {
+          let element = document.querySelector('.navbar') as HTMLElement;
+          element.classList.remove('shadow');
+          element.classList.remove('bg-navbar');
+        }, 350);
+      }
     }
   }
+
+  // @HostListener('show.bs.collapse', ['$event'])
+  // onBsCollapseShow() {
+  //   console.log('BS COLLAPSE SHOW');
+  //   this.opened = true;
+  //   let element = document.querySelector('.navbar') as HTMLElement;
+  //   element.classList.add('shadow');
+  //   element.classList.add('bg-navbar');
+  // }
+
+  // @HostListener('hidden.bs.collapse', ['$event'])
+  // onBsCollapseHide() {
+  //   console.log('BS COLLAPSE HIDE');
+  //   this.opened = false;
+  //   if (!this.scrolledDown) {
+  //     let element = document.querySelector('.navbar') as HTMLElement;
+  //     element.classList.remove('shadow');
+  //     element.classList.remove('bg-navbar');
+  //   }
+  // }
 }

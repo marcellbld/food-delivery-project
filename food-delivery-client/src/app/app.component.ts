@@ -1,4 +1,10 @@
 import { Component } from '@angular/core';
+import {
+  NgbActiveModal,
+  NgbDateAdapter,
+  NgbDateParserFormatter,
+  NgbDateStruct,
+} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +13,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'food-delivery-client';
+  public isCollapsed = false;
 }

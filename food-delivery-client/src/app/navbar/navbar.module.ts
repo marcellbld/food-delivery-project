@@ -5,7 +5,6 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { RouterModule } from '@angular/router';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { SearchRestaurantRowBlockComponent } from './components/search-restaurant-row-block/search-restaurant-row-block.component';
-import { DragScrollModule } from 'ngx-drag-scroll';
 
 @NgModule({
   declarations: [
@@ -13,7 +12,7 @@ import { DragScrollModule } from 'ngx-drag-scroll';
     SearchBarComponent,
     SearchRestaurantRowBlockComponent,
   ],
-  imports: [CommonModule, SharedModule, RouterModule, DragScrollModule],
+  imports: [CommonModule, SharedModule, RouterModule],
   exports: [NavbarComponent],
 })
 export class NavbarModule {}

@@ -10,6 +10,7 @@ import { RouterModule } from '@angular/router';
 import { ScrollListComponent } from './components/scroll-list/scroll-list.component';
 import { DragScrollModule } from 'ngx-drag-scroll';
 import { PriceInputComponent } from './components/price-input/price-input.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -26,11 +27,13 @@ import { PriceInputComponent } from './components/price-input/price-input.compon
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
+    NgbModule,
     DragScrollModule,
   ],
   exports: [
     FormsModule,
     ReactiveFormsModule,
+    NgbModule,
     DragScrollModule,
     ButtonComponent,
     CategoryComponent,

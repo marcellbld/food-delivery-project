@@ -21,9 +21,9 @@ export function tokenGetter() {
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
+    NavbarModule,
     FormsModule,
     RouterModule,
-    NavbarModule,
     SidebarModule,
     ToastsModule,
     JwtModule.forRoot({
