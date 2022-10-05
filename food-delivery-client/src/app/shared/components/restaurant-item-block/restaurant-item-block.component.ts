@@ -5,6 +5,9 @@ import { CartService } from '../../../core/services/cart/cart.service';
 import { CartItemI } from '../../models/cart/cart-item.interface';
 import { RestaurantItemI } from '../../models/restaurant-item/restaurant-item.interface';
 import { getRestaurantItemImageUrl } from '../../utils/image-url-helper';
+import { RestaurantService } from '../../../core/services/restaurant/restaurant.service';
+import { AuthService } from '../../../core/services/auth/auth.service';
+import { UserRole } from '../../models/user/user.interface';
 
 @Component({
   selector: 'app-restaurant-item-block',
@@ -21,14 +24,27 @@ export class RestaurantItemBlockComponent implements OnInit {
   constructor(
     private readonly cartService: CartService,
     private readonly restaurantItemService: RestaurantItemService,
+    private readonly restaurantService: RestaurantService,
+    private readonly authService: AuthService,
     private readonly router: Router
   ) {}
+
+  isUserRoleOwnerOrAdmin(): boolean | undefined {
+    const role = this.authService.loggedInUser()?.role;
+    return role && (role === UserRole.Admin || role === UserRole.Owner);
+  }
 
   isItemInCart(): boolean {
     return (
       this.cartService.selfUnpurchasedCart?.findItem(
         this.restaurantItem?.id!
       ) !== undefined
+    );
+  }
+
+  isItemSelf(): boolean {
+    return this.restaurantService.isRestaurantSelf(
+      this.restaurantItem.restaurant.id
     );
   }
 

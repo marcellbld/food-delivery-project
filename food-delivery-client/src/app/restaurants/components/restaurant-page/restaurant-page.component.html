@@ -7,7 +7,7 @@
           class="custom-card-image"
           />
         </div>
-        <div class="bottomright" *ngIf="isUserRoleOwnerOrAdmin()">
+        <div class="bottomright" *ngIf="isUserRoleOwnerOrAdmin() && isRestaurantSelf()">
           <button type="button" class="btn edit-btn btn-circle btn-orange btn-md pb-2" (click)="onClickEditButton()"><i class="bi bi-pencil-fill"></i></button>
         </div>
         <div class="bottomdeco">
@@ -65,8 +65,8 @@
   <div class="custom-card my-3">
     <div class="custom-card-inner d-flex flex-column h-100">
       <div class="custom-card-body py-2">
-        <div class="text-center" *ngIf="isUserRoleOwnerOrAdmin()">
-          <button type="button" class="btn edit-btn btn-orange btn-md pb-2" (click)="onClickCreateItemButton()"><i class="bi bi-plus me-2"></i>Add item</button>
+        <div class="text-center" *ngIf="isUserRoleOwnerOrAdmin() && isRestaurantSelf()">
+          <button type="button" class="btn edit-btn btn-orange btn-md pb-2 rounded-pill" (click)="onClickCreateItemButton()"><i class="bi bi-plus me-2"></i>Add item</button>
         </div>
         <div>
           <span class="small-caps text-black-50">Items</span>

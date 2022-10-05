@@ -35,6 +35,14 @@ export class RestaurantService {
       });
     }
   }
+  isRestaurantSelf(id: number): boolean {
+    if (this.authService.loggedInUser()?.role === UserRole.Admin) return true;
+
+    return (
+      this.selfRestaurants?.find((restaurant) => restaurant.id === id) !==
+      undefined
+    );
+  }
 
   findAll(
     skip: number = 0,

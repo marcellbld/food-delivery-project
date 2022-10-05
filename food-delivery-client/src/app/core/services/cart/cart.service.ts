@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable, of, tap } from 'rxjs';
 import { CartI } from '../../../shared/models/cart/cart.interface';
@@ -6,6 +6,8 @@ import { Cart } from '../../../shared/models/cart/cart';
 import { CartItemI } from '../../../shared/models/cart/cart-item.interface';
 import { AuthService } from '../auth/auth.service';
 import { UserRole } from '../../../shared/models/user/user.interface';
+import { Router } from '@angular/router';
+import { ToastService } from '../toast/toast.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +18,9 @@ export class CartService {
 
   constructor(
     private readonly http: HttpClient,
-    private readonly authService: AuthService
+    private readonly router: Router,
+    private readonly authService: AuthService,
+    private readonly toastService: ToastService
   ) {
     this.authService.loginChange$.subscribe((loggedIn: boolean) => {
       if (loggedIn) {
@@ -73,13 +77,22 @@ export class CartService {
         restaurantItemId,
       })
       .pipe(
-        tap((result: CartItemI) => {
-          if (!this.selfUnpurchasedCart) {
-            this.loadSelfUnpurchasedCart();
-          } else {
-            this.selfUnpurchasedCart.updateOrAddItem(result);
+        tap(
+          (result: CartItemI) => {
+            if (!this.selfUnpurchasedCart) {
+              this.loadSelfUnpurchasedCart();
+            } else {
+              this.selfUnpurchasedCart.updateOrAddItem(result);
+            }
+          },
+          (response: HttpErrorResponse) => {
+            if (response.status === 401) {
+              this.router.navigateByUrl('/login');
+            } else if (response.status === 400) {
+              this.toastService.showErrorToast(response.error.message);
+            }
           }
-        })
+        )
       );
   }
   deleteItem(id: number): Observable<boolean> {

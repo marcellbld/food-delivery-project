@@ -39,7 +39,8 @@ export class ToastComponent implements OnInit {
 
   show() {
     this.toast = new Toast(this.toastEl.nativeElement, {
-      delay: 5000,
+      autohide: true,
+      delay: 2000,
     });
     fromEvent(this.toastEl.nativeElement, 'hidden.bs.toast')
       .pipe(take(1))

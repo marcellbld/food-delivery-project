@@ -7,6 +7,8 @@ import { RestaurantI } from '../../../shared/models/restaurant/restaurant.interf
 import { RestaurantItemI } from '../../../shared/models/restaurant-item/restaurant-item.interface';
 import { getRestaurantItemImageUrl } from '../../../shared/utils/image-url-helper';
 import { windowRef } from '../../../shared/utils/window-ref';
+import { AuthService } from '../../../core/services/auth/auth.service';
+import { UserRole } from '../../../shared/models/user/user.interface';
 
 @Component({
   selector: 'app-create-restaurant-item-page',
@@ -41,12 +43,22 @@ export class CreateRestaurantItemPageComponent implements OnInit {
   window = windowRef();
 
   constructor(
-    private readonly restaurantService: RestaurantService,
-    private readonly restaurantItemService: RestaurantItemService,
     private readonly router: Router,
-    private readonly route: ActivatedRoute
+    private readonly route: ActivatedRoute,
+    private readonly authService: AuthService,
+    private readonly restaurantService: RestaurantService,
+    private readonly restaurantItemService: RestaurantItemService
   ) {
     const restaurantId = this.route.snapshot.params['id'];
+    if (this.authService.loggedInUser()?.role === UserRole.Admin) {
+      this.restaurantService.findOne(restaurantId).subscribe((result) => {
+        this.restaurant = result;
+
+        if (!this.restaurant) {
+          router.navigate(['']);
+        }
+      });
+    }
     this.restaurantService.findSelf().subscribe((result) => {
       const found = result.find((r) => r.id == restaurantId);
       this.restaurant = found;

@@ -55,6 +55,12 @@ export class RestaurantPageComponent implements OnInit {
     return getRestaurantImageUrl(this.restaurant?.image);
   }
 
+  isRestaurantSelf(): boolean {
+    if (!this.restaurant) return false;
+
+    return this.restaurantService.isRestaurantSelf(this.restaurant.id);
+  }
+
   getRestaurant(): void {
     const id = parseInt(this.route.snapshot.paramMap.get('id')!, 10);
     this.restaurantService.findOne(id).subscribe({

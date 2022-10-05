@@ -66,7 +66,7 @@ export class ProdSeeder extends Seeder {
         id: 2,
         name: 'Test Restaurant 2',
         description: 'Test Restaurant Description 2',
-        owner: owners[0],
+        owner: owners[1],
       }),
     );
     restaurants.push(

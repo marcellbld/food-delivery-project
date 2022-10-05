@@ -37,11 +37,13 @@
           <div data-testid="passwordConfirm-validation" class="invalid-feedback" *ngIf="passwordConfirmError">
             {{passwordConfirmError}}
           </div>
-        
           <div class="text-center mt-3 w-100">
             <app-button [disabled]="isChangePasswordBtnDisabled()" [apiProgress]="changePasswordApiProgress">Submit</app-button>
           </div>
         </form>
+        <div class="text-success text-center mt-2" *ngIf="changePasswordSuccess">
+          <span>Your account has been updated successfully!</span>
+        </div>
       </div>
     </div>
   </div>
