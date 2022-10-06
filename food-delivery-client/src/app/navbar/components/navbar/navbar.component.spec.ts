@@ -6,15 +6,14 @@ import {
   tick,
 } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 import { UserRole } from '../../../shared/models/user/user.interface';
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { HomePageComponent } from '../../../home/components/home-page/home-page.component';
 import { LoginPageComponent } from '../../../login/components/login-page/login-page.component';
 import { SharedModule } from '../../../shared/shared.module';
-
 import { NavbarComponent } from './navbar.component';
-import { Router } from '@angular/router';
-import { Location } from '@angular/common';
 import { RegistrationPageComponent } from '../../../registration/components/registration-page/registration-page.component';
 import { ProfilePageComponent } from '../../../profile/components/profile-page/profile-page.component';
 import { NavbarModule } from '../../navbar.module';

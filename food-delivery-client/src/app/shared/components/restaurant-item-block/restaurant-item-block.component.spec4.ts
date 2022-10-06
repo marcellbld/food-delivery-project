@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { RestaurantItemBlockComponent } from './restaurant-item-block.component';
 
 describe('RestaurantItemBlockComponent', () => {
@@ -8,9 +7,8 @@ describe('RestaurantItemBlockComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RestaurantItemBlockComponent ]
-    })
-    .compileComponents();
+      declarations: [RestaurantItemBlockComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(RestaurantItemBlockComponent);
     component = fixture.componentInstance;

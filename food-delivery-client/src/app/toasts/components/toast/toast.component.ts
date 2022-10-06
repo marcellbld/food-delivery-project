@@ -8,8 +8,8 @@ import {
   ViewChild,
 } from '@angular/core';
 import { fromEvent, take } from 'rxjs';
-import { ToastEventType } from '../../../shared/models/toast-event/toast-event-type.interface';
 import { Toast } from 'bootstrap';
+import { ToastEventType } from '../../../shared/models/toast-event/toast-event-type.interface';
 
 @Component({
   selector: 'app-toast',

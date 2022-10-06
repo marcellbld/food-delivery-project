@@ -7,21 +7,20 @@ import {
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { Observable, of } from 'rxjs';
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { CartService } from '../../../core/services/cart/cart.service';
 import { HomePageComponent } from '../../../home/components/home-page/home-page.component';
 import { LoginPageComponent } from '../../../login/components/login-page/login-page.component';
 import { SharedModule } from '../../../shared/shared.module';
-
 import { SidebarComponent } from './sidebar.component';
 import { UserRole } from '../../../shared/models/user/user.interface';
 import { cartMock } from '../../../../test/mocks/cart.mock';
-import { Observable, of } from 'rxjs';
 import { RestaurantPageComponent } from '../../../restaurants/components/restaurant-page/restaurant-page.component';
 import { RegistrationPageComponent } from '../../../registration/components/registration-page/registration-page.component';
 import { ProfilePageComponent } from '../../../profile/components/profile-page/profile-page.component';
 import { Cart } from '../../../shared/models/cart/cart';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('SidebarComponent', () => {
   let component: SidebarComponent;

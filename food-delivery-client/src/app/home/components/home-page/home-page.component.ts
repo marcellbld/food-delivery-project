@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { RestaurantService } from '../../../core/services/restaurant/restaurant.service';
 import { RestaurantI } from '../../../shared/models/restaurant/restaurant.interface';
 

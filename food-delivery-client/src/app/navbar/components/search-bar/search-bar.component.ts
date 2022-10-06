@@ -6,12 +6,12 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { debounceTime, distinctUntilChanged, Subscription } from 'rxjs';
 import { CategoryService } from '../../../core/services/category/category.service';
 import { CategoryI } from '../../../shared/models/category/category.interface';
 import { RestaurantI } from '../../../shared/models/restaurant/restaurant.interface';
 import { RestaurantService } from '../../../core/services/restaurant/restaurant.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search-bar',

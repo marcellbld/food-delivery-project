@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ScrollListComponent } from './scroll-list.component';
 
 describe('ScrollListComponent', () => {
@@ -8,9 +7,8 @@ describe('ScrollListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ScrollListComponent ]
-    })
-    .compileComponents();
+      declarations: [ScrollListComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ScrollListComponent);
     component = fixture.componentInstance;

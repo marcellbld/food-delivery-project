@@ -3,11 +3,11 @@ import { Router } from '@angular/router';
 import { SharedModule } from '../../../shared/shared.module';
 import { Location } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
+import { of } from 'rxjs';
 import { HomePageComponent } from '../../../home/components/home-page/home-page.component';
 import { LoginPageComponent } from '../../../login/components/login-page/login-page.component';
 import { RegistrationPageComponent } from './registration-page.component';
 import { UserService } from '../../../core/services/user/user.service';
-import { of } from 'rxjs';
 
 describe('RegistrationPageComponent', () => {
   let component: RegistrationPageComponent;

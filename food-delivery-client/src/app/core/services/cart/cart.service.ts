@@ -1,12 +1,12 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { map, Observable, of, tap } from 'rxjs';
 import { CartI } from '../../../shared/models/cart/cart.interface';
 import { Cart } from '../../../shared/models/cart/cart';
 import { CartItemI } from '../../../shared/models/cart/cart-item.interface';
 import { AuthService } from '../auth/auth.service';
 import { UserRole } from '../../../shared/models/user/user.interface';
-import { Router } from '@angular/router';
 import { ToastService } from '../toast/toast.service';
 
 @Injectable({

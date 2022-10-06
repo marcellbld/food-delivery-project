@@ -1,10 +1,4 @@
-import {
-  Component,
-  DebugElement,
-  HostListener,
-  NgZone,
-  OnInit,
-} from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { UserRole } from '../../../shared/models/user/user.interface';
 import { AuthService } from '../../../core/services/auth/auth.service';
 
@@ -68,5 +62,4 @@ export class NavbarComponent implements OnInit {
       }
     }
   }
-
 }

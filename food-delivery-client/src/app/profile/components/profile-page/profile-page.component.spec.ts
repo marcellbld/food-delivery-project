@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Observable, of } from 'rxjs';
 import { ProfilePageComponent } from './profile-page.component';
 import { AuthService } from '../../../core/services/auth/auth.service';
 import {
@@ -11,9 +13,7 @@ import { CartService } from '../../../core/services/cart/cart.service';
 import { UserService } from '../../../core/services/user/user.service';
 import { SharedModule } from '../../../shared/shared.module';
 import { PastOrderRowComponent } from '../past-order-row/past-order-row.component';
-import { RouterTestingModule } from '@angular/router/testing';
 import { UserI, UserRole } from '../../../shared/models/user/user.interface';
-import { Observable, of } from 'rxjs';
 
 describe('ProfilePageComponent', () => {
   let component: ProfilePageComponent;

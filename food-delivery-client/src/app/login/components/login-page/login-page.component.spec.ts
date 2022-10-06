@@ -1,12 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { LoginPageComponent } from './login-page.component';
-import { SharedModule } from '../../../shared/shared.module';
-import { JwtHelperService } from '@auth0/angular-jwt';
-import { AuthService } from '../../../core/services/auth/auth.service';
-import { of, throwError } from 'rxjs';
 import { Location } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { of, throwError } from 'rxjs';
+import { LoginPageComponent } from './login-page.component';
+import { SharedModule } from '../../../shared/shared.module';
+import { AuthService } from '../../../core/services/auth/auth.service';
 import { RegistrationPageComponent } from '../../../registration/components/registration-page/registration-page.component';
 import { HomePageComponent } from '../../../home/components/home-page/home-page.component';
 

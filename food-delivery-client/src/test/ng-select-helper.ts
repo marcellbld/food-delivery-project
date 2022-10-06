@@ -2,7 +2,6 @@ import { DebugElement } from '@angular/core';
 import {
   ComponentFixture,
   discardPeriodicTasks,
-  flush,
   tick,
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';

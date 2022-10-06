@@ -1,17 +1,10 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
-import { RestaurantI } from '../../../shared/models/restaurant/restaurant.interface';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable, of } from 'rxjs';
+import { RestaurantI } from '../../../shared/models/restaurant/restaurant.interface';
 import { getRestaurantImageUrl } from '../../../shared/utils/image-url-helper';
 import { RestaurantItemI } from '../../../shared/models/restaurant-item/restaurant-item.interface';
 import { RestaurantItemService } from '../../../core/services/restaurant-item/restaurant-item.service';
-import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-restaurant-block',
