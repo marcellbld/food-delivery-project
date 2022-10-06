@@ -1,6 +1,5 @@
 import { AutoMap } from '@automapper/classes';
 import {
-  Cascade,
   Collection,
   Entity,
   ManyToOne,

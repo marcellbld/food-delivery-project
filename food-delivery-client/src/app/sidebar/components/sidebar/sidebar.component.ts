@@ -20,9 +20,7 @@ export class SidebarComponent implements OnInit {
     private readonly toastService: ToastService
   ) {}
 
-  ngOnInit(): void {
-    // this.loadCart();
-  }
+  ngOnInit(): void {}
 
   get cart(): Cart | undefined {
     return this.cartService.selfUnpurchasedCart;

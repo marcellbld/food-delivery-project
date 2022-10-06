@@ -18,6 +18,8 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { Express } from 'express';
 import { UserParam } from '../../../auth/user-param.decorator';
 import { UserDto } from '../../../users/dto/user.dto';
 import { JwtAuthGuard } from '../../../auth/guards/jwt-auth.guard';
@@ -32,8 +34,6 @@ import { RestaurantItemDto } from '../../dto/restaurant-item/restaurant-item.dto
 import { RestaurantItemsService } from '../../services/restaurant-items/restaurant-items.service';
 import { CreateRestaurantItemDto } from '../../dto/restaurant-item/create-restaurant-item.dto';
 import { UpdateRestaurantItemDto } from '../../dto/restaurant-item/update-restaurant-item.dto';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { Express } from 'express';
 
 @Controller('restaurants')
 export class RestaurantsController {

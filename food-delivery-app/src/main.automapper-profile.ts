@@ -1,14 +1,12 @@
 import { AutomapperProfile, InjectMapper } from '@automapper/nestjs';
 import {
-  afterMap,
-  beforeMap,
   createMap,
   forMember,
   mapFrom,
   Mapper,
   mapWith,
 } from '@automapper/core';
-import { Injectable, StreamableFile } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CartItem } from './cart/entities/cart-item.model';
 import { CartItemDto } from './cart/dto/cart-item.dto';
 import { RestaurantItemDto } from './restaurants/dto/restaurant-item/restaurant-item.dto';
@@ -21,8 +19,6 @@ import { User } from './users/entities/user.model';
 import { UserDto } from './users/dto/user.dto';
 import { Category } from './categories/entities/category.model';
 import { CategoryDto } from './categories/dto/category.dto';
-import { createReadStream } from 'fs';
-import { join } from 'path';
 
 @Injectable()
 export class MainAutomapperProfile extends AutomapperProfile {
@@ -59,11 +55,6 @@ export class MainAutomapperProfile extends AutomapperProfile {
             parseFloat((source.item.price * source.count).toFixed(2)),
           ),
         ),
-        // beforeMap((source, dest) => {
-        //   dest.price = source.item.price * source.count;
-
-        //   return dest;
-        // }),
       );
       createMap(mapper, Category, CategoryDto);
       createMap(

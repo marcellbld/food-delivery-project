@@ -1,15 +1,15 @@
+import { AutomapperModule } from '@automapper/nestjs';
+import { classes } from '@automapper/classes';
 import { EntityRepository } from '@mikro-orm/core';
 import { getRepositoryToken } from '@mikro-orm/nestjs';
+import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { User } from '../entities/user.model';
 import { UsersService } from './users.service';
 import * as AuthHelper from '../../auth/utils/auth-helper';
 import * as UserMocks from '../../../test/mocks/user.mock';
 import { UserRole } from '../user-role';
-import { AutomapperModule } from '@automapper/nestjs';
-import { classes } from '@automapper/classes';
 import { MainAutomapperProfile } from '../../main.automapper-profile';
-import { BadRequestException, NotFoundException } from '@nestjs/common';
 
 describe('UsersService', () => {
   let service: UsersService;

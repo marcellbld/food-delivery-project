@@ -1,13 +1,13 @@
-import { getRepositoryToken } from '@mikro-orm/nestjs';
-import { Test, TestingModule } from '@nestjs/testing';
-import { EntityRepository, QueryOrder } from '@mikro-orm/core';
 import { classes } from '@automapper/classes';
 import { AutomapperModule } from '@automapper/nestjs';
+import { getRepositoryToken } from '@mikro-orm/nestjs';
+import { EntityRepository, QueryOrder } from '@mikro-orm/core';
+import { Test, TestingModule } from '@nestjs/testing';
+import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { Cart } from '../../entities/cart.model';
 import { CartsService } from './carts.service';
 import * as CartMocks from '../../../../test/mocks/cart.mock';
 import { MainAutomapperProfile } from '../../../main.automapper-profile';
-import { BadRequestException, NotFoundException } from '@nestjs/common';
 
 describe('CartService', () => {
   let service: CartsService;

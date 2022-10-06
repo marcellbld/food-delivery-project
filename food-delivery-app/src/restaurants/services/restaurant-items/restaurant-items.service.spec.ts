@@ -1,15 +1,14 @@
+import { AutomapperModule } from '@automapper/nestjs';
+import { classes } from '@automapper/classes';
+import { EntityRepository } from '@mikro-orm/core';
+import { getRepositoryToken } from '@mikro-orm/nestjs';
+import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { Restaurant } from '../../entities/restaurant.model';
 import { RestaurantItem } from '../../entities/restaurant-item.model';
 import { RestaurantItemsService } from './restaurant-items.service';
-import { getRepositoryToken } from '@mikro-orm/nestjs';
-import { classes } from '@automapper/classes';
-import { AutomapperModule } from '@automapper/nestjs';
-import { EntityRepository } from '@mikro-orm/core';
 import * as RestaurantMocks from '../../../../test/mocks/restaurant.mock';
 import * as RestaurantItemMocks from '../../../../test/mocks/restaurant-item.mock';
 import { MainAutomapperProfile } from '../../../main.automapper-profile';
-import { BadRequestException, NotFoundException } from '@nestjs/common';
 
 describe('RestaurantItemsService', () => {
   let service: RestaurantItemsService;

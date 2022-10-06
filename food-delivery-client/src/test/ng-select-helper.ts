@@ -27,12 +27,12 @@ export function selectOption(
   key: KeyCode,
   index: number
 ) {
-  triggerKeyDownEvent(getNgSelectElement(fixture), KeyCode.Space); // open
-  tickAndDetectChanges(fixture); // need to tick and detect changes, since dropdown fully inits after promise is resolved
+  triggerKeyDownEvent(getNgSelectElement(fixture), KeyCode.Space);
+  tickAndDetectChanges(fixture);
   for (let i = 0; i < index; i++) {
     triggerKeyDownEvent(getNgSelectElement(fixture), key);
   }
-  triggerKeyDownEvent(getNgSelectElement(fixture), KeyCode.Enter); // select
+  triggerKeyDownEvent(getNgSelectElement(fixture), KeyCode.Enter);
 }
 
 export function getNgSelectElement(

@@ -53,11 +53,11 @@ describe('CartItemBlockComponent', () => {
   });
 
   describe('Layout', () => {
-    //TODO
-    // it('has image of restaurant item', () => {
-    //   const image = nativeElement.querySelector('img');
-    //   console.log(image.src);
-    // });
+    it('has image of restaurant item', () => {
+      const image = nativeElement.querySelector('img');
+
+      expect(image).toBeTruthy();
+    });
     it('should display name of restaurant item', () => {
       const span = nativeElement.querySelector('span[data-testid="item-name"]');
       expect(span.textContent).toEqual('Test Restaurant Item');

@@ -2,12 +2,12 @@ import { classes } from '@automapper/classes';
 import { AutomapperModule } from '@automapper/nestjs';
 import { EntityRepository } from '@mikro-orm/core';
 import { getRepositoryToken } from '@mikro-orm/nestjs';
+import { BadRequestException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Category } from '../../entities/category.model';
 import { CategoriesService } from './categories.service';
 import * as CategoryMocks from '../../../../test/mocks/category.mock';
 import { MainAutomapperProfile } from '../../../main.automapper-profile';
-import { BadRequestException } from '@nestjs/common';
 
 describe('CategoriesService', () => {
   let service: CategoriesService;

@@ -1,15 +1,15 @@
+import { Mapper } from '@automapper/core';
+import { InjectMapper } from '@automapper/nestjs';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { EntityRepository } from '@mikro-orm/sqlite';
+import { QueryOrder } from '@mikro-orm/core';
 import {
   BadRequestException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { Mapper } from '@automapper/core';
-import { InjectMapper } from '@automapper/nestjs';
 import { CartDto } from '../../dto/cart.dto';
 import { Cart } from '../../entities/cart.model';
-import { QueryOrder } from '@mikro-orm/core';
 
 @Injectable()
 export class CartsService {

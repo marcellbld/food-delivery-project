@@ -1,3 +1,4 @@
+import { ForbiddenException, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { RestaurantItemsService } from '../../services/restaurant-items/restaurant-items.service';
 import * as RestaurantMocks from '../../../../test/mocks/restaurant.mock';
@@ -6,21 +7,20 @@ import * as UserMocks from '../../../../test/mocks/user.mock';
 import { RestaurantsService } from '../../services/restaurants/restaurants.service';
 import { RestaurantsController } from './restaurants.controller';
 import { UserRole } from '../../../users/user-role';
-import { ForbiddenException, NotFoundException } from '@nestjs/common';
 
 describe('RestaurantsController', () => {
   let controller: RestaurantsController;
   let restaurantsService: RestaurantsService;
   let restaurantItemsService: RestaurantItemsService;
 
-  let createRestaurantMock;
-  let restaurantDtoMock;
-  let restaurantArrayDtoMock;
-  let userDtoMock;
+  let createRestaurantMock: any;
+  let restaurantDtoMock: any;
+  let restaurantArrayDtoMock: any;
+  let userDtoMock: any;
 
-  let createRestaurantItemMock;
-  let restaurantItemDtoMock;
-  let restaurantItemArrayDtoMock;
+  let createRestaurantItemMock: any;
+  let restaurantItemDtoMock: any;
+  let restaurantItemArrayDtoMock: any;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({

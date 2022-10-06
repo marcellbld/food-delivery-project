@@ -69,23 +69,4 @@ export class NavbarComponent implements OnInit {
     }
   }
 
-  // @HostListener('show.bs.collapse', ['$event'])
-  // onBsCollapseShow() {
-  //   console.log('BS COLLAPSE SHOW');
-  //   this.opened = true;
-  //   let element = document.querySelector('.navbar') as HTMLElement;
-  //   element.classList.add('shadow');
-  //   element.classList.add('bg-navbar');
-  // }
-
-  // @HostListener('hidden.bs.collapse', ['$event'])
-  // onBsCollapseHide() {
-  //   console.log('BS COLLAPSE HIDE');
-  //   this.opened = false;
-  //   if (!this.scrolledDown) {
-  //     let element = document.querySelector('.navbar') as HTMLElement;
-  //     element.classList.remove('shadow');
-  //     element.classList.remove('bg-navbar');
-  //   }
-  // }
 }

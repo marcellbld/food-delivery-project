@@ -1,19 +1,17 @@
 import { classes } from '@automapper/classes';
 import { AutomapperModule } from '@automapper/nestjs';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
+import { MikroORM } from '@mikro-orm/core';
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { ServeStaticModule } from '@nestjs/serve-static/dist/serve-static.module';
+import { join } from 'path';
+import mikroOrmConfig from '../mikro-orm.config';
+import { MainAutomapperProfile } from './main.automapper-profile';
 import { RestaurantsModule } from './restaurants/restaurants.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
-import mikroOrmConfig from '../mikro-orm.config';
 import { CategoriesModule } from './categories/categories.module';
 import { CartModule } from './cart/cart.module';
-import { MainAutomapperProfile } from './main.automapper-profile';
-import { ServeStaticModule } from '@nestjs/serve-static/dist/serve-static.module';
-import { join } from 'path';
-import { MikroORM } from '@mikro-orm/core';
 
 @Module({
   imports: [
@@ -30,8 +28,8 @@ import { MikroORM } from '@mikro-orm/core';
     UsersModule,
     CartModule,
   ],
-  controllers: [AppController],
-  providers: [AppService, MainAutomapperProfile],
+  controllers: [],
+  providers: [MainAutomapperProfile],
 })
 export class AppModule {
   constructor(private readonly orm: MikroORM) {
@@ -46,23 +44,4 @@ export class AppModule {
       await this.orm.getSeeder().seed();
     }
   }
-  // constructor(private readonly orm: MikroORM) {
-  //   (async () => {
-  //     await this.setupOrm();
-  //   })();
-  // }
-  // private async setupOrm() {
-  //   const env = process.env.NODE_ENV;
-  //   if (env === 'development') {
-  //     await this.orm.getSchemaGenerator().updateSchema();
-  //     await this.orm.getSchemaGenerator().clearDatabase();
-  //     await this.orm.getSeeder().seed(DevDatabaseSeeder);
-  //   }
-  //   if (env === 'test') {
-  //     //ez nem megy egyszerre a teszttel
-  //     // await this.orm.getSchemaGenerator().updateSchema();
-  //     // await this.orm.getSchemaGenerator().clearDatabase();
-  //     // await this.orm.getSeeder().seed(DevDatabaseSeeder);
-  //   }
-  // }
 }

@@ -3,11 +3,11 @@ import { AutomapperModule } from '@automapper/nestjs';
 import { getRepositoryToken } from '@mikro-orm/nestjs';
 import { EntityRepository } from '@mikro-orm/sqlite';
 import { Test, TestingModule } from '@nestjs/testing';
+import { NotFoundException } from '@nestjs/common';
 import { CartItem } from '../../entities/cart-item.model';
 import { CartItemsService } from './cart-items.service';
 import * as CartItemMocks from '../../../../test/mocks/cart-item.mock';
 import { MainAutomapperProfile } from '../../../main.automapper-profile';
-import { NotFoundException } from '@nestjs/common';
 
 describe('CartItemService', () => {
   let service: CartItemsService;

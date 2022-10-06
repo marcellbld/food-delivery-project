@@ -639,18 +639,6 @@ describe('RestaurantsController (e2e)', () => {
         })
         .expect(400);
     });
-    // it('should not create item with incorrect price value - return 500', async () => {
-    //   const token = await setupTokenForAdmin();
-    //   return request(app.getHttpServer())
-    //     .post(CREATE_RESTAURANT_ITEM_URL)
-    //     .set('Authorization', 'Bearer ' + token)
-    //     .send({
-    //       name: 'New Item 4',
-    //       description: 'New Item Description 4',
-    //       price: 'incorrect',
-    //     })
-    //     .expect(500);
-    // });
     it('should create item without description - return 201', async () => {
       const token = await setupTokenForAdmin();
       return request(app.getHttpServer())

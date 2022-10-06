@@ -1,3 +1,5 @@
+import { Test, TestingModule } from '@nestjs/testing';
+import { BadRequestException, ForbiddenException } from '@nestjs/common';
 import { CartItemsService } from '../../services/cart-item/cart-items.service';
 import { CartsService } from '../../services/cart/carts.service';
 import { RestaurantItemsService } from '../../../restaurants/services/restaurant-items/restaurant-items.service';
@@ -6,8 +8,6 @@ import * as CartMocks from '../../../../test/mocks/cart.mock';
 import * as CartItemMocks from '../../../../test/mocks/cart-item.mock';
 import * as RestaurantItemMocks from '../../../../test/mocks/restaurant-item.mock';
 import * as UserMocks from '../../../../test/mocks/user.mock';
-import { Test, TestingModule } from '@nestjs/testing';
-import { BadRequestException, ForbiddenException } from '@nestjs/common';
 import { UserRole } from '../../../users/user-role';
 
 describe('CartController', () => {
@@ -16,23 +16,16 @@ describe('CartController', () => {
   let cartItemsService: CartItemsService;
   let restaurantItemsService: RestaurantItemsService;
 
-  let cartMock;
-  let purchasedCartMock;
-  let purchasedCart2Mock;
+  let cartDtoMock: any;
+  let purchasedCartDtoMock: any;
+  let purchasedCart2DtoMock: any;
 
-  let cartDtoMock;
-  let purchasedCartDtoMock;
-  let purchasedCart2DtoMock;
+  let userDtoMock: any;
 
-  let userDtoMock;
+  let cartItemDtoMock: any;
+  let cartItem2DtoMock: any;
 
-  let cartItemMock;
-  let cartItem2Mock;
-
-  let cartItemDtoMock;
-  let cartItem2DtoMock;
-
-  let restaurantItemDtoMock;
+  let restaurantItemDtoMock: any;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -75,15 +68,10 @@ describe('CartController', () => {
   });
 
   beforeEach(() => {
-    cartMock = CartMocks.cartMock();
     cartDtoMock = CartMocks.cartDtoMock();
-    purchasedCartMock = CartMocks.purchasedCartMock();
-    purchasedCart2Mock = CartMocks.purchasedCart2Mock();
     purchasedCartDtoMock = CartMocks.purchasedCartDtoMock();
     purchasedCart2DtoMock = CartMocks.purchasedCart2DtoMock();
 
-    cartItemMock = CartItemMocks.cartItemMock();
-    cartItem2Mock = CartItemMocks.cartItem2Mock();
     cartItemDtoMock = CartItemMocks.cartItemDtoMock();
     cartItem2DtoMock = CartItemMocks.cartItem2DtoMock();
 

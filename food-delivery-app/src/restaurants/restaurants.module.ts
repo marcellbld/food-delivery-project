@@ -1,5 +1,5 @@
-import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { Module } from '@nestjs/common';
+import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { Category } from '../categories/entities/category.model';
 import { RestaurantsController } from './controllers/restaurants/restaurants.controller';
 import { RestaurantItem } from './entities/restaurant-item.model';

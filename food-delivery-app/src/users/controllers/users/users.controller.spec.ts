@@ -1,9 +1,9 @@
+import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { UsersService } from '../../services/users.service';
 import { UsersController } from './users.controller';
 import * as UserMocks from '../../../../test/mocks/user.mock';
 import { UserRole } from '../../user-role';
-import { NotFoundException } from '@nestjs/common';
 
 describe('UsersController', () => {
   let controller: UsersController;
