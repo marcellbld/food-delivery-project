@@ -20,7 +20,7 @@ export class CartsService {
   ) {}
 
   async create(userId: number, restaurantId: number): Promise<CartDto> {
-    if (await this.findUnpurchasedByUserId(userId))
+    if (await this.findActiveCartByUserId(userId))
       throw new BadRequestException('User already has active cart');
 
     const cart = this.cartRepository.create({
@@ -44,22 +44,90 @@ export class CartsService {
     return this.mapper.map(cart, Cart, CartDto);
   }
 
-  async findUnpurchasedByUserId(userId: number): Promise<CartDto> {
-    const cart = await this.cartRepository.findOne(
+  async findActiveCartByUserId(userId: number): Promise<CartDto> {
+    let cart = await this.findUnpurchasedByUserId(userId);
+    if (!cart) {
+      cart = await this.findUndeliveredByUserId(userId);
+    }
+    if (!cart) {
+      cart = await this.findDeliveryOnTheWayByUserId(userId);
+    }
+
+    return this.mapper.map(cart, Cart, CartDto);
+  }
+
+  private async findUnpurchasedByUserId(userId: number): Promise<Cart> {
+    return await this.cartRepository.findOne(
       {
         user: userId,
         purchased: false,
       },
       { populate: ['cartItems', 'cartItems.item', 'user', 'restaurant'] },
     );
-
-    return this.mapper.map(cart, Cart, CartDto);
   }
-  async findAllPurchasedByUserId(userId: number): Promise<CartDto[]> {
+  private async findUndeliveredByUserId(userId: number): Promise<Cart> {
+    return await this.cartRepository.findOne(
+      {
+        user: userId,
+        purchased: true,
+      },
+      {
+        populate: ['cartItems', 'cartItems.item', 'user', 'restaurant'],
+        filters: { undelivered: true },
+      },
+    );
+  }
+  private async findDeliveryOnTheWayByUserId(userId: number): Promise<Cart> {
     const carts = await this.cartRepository.find(
       {
         user: userId,
         purchased: true,
+      },
+      {
+        populate: [
+          'cartItems',
+          'cartItems.item',
+          'user',
+          'restaurant',
+          'order',
+        ],
+      },
+    );
+
+    const cart = carts.find((c) => c.order.deliveryTime > new Date());
+
+    return cart;
+  }
+
+  async findAllDeliveredByUserId(userId: number): Promise<CartDto[]> {
+    let carts = await this.cartRepository.find(
+      {
+        user: userId,
+        purchased: true,
+        order: { $ne: null },
+      },
+      {
+        populate: [
+          'cartItems',
+          'cartItems.item',
+          'user',
+          'restaurant',
+          'order',
+        ],
+        orderBy: { purchasedDate: QueryOrder.DESC_NULLS_LAST },
+      },
+    );
+
+    carts = carts.filter((cart) => cart.order.deliveryTime <= new Date());
+
+    return this.mapper.mapArray(carts, Cart, CartDto);
+  }
+
+  async findAllUndelivered(): Promise<CartDto[]> {
+    const carts = await this.cartRepository.find(
+      {
+        purchased: true,
+        order: { $eq: null },
       },
       {
         populate: ['cartItems', 'cartItems.item', 'user', 'restaurant'],
@@ -95,6 +163,9 @@ export class CartsService {
     );
 
     if (!cart) throw new NotFoundException("Cart doesn't exists");
+
+    if (cart.order !== null)
+      throw new BadRequestException("Can't delete this cart");
 
     await this.cartRepository.removeAndFlush(cart);
 

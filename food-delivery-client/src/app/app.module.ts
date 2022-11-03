@@ -7,7 +7,9 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
+import { MapModalModule } from './map-modal/map-modal.module';
 import { NavbarModule } from './navbar/navbar.module';
+import { SharedModule } from './shared/shared.module';
 import { SidebarModule } from './sidebar/sidebar.module';
 import { ToastsModule } from './toasts/toasts.module';
 
@@ -26,6 +28,7 @@ export function tokenGetter() {
     RouterModule,
     SidebarModule,
     ToastsModule,
+    MapModalModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

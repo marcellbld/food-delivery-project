@@ -31,16 +31,18 @@ describe('UsersController (e2e)', () => {
           username: 'user1',
           accountType: 'USER',
           password: 'pass1',
+          address: [1, 1],
         } as CreateUserDto)
         .expect(201)
         .then((res: request.Response) => {
           const user = res.body;
           expect(user).toBeTruthy();
           expect(user).toEqual({
-            id: 6,
+            id: expect.anything(),
             username: 'user1',
             role: UserRole.User,
             createdAt: expect.anything(),
+            address: [1, 1],
           });
         });
     });
@@ -57,10 +59,11 @@ describe('UsersController (e2e)', () => {
           const user = res.body;
           expect(user).toBeTruthy();
           expect(user).toEqual({
-            id: 7,
+            id: expect.anything(),
             username: 'owner1',
             role: UserRole.Owner,
             createdAt: expect.anything(),
+            address: [null, null],
           });
         });
     });
@@ -81,6 +84,7 @@ describe('UsersController (e2e)', () => {
           username: 'user2',
           accountType: 'USER',
           password: 'p',
+          address: [1, 1],
         } as CreateUserDto)
         .expect(400);
     });
@@ -90,6 +94,7 @@ describe('UsersController (e2e)', () => {
         .send({
           username: 'u',
           accountType: 'USER',
+          address: [1, 1],
         } as CreateUserDto)
         .expect(400);
     });
@@ -98,6 +103,7 @@ describe('UsersController (e2e)', () => {
         .post(CREATE_USER_URL)
         .send({
           password: 'pass2',
+          address: [1, 1],
         } as CreateUserDto)
         .expect(400);
     });
@@ -107,6 +113,7 @@ describe('UsersController (e2e)', () => {
         .send({
           username: 'user2',
           accountType: 'USER',
+          address: [1, 1],
         } as CreateUserDto)
         .expect(400);
     });
@@ -116,6 +123,17 @@ describe('UsersController (e2e)', () => {
         .send({
           username: 'user2',
           password: 'pass2',
+          address: [1, 1],
+        } as CreateUserDto)
+        .expect(400);
+    });
+    it('should not create User when no address is provided - return 400', async () => {
+      return request(app.getHttpServer())
+        .post(CREATE_USER_URL)
+        .send({
+          username: 'user2',
+          password: 'pass2',
+          accountType: 'USER',
         } as CreateUserDto)
         .expect(400);
     });
@@ -126,6 +144,7 @@ describe('UsersController (e2e)', () => {
           username: 'user1',
           accountType: 'USER',
           password: 'pass1',
+          address: [1, 1],
         } as CreateUserDto)
         .expect(400);
     });
@@ -144,10 +163,11 @@ describe('UsersController (e2e)', () => {
         .then((response) => {
           const user = response.body as UserDto;
           expect(user).toEqual({
-            id: 2,
+            id: expect.anything(),
             username: 'tuser1',
             role: UserRole.User,
             createdAt: expect.anything(),
+            address: [1, 1],
           });
         });
     });
@@ -212,12 +232,12 @@ describe('UsersController (e2e)', () => {
         });
     });
   });
-  describe('update self (PATCH /users)', () => {
-    const PATCH_UPDATE_SELF_URL = '/users';
+  describe('update self password (PATCH /users)', () => {
+    const PATCH_UPDATE_SELF_PASSWORD_URL = '/users';
     it('should update and return user - return 200', async () => {
       const token = await setupTokenForUser();
       return request(app.getHttpServer())
-        .patch(PATCH_UPDATE_SELF_URL)
+        .patch(PATCH_UPDATE_SELF_PASSWORD_URL)
         .set('Authorization', 'Bearer ' + token)
         .send({ password: 'newPass' })
         .expect(200)
@@ -225,16 +245,17 @@ describe('UsersController (e2e)', () => {
           const user = response.body;
 
           expect(user).toEqual({
-            id: 2,
+            id: expect.anything(),
             username: 'tuser1',
             role: UserRole.User,
             createdAt: expect.anything(),
+            address: [1, 1],
           });
         });
     });
     it('should not update without token - return 401', async () => {
       return request(app.getHttpServer())
-        .patch(PATCH_UPDATE_SELF_URL)
+        .patch(PATCH_UPDATE_SELF_PASSWORD_URL)
         .send({ password: 'newPass' })
         .expect(401);
     });

@@ -7,6 +7,8 @@ import { User } from '../src/users/entities/user.model';
 import { UserRole } from '../src/users/user-role';
 import { Cart } from '../src/cart/entities/cart.model';
 import { CartItem } from '../src/cart/entities/cart-item.model';
+import { Order } from '../src/orders/entities/order.model';
+import e from 'express';
 
 export class TestE2eSeeder extends Seeder {
   async run(em: EntityManager): Promise<void> {
@@ -23,6 +25,8 @@ export class TestE2eSeeder extends Seeder {
           password:
             '$2b$12$KDOUfDo.1eO3WEb2/PM.Bu7oaay6kmbXqEfJs7rRyMAqTABSuYyjO',
           role: UserRole.User,
+          addressLon: 1,
+          addressLat: 1,
         }),
       );
     }
@@ -34,6 +38,17 @@ export class TestE2eSeeder extends Seeder {
           password:
             '$2b$12$KDOUfDo.1eO3WEb2/PM.Bu7oaay6kmbXqEfJs7rRyMAqTABSuYyjO',
           role: UserRole.Owner,
+        }),
+      );
+    }
+    const couriers = [];
+    for (let i = 0; i < 2; i++) {
+      couriers.push(
+        em.create(User, {
+          username: `tcourier${i + 1}`,
+          password:
+            '$2b$12$KDOUfDo.1eO3WEb2/PM.Bu7oaay6kmbXqEfJs7rRyMAqTABSuYyjO',
+          role: UserRole.Courier,
         }),
       );
     }
@@ -60,6 +75,8 @@ export class TestE2eSeeder extends Seeder {
         description: 'Test Restaurant Description',
         owner: owners[0],
         categories: [2, 3],
+        locationLon: 1,
+        locationLat: 1,
       }),
     );
     restaurants.push(
@@ -68,6 +85,8 @@ export class TestE2eSeeder extends Seeder {
         name: 'Test Restaurant 2',
         description: 'Test Restaurant Description 2',
         owner: owners[0],
+        locationLon: 1,
+        locationLat: 1,
       }),
     );
     restaurants.push(
@@ -76,6 +95,8 @@ export class TestE2eSeeder extends Seeder {
         name: 'Test Restaurant 3',
         description: 'Test Restaurant Description 3',
         owner: owners[0],
+        locationLon: 1,
+        locationLat: 1,
       }),
     );
 
@@ -136,18 +157,17 @@ export class TestE2eSeeder extends Seeder {
       cart: carts[1],
       item: restaurantItems[0],
     });
-    carts.push(
-      em.create(Cart, {
-        purchased: true,
-        purchasedDate: new Date(),
-        restaurant: restaurants[0],
-        user: users[0],
+
+    const orders = [];
+
+    orders.push(
+      em.create(Order, {
+        courier: couriers[0],
+        cart: carts[1],
+        commission: 0.1,
+        createdAt: new Date(new Date().getTime() - 5 * 60000),
+        deliveryTime: new Date(new Date().getTime() - 5 * 60000),
       }),
     );
-    em.create(CartItem, {
-      count: 3,
-      cart: carts[2],
-      item: restaurantItems[0],
-    });
   }
 }

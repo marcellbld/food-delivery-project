@@ -11,6 +11,8 @@ export class RestaurantDto {
   @AutoMap()
   createdAt!: Date;
   @AutoMap()
+  location!: number[];
+  @AutoMap()
   categories!: CategoryDto[];
   @AutoMap()
   image?: string;

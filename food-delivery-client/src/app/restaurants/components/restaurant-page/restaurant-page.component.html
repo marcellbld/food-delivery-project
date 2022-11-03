@@ -19,6 +19,10 @@
         </div>
         <p class="fs-5 pt-1 mb-1">  {{restaurant?.name}}</p>
         <p class="text-secondary">{{restaurant?.description}}</p>
+        <div>
+          <button type="button" class="btn btn-sm btn-circle btn-dark me-2" (click)="onClickShowMapButton()"><i class="bi bi-pin-map-fill"></i></button>
+          <span class="text-secondary">{{locationText}}</span>
+        </div>
       </div>
     </div>
   </div>
@@ -56,7 +60,7 @@
             [restaurantItem]="restaurantItem"
             class="mx-1"
             style="width: 125px"
-            [purchase]="true"
+            [purchase]="isUserRoleUser() || false"
             ></app-restaurant-item-block>
         </drag-scroll>
       </div>
@@ -80,8 +84,8 @@
                 class="flex-grow-1"
                 [restaurantItem]="restaurantItem"
                 [rowLayout]="true"
-                [purchase]="true"
-                [editable]="isUserRoleOwnerOrAdmin() ? true : false"
+                [purchase]="isUserRoleUser() || false"
+                [editable]="isUserRoleOwnerOrAdmin() || false"
               ></app-restaurant-item-block>
             </div>
           </div>

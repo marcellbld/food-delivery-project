@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { UserRole } from '../../../shared/models/user/user.interface';
+import { AuthService } from '../../../core/services/auth/auth.service';
 import { RestaurantService } from '../../../core/services/restaurant/restaurant.service';
 import { RestaurantI } from '../../../shared/models/restaurant/restaurant.interface';
 
@@ -12,10 +14,17 @@ export class HomePageComponent implements OnInit {
 
   clickedRestaurantElement: HTMLElement | null = null;
 
-  constructor(private readonly restaurantService: RestaurantService) {}
+  constructor(
+    private readonly restaurantService: RestaurantService,
+    private readonly authService: AuthService
+  ) {}
 
   isElementClicked(id: number): boolean {
     return this.clickedRestaurantElement?.dataset?.['restaurantid'] == '' + id;
+  }
+
+  loggedInRole(): string {
+    return this.authService.loggedInUser()?.role || UserRole.User;
   }
 
   ngOnInit(): void {

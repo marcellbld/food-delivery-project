@@ -19,6 +19,8 @@ import { User } from './users/entities/user.model';
 import { UserDto } from './users/dto/user.dto';
 import { Category } from './categories/entities/category.model';
 import { CategoryDto } from './categories/dto/category.dto';
+import { Order } from './orders/entities/order.model';
+import { OrderDto } from './orders/dto/order.dto';
 
 @Injectable()
 export class MainAutomapperProfile extends AutomapperProfile {
@@ -67,9 +69,32 @@ export class MainAutomapperProfile extends AutomapperProfile {
             source.categories ? source.categories.toArray() : [],
           ),
         ),
+        forMember(
+          (destination) => destination.location,
+          mapFrom((source) => [source.locationLon, source.locationLat]),
+        ),
       );
       createMap(mapper, RestaurantItem, RestaurantItemDto);
-      createMap(mapper, User, UserDto);
+      createMap(
+        mapper,
+        Order,
+        OrderDto,
+        forMember(
+          (destination) => destination.cart,
+          mapFrom((source) =>
+            this.mapper.map({ ...source.cart, order: null }, Cart, CartDto),
+          ),
+        ),
+      );
+      createMap(
+        mapper,
+        User,
+        UserDto,
+        forMember(
+          (destination) => destination.address,
+          mapFrom((source) => [source.addressLon, source.addressLat]),
+        ),
+      );
     };
   }
 }

@@ -19,6 +19,9 @@ body {
 .text-orange {
   color: #f5af47;
 }
+.text-green {
+  color: #19945b
+}
 
 .nav-link-dark {
   --bs-nav-link-color: rgb(77, 77, 77);
@@ -31,8 +34,24 @@ body {
 }
 
 .nav-link-green {
-  --bs-nav-link-color: rgb(25, 150, 91);
+  --bs-nav-link-color: rgb(25, 148, 91);
   --bs-nav-link-hover-color: rgb(4, 99, 56);
+}
+.btn-green {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: rgb(25, 148, 91);
+  --bs-btn-border-color: rgb(25, 148, 91);
+  --bs-btn-hover-color: #ffffff;
+  --bs-btn-hover-bg: rgb(12, 111, 65);
+  --bs-btn-hover-border-color: rgb(12, 111, 65);
+  --bs-btn-focus-shadow-rgb: 245, 71, 74;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: rgb(12, 111, 65);
+  --bs-btn-active-border-color: rgb(12, 111, 65);
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #fff;
+  --bs-btn-disabled-bg: rgb(132, 146, 139);
+  --bs-btn-disabled-border-color: rgb(132, 146, 139);
 }
 .btn-orange {
   --bs-btn-color: #fff;
@@ -165,6 +184,7 @@ body {
   font-size: 16px;
   text-align: center;
 }
+
 .btn-circle.btn-md {
   width: 50px;
   height: 50px;

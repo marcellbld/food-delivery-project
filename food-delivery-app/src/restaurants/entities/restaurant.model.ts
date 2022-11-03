@@ -30,6 +30,14 @@ export class Restaurant {
 
   @AutoMap()
   @Property()
+  locationLat!: number;
+
+  @AutoMap()
+  @Property()
+  locationLon!: number;
+
+  @AutoMap()
+  @Property()
   description!: string;
 
   @AutoMap()

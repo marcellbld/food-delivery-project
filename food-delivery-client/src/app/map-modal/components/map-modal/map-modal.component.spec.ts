@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ToastContainerComponent } from './toast-container.component';
+import { MapModalComponent } from './map-modal.component';
 
-describe('ToastContainerComponent', () => {
-  let component: ToastContainerComponent;
-  let fixture: ComponentFixture<ToastContainerComponent>;
+describe('MapModalComponent', () => {
+  let component: MapModalComponent;
+  let fixture: ComponentFixture<MapModalComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ToastContainerComponent ]
+      declarations: [ MapModalComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ToastContainerComponent);
+    fixture = TestBed.createComponent(MapModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

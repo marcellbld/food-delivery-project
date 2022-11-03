@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './core/guards/auth.guard';
 import { LoginGuard } from './core/guards/login.guard';
+import { DeliverOrdersModule } from './deliver-orders/deliver-orders.module';
 import { HomeModule } from './home/home.module';
 import { LoginModule } from './login/login.module';
 import { ProfileModule } from './profile/profile.module';
@@ -26,6 +27,11 @@ const routes: Routes = [
   {
     path: 'profile',
     loadChildren: () => ProfileModule,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'deliver-orders',
+    loadChildren: () => DeliverOrdersModule,
     canActivate: [AuthGuard],
   },
   {

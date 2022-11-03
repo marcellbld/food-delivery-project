@@ -36,9 +36,8 @@ export class RestaurantItemBlockComponent implements OnInit {
 
   isItemInCart(): boolean {
     return (
-      this.cartService.selfUnpurchasedCart?.findItem(
-        this.restaurantItem?.id!
-      ) !== undefined
+      this.cartService.selfActiveCart?.findItem(this.restaurantItem?.id!) !==
+      undefined
     );
   }
 
@@ -49,17 +48,11 @@ export class RestaurantItemBlockComponent implements OnInit {
   }
 
   cartItem(): CartItemI | undefined {
-    return this.cartService.selfUnpurchasedCart?.findItem(
-      this.restaurantItem?.id!
-    );
+    return this.cartService.selfActiveCart?.findItem(this.restaurantItem?.id!);
   }
 
   onClickBuyButton(): void {
-    this.cartService
-      .addItemToCart(this.restaurantItem?.id!)
-      .subscribe((a: any) => {
-        console.log(a);
-      });
+    this.cartService.addItemToCart(this.restaurantItem?.id!).subscribe();
   }
   onClickModifyButton(add: boolean): void {
     const cartItem = this.cartItem() as CartItemI;

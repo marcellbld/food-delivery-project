@@ -32,6 +32,8 @@ import {
 import { restaurantMock } from '../../../../test/mocks/restaurant.mock';
 import { userMock } from '../../../../test/mocks/user.mock';
 import { RestaurantPageComponent } from '../restaurant-page/restaurant-page.component';
+import { MapService } from '../../../core/services/map/map.service';
+import { MapAddressService } from '../../../core/services/map-address/map-address.service';
 
 describe('CreateRestaurantPageComponent', () => {
   let component: CreateRestaurantPageComponent;
@@ -62,6 +64,9 @@ describe('CreateRestaurantPageComponent', () => {
         .mockReturnValue(of([primaryCategory1Mock, primaryCategory2Mock])),
     } as Partial<CategoryService>;
 
+    const mapAddressServiceMock = {} as Partial<MapAddressService>;
+    const mapServiceMock = {} as Partial<MapService>;
+
     await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule.withRoutes([
@@ -79,6 +84,8 @@ describe('CreateRestaurantPageComponent', () => {
         { provide: RestaurantService, useValue: restaurantServiceMock },
         { provide: UserService, useValue: userServiceMock },
         { provide: CategoryService, useValue: categoryServiceMock },
+        { provide: MapAddressService, useValue: mapAddressServiceMock },
+        { provide: MapService, useValue: mapServiceMock },
       ],
     }).compileComponents();
 
@@ -154,7 +161,6 @@ describe('CreateRestaurantPageComponent', () => {
       });
       it('should disable the Create button initially', () => {
         const button = nativeElement.querySelector('button');
-        console.log(button);
 
         expect(button?.disabled).toBeTruthy();
       });
@@ -353,6 +359,8 @@ describe('CreateRestaurantPageComponent', () => {
           .get('categories')
           ?.setValue([primaryCategory2Mock.id] as never);
 
+        component.location = [1, 1];
+
         component.onClickSubmit();
 
         expect(restaurantService.create).toHaveBeenCalledWith({
@@ -361,6 +369,7 @@ describe('CreateRestaurantPageComponent', () => {
           owner: userMock.id,
           categories: [primaryCategory2Mock.id],
           file: undefined,
+          location: [1, 1],
         });
       });
       it('should not call restaurantService.create when form is invalid', async () => {

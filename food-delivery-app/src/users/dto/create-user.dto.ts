@@ -8,6 +8,8 @@ export class CreateUserDto {
   password?: string;
 
   @IsEnum(UserRole)
-  @IsIn([UserRole.User, UserRole.Owner])
+  @IsIn([UserRole.User, UserRole.Owner, UserRole.Courier])
   accountType: UserRole;
+
+  address?: number[];
 }

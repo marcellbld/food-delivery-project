@@ -1,0 +1,40 @@
+@media (min-width: 768px) {
+  .cart-block-base {
+    transition: all 0.25s ease;
+  }
+  .cart-block {
+    width: 46%;
+    margin: 2%;
+  }
+  .cart-block-shrink {
+    width: 46%;
+    margin: 2%;
+    transition: all 0.5s ease;
+  }
+  .cart-block-grow {
+    width: 66%;
+    transition: all 0.5s ease;
+  }
+  
+};
+@media (max-width: 768px) {
+  .cart-block {
+    width: 66%;
+  }
+};
+
+.cart-block:hover {
+  transform: scale(1.05);
+}
+
+.map-container {
+  display: flex;
+  width: 100%;
+  height: 500px;
+  border-radius: 25px;
+  overflow: clip;
+}
+
+.bg-none {
+  background: none !important;
+}

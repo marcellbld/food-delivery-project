@@ -12,5 +12,8 @@ export class UserDto {
   role?: UserRole;
 
   @AutoMap()
+  address?: number[];
+
+  @AutoMap()
   createdAt?: Date;
 }

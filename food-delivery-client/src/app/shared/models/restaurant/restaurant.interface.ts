@@ -5,6 +5,7 @@ export interface RestaurantI {
   name: string;
   description: string;
   createdAt: Date;
+  location: number[];
   categories: CategoryI[];
   image: string;
 }

@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserRole } from '../../../shared/models/user/user.interface';
 import { UserService } from '../../../core/services/user/user.service';
 import { passwordMatchValidator } from '../../validators/password-match.validator';
 import { UsernameTakenValidator } from '../../validators/username-taken.validator';
+import { MapInputComponent } from 'src/app/shared/components/map-input/map-input.component';
+import { Coordinate } from 'ol/coordinate';
 
 @Component({
   selector: 'app-registration-page',
@@ -12,6 +14,8 @@ import { UsernameTakenValidator } from '../../validators/username-taken.validato
   styleUrls: ['./registration-page.component.scss'],
 })
 export class RegistrationPageComponent implements OnInit {
+  @ViewChild('mapInput') mapInput: MapInputComponent | undefined;
+
   form = new FormGroup(
     {
       username: new FormControl('', {
@@ -33,7 +37,7 @@ export class RegistrationPageComponent implements OnInit {
         Validators.maxLength(20),
       ]),
       passwordConfirm: new FormControl('', [Validators.required]),
-      accountType: new FormControl('User', Validators.required),
+      accountType: new FormControl('USER', Validators.required),
     },
     {
       validators: passwordMatchValidator,
@@ -42,6 +46,8 @@ export class RegistrationPageComponent implements OnInit {
 
   apiProgress = false;
   signUpSuccess = false;
+
+  location: Coordinate | undefined;
 
   constructor(
     private readonly userService: UserService,
@@ -52,15 +58,15 @@ export class RegistrationPageComponent implements OnInit {
   ngOnInit(): void {}
 
   onClickSignUp(): void {
-    if (!this.form.valid) return;
+    if (!this.form.valid || this.mapInput?.formError) return;
 
     this.apiProgress = true;
     this.userService
       .create({
         username: this.username?.value!,
         password: this.password?.value!,
-        accountType:
-          this.accountType?.value! === 'Owner' ? UserRole.Owner : UserRole.User,
+        accountType: (this.accountType?.value as UserRole) || UserRole.User,
+        address: this.accountType?.value === UserRole.User ? this.location : [],
       })
       .subscribe({
         next: () => {
@@ -73,14 +79,29 @@ export class RegistrationPageComponent implements OnInit {
       });
   }
 
+  accountTypeChanged() {
+    // Refresh Map
+    setTimeout(() => {
+      this.location = undefined;
+
+      if (this.location) {
+        this.mapInput?.locationChanged(this.location);
+      }
+    }, 0);
+  }
+
   isDisabled() {
     const formFilled =
       this.username?.value &&
       this.password?.value &&
-      this.passwordConfirm?.value;
+      this.passwordConfirm?.value &&
+      (this.accountType?.value === UserRole.User ? this.location : true);
 
     const validationError =
-      this.usernameError || this.passwordError || this.passwordConfirmError;
+      this.usernameError ||
+      this.passwordError ||
+      this.passwordConfirmError ||
+      this.mapInput?.formError;
 
     return !formFilled || validationError !== undefined;
   }
@@ -130,5 +151,18 @@ export class RegistrationPageComponent implements OnInit {
       }
     }
     return;
+  }
+
+  get postalCodeError() {
+    return this.mapInput?.postalCodeError || null;
+  }
+  get streetError() {
+    return this.mapInput?.streetError || null;
+  }
+  get houseNumberError() {
+    return this.mapInput?.houseNumberError || null;
+  }
+  get invalidAddressError() {
+    return this.mapInput?.invalidAddressError || null;
   }
 }

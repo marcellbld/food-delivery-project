@@ -94,6 +94,24 @@
           "nullable": false,
           "mappedType": "json"
         },
+        "address_lat": {
+          "name": "address_lat",
+          "type": "integer",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "mappedType": "integer"
+        },
+        "address_lon": {
+          "name": "address_lon",
+          "type": "integer",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "mappedType": "integer"
+        },
         "created_at": {
           "name": "created_at",
           "type": "datetime",
@@ -157,6 +175,24 @@
           "primary": false,
           "nullable": true,
           "mappedType": "text"
+        },
+        "location_lat": {
+          "name": "location_lat",
+          "type": "integer",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "integer"
+        },
+        "location_lon": {
+          "name": "location_lon",
+          "type": "integer",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "integer"
         },
         "description": {
           "name": "description",
@@ -525,6 +561,124 @@
             "id"
           ],
           "referencedTableName": "user",
+          "updateRule": "cascade"
+        }
+      }
+    },
+    {
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
+          "nullable": false,
+          "mappedType": "integer"
+        },
+        "commission": {
+          "name": "commission",
+          "type": "integer",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "integer"
+        },
+        "courier_id": {
+          "name": "courier_id",
+          "type": "integer",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "mappedType": "integer"
+        },
+        "cart_id": {
+          "name": "cart_id",
+          "type": "integer",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "integer"
+        },
+        "delivery_time": {
+          "name": "delivery_time",
+          "type": "datetime",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 0,
+          "mappedType": "datetime"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "datetime",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 0,
+          "mappedType": "datetime"
+        }
+      },
+      "name": "order",
+      "indexes": [
+        {
+          "columnNames": [
+            "courier_id"
+          ],
+          "composite": false,
+          "keyName": "order_courier_id_index",
+          "primary": false,
+          "unique": false
+        },
+        {
+          "columnNames": [
+            "cart_id"
+          ],
+          "composite": false,
+          "keyName": "order_cart_id_unique",
+          "primary": false,
+          "unique": true
+        },
+        {
+          "keyName": "primary",
+          "columnNames": [
+            "id"
+          ],
+          "composite": false,
+          "primary": true,
+          "unique": true
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {
+        "order_courier_id_foreign": {
+          "constraintName": "order_courier_id_foreign",
+          "columnNames": [
+            "courier_id"
+          ],
+          "localTableName": "order",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "user",
+          "deleteRule": "set null",
+          "updateRule": "cascade"
+        },
+        "order_cart_id_foreign": {
+          "constraintName": "order_cart_id_foreign",
+          "columnNames": [
+            "cart_id"
+          ],
+          "localTableName": "order",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "cart",
           "updateRule": "cascade"
         }
       }

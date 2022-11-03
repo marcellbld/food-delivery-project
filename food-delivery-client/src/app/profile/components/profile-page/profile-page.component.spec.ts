@@ -14,6 +14,9 @@ import { UserService } from '../../../core/services/user/user.service';
 import { SharedModule } from '../../../shared/shared.module';
 import { PastOrderRowComponent } from '../past-order-row/past-order-row.component';
 import { UserI, UserRole } from '../../../shared/models/user/user.interface';
+import { MapService } from '../../../core/services/map/map.service';
+import { MapAddressService } from '../../../core/services/map-address/map-address.service';
+import { userMock } from '../../../../test/mocks/user.mock';
 
 describe('ProfilePageComponent', () => {
   let component: ProfilePageComponent;
@@ -36,12 +39,16 @@ describe('ProfilePageComponent', () => {
       }),
     };
     const cartServiceMock: Partial<CartService> = {
-      selfPurchasedCarts: [purchasedCartMock, purchasedCart2Mock],
+      selfDeliveredCarts: [purchasedCartMock, purchasedCart2Mock],
     };
 
     const userServiceMock: Partial<UserService> = {
       update: jest.fn(),
+      findSelf: jest.fn().mockImplementationOnce(() => of(userMock)),
     };
+
+    const mapAddressServiceMock = {} as Partial<MapAddressService>;
+    const mapServiceMock = {} as Partial<MapService>;
 
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule, SharedModule],
@@ -50,6 +57,8 @@ describe('ProfilePageComponent', () => {
         { provide: AuthService, useValue: authServiceMock },
         { provide: CartService, useValue: cartServiceMock },
         { provide: UserService, useValue: userServiceMock },
+        { provide: MapAddressService, useValue: mapAddressServiceMock },
+        { provide: MapService, useValue: mapServiceMock },
       ],
     }).compileComponents();
 

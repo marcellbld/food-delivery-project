@@ -11,6 +11,8 @@ export const restaurantMock = () => ({
   categories: { toArray: jest.fn(), set: jest.fn() } as any,
   items: { toArray: jest.fn() } as any,
   carts: { toArray: jest.fn() } as any,
+  locationLon: 1,
+  locationLat: 1,
 });
 
 export const restaurant2Mock = () => ({
@@ -24,6 +26,8 @@ export const restaurant2Mock = () => ({
   categories: { toArray: jest.fn(), set: jest.fn() } as any,
   items: { toArray: jest.fn() } as any,
   carts: { toArray: jest.fn() } as any,
+  locationLon: 1,
+  locationLat: 1,
 });
 
 export const restaurantDtoMock = () => ({
@@ -33,6 +37,7 @@ export const restaurantDtoMock = () => ({
   image: 'default.jpg',
   createdAt: new Date(1000000000000),
   categories: undefined,
+  location: [1, 1],
 });
 
 export const restaurant2DtoMock = () => ({
@@ -42,10 +47,12 @@ export const restaurant2DtoMock = () => ({
   image: 'default.jpg',
   createdAt: new Date(1100000000000),
   categories: undefined,
+  location: [1, 1],
 });
 
 export const createRestaurantMock = () => ({
   name: 'Test Restaurant',
   description: 'Something',
   owner: 1,
+  location: [1, 1],
 });

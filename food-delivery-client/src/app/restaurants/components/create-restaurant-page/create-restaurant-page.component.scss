@@ -1,12 +1,11 @@
 .custom-card {
-  width: 320px;
-  max-width: 320px;
+  width: 380px;
+  max-width: 380px;
 }
 
 .error-text {
   font-size: 0.9rem;
 }
-
 .required:after {
   content:" *";
   color: red;

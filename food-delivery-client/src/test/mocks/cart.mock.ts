@@ -6,6 +6,7 @@ import { userMock } from './user.mock';
 export const cartMock = {
   id: 1,
   purchased: false,
+  order: undefined,
   restaurant: restaurantMock,
   cartItems: [cartItemMock, cartItem2Mock],
   user: userMock,
@@ -14,6 +15,7 @@ export const purchasedCartMock = {
   id: 2,
   purchased: true,
   purchasedDate: new Date(999999999),
+  order: undefined,
   restaurant: restaurantMock,
   cartItems: [cartItemMock, cartItem2Mock],
   user: userMock,
@@ -26,6 +28,7 @@ export const purchasedCart2Mock = {
   id: 3,
   purchased: true,
   purchasedDate: new Date(999999999),
+  order: undefined,
   restaurant: restaurantMock,
   cartItems: [cartItemMock, cartItem2Mock],
   user: userMock,

@@ -66,6 +66,7 @@ export class RestaurantService {
     formData.append('name', createRestaurant.name);
     formData.append('description', createRestaurant.description);
     formData.append('owner', '' + createRestaurant.owner);
+    formData.append('location', JSON.stringify(createRestaurant.location));
     formData.append('categories', JSON.stringify(createRestaurant.categories));
     if (createRestaurant.file) {
       formData.append(
@@ -82,11 +83,10 @@ export class RestaurantService {
   }
 
   update(updateRestaurant: UpdateRestaurantI): Observable<RestaurantI> {
-    console.log(updateRestaurant.categories);
-
     const formData = new FormData();
     formData.append('id', updateRestaurant.id);
     formData.append('description', updateRestaurant.description);
+    formData.append('location', JSON.stringify(updateRestaurant.location));
     formData.append('categories', JSON.stringify(updateRestaurant.categories));
     if (updateRestaurant.file) {
       formData.append(

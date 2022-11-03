@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CategoryI } from '../../../shared/models/category/category.interface';
@@ -10,6 +10,8 @@ import { debounceTime, distinctUntilChanged, Subscription } from 'rxjs';
 import { RestaurantI } from '../../../shared/models/restaurant/restaurant.interface';
 import { getRestaurantImageUrl } from '../../../shared/utils/image-url-helper';
 import { windowRef } from '../../../shared/utils/window-ref';
+import { Coordinate } from 'ol/coordinate';
+import { MapInputComponent } from '../../../shared/components/map-input/map-input.component';
 
 @Component({
   selector: 'app-create-restaurant-page',
@@ -17,6 +19,8 @@ import { windowRef } from '../../../shared/utils/window-ref';
   styleUrls: ['./create-restaurant-page.component.scss'],
 })
 export class CreateRestaurantPageComponent implements OnInit {
+  @ViewChild('mapInput') mapInput: MapInputComponent | undefined;
+
   subscriptions = new Array<Subscription>();
   categoriesTypeahead = new EventEmitter<string>();
 
@@ -54,6 +58,8 @@ export class CreateRestaurantPageComponent implements OnInit {
 
   editRestaurant: RestaurantI | undefined;
 
+  location: Coordinate | undefined;
+
   window = windowRef();
 
   constructor(
@@ -79,6 +85,7 @@ export class CreateRestaurantPageComponent implements OnInit {
 
     const state = this.window.history.state;
     const restaurant = state.restaurant;
+
     this.editRestaurant = restaurant;
 
     if (!this.editRestaurant && this.router.url.endsWith('/edit')) {
@@ -105,6 +112,14 @@ export class CreateRestaurantPageComponent implements OnInit {
       this.categories?.setValue(
         this.editRestaurant.categories.map((c) => c.id) as never[]
       );
+
+      // Refresh Map
+      setTimeout(() => {
+        this.location = this.editRestaurant!.location;
+        if (this.location) {
+          this.mapInput?.locationChanged(this.location);
+        }
+      }, 0);
     }
   }
 
@@ -115,8 +130,6 @@ export class CreateRestaurantPageComponent implements OnInit {
   }
 
   onClickSubmit(): void {
-    console.log(this.form.valid);
-
     if (!this.form.valid) return;
 
     if (this.editRestaurant) {
@@ -127,12 +140,15 @@ export class CreateRestaurantPageComponent implements OnInit {
   }
 
   create(): void {
+    if (this.isDisabled()) return;
+
     this.apiProgress = true;
     this.restaurantService
       .create({
         name: this.restaurantName?.value!,
         description: this.description?.value!,
         owner: this.authService.loggedInUser()?.id || -1,
+        location: this.location || [],
         categories: this.categories?.value as number[],
         file: this.uploadedImage,
       })
@@ -148,11 +164,14 @@ export class CreateRestaurantPageComponent implements OnInit {
   }
 
   update(): void {
+    if (this.isDisabled()) return;
+
     this.apiProgress = true;
     this.restaurantService
       .update({
         id: '' + this.editRestaurant!.id,
         description: this.description?.value!,
+        location: this.location || [],
         categories: this.categories?.value as number[],
         file: this.uploadedImage,
       })
@@ -187,7 +206,10 @@ export class CreateRestaurantPageComponent implements OnInit {
   isDisabled() {
     const formFilled = this.restaurantName?.value && this.description?.value;
 
-    const validationError = this.restaurantNameError || this.descriptionError;
+    const validationError =
+      this.restaurantNameError ||
+      this.descriptionError ||
+      this.mapInput?.formError;
 
     return !formFilled || validationError !== undefined;
   }
@@ -249,5 +271,18 @@ export class CreateRestaurantPageComponent implements OnInit {
   }
   get buttonText(): string {
     return this.editRestaurant ? 'Edit' : 'Create';
+  }
+
+  get postalCodeError() {
+    return this.mapInput?.postalCodeError || null;
+  }
+  get streetError() {
+    return this.mapInput?.streetError || null;
+  }
+  get houseNumberError() {
+    return this.mapInput?.houseNumberError || null;
+  }
+  get invalidAddressError() {
+    return this.mapInput?.invalidAddressError || null;
   }
 }

@@ -1,0 +1,25 @@
+<div class="modal modal-lg fade" id="mapModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-none">
+      <div class="custom-card">
+        <div class="custom-card-inner">
+          <div class="custom-card-body p-1">
+            <div class="map-container">
+              <app-map
+              [clickable]="false"
+              [route]="route"
+              [mainCoordinate]="mainCoordinate"
+              [secondaryCoordinate]="secondaryCoordinate"
+              [featureIcons]="['shop.svg', 'user.svg']"
+              ></app-map>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex align-items-center justify-content-center p-3">
+        <button type="button" class="btn btn-secondary px-5" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<button #openModalButton id="openModalButton" [hidden]="true" data-bs-toggle="modal" data-bs-target="#mapModal"></button>

@@ -34,8 +34,8 @@ describe('CartController', () => {
         {
           provide: CartsService,
           useValue: {
-            findUnpurchasedByUserId: jest.fn(),
-            findAllPurchasedByUserId: jest.fn(),
+            findActiveCartByUserId: jest.fn(),
+            findAllDeliveredByUserId: jest.fn(),
             findOne: jest.fn(),
             setPurchased: jest.fn(),
             delete: jest.fn(),
@@ -93,39 +93,39 @@ describe('CartController', () => {
     expect(restaurantItemsService).toBeDefined();
   });
 
-  describe('findUnpurchasedByUser', () => {
+  describe('findActiveByUser', () => {
     beforeEach(() => {
       jest
-        .spyOn(cartsService, 'findUnpurchasedByUserId')
+        .spyOn(cartsService, 'findActiveCartByUserId')
         .mockReturnValue(cartDtoMock);
     });
 
     it('should return cart', async () => {
-      const cart = await controller.findUnpurchasedByUser(userDtoMock);
+      const cart = await controller.findActiveByUser(userDtoMock);
       expect(cart).toEqual(cartDtoMock);
     });
-    it('should call cartsService.findUnpurchasedByUserId with correct params', async () => {
-      await controller.findUnpurchasedByUser(userDtoMock);
-      expect(cartsService.findUnpurchasedByUserId).toHaveBeenCalledWith(
+    it('should call cartsService.findActiveCartByUserId with correct params', async () => {
+      await controller.findActiveByUser(userDtoMock);
+      expect(cartsService.findActiveCartByUserId).toHaveBeenCalledWith(
         userDtoMock.id,
       );
     });
   });
-  describe('findAllPurchasedByUser', () => {
+  describe('findAllDeliveredByUser', () => {
     beforeEach(() => {
       return jest
-        .spyOn(cartsService, 'findAllPurchasedByUserId')
+        .spyOn(cartsService, 'findAllDeliveredByUserId')
         .mockResolvedValue([purchasedCartDtoMock, purchasedCart2DtoMock]);
     });
 
     it('should return carts', async () => {
-      const carts = await controller.findAllPurchasedByUser(userDtoMock);
+      const carts = await controller.findAllDeliveredByUser(userDtoMock);
       expect(carts).toEqual([purchasedCartDtoMock, purchasedCart2DtoMock]);
     });
 
-    it('should call cartsService.findAllPurchasedByUserId with correct params', async () => {
-      await controller.findAllPurchasedByUser(userDtoMock);
-      expect(cartsService.findAllPurchasedByUserId).toHaveBeenCalledWith(
+    it('should call cartsService.findAllDeliveredByUserId with correct params', async () => {
+      await controller.findAllDeliveredByUser(userDtoMock);
+      expect(cartsService.findAllDeliveredByUserId).toHaveBeenCalledWith(
         userDtoMock.id,
       );
     });
@@ -235,19 +235,11 @@ describe('CartController', () => {
         controller.delete(1, { ...userDtoMock, id: 99 }),
       ).rejects.toThrowError(ForbiddenException);
     });
-    it('should throw BadRequestException if cart is purchased', async () => {
-      cartsService.findOne = jest
-        .fn()
-        .mockResolvedValueOnce({ ...cartDtoMock, purchased: true });
-      await expect(controller.delete(1, userDtoMock)).rejects.toThrowError(
-        BadRequestException,
-      );
-    });
   });
   describe('createItem', () => {
     beforeEach(() => {
       jest
-        .spyOn(cartsService, 'findUnpurchasedByUserId')
+        .spyOn(cartsService, 'findActiveCartByUserId')
         .mockResolvedValue(cartDtoMock);
       jest
         .spyOn(restaurantItemsService, 'findOne')
@@ -255,10 +247,10 @@ describe('CartController', () => {
 
       jest.spyOn(cartItemsService, 'create').mockResolvedValue(cartItemDtoMock);
     });
-    it('should call cartsService.findUnpurchasedByUserId with correct params', async () => {
+    it('should call cartsService.findActiveCartByUserId with correct params', async () => {
       await controller.createItem({ restaurantItemId: 1 }, userDtoMock);
 
-      expect(cartsService.findUnpurchasedByUserId).toHaveBeenCalledWith(
+      expect(cartsService.findActiveCartByUserId).toHaveBeenCalledWith(
         userDtoMock.id,
       );
     });
@@ -280,7 +272,7 @@ describe('CartController', () => {
     describe('cart exists', () => {
       beforeEach(() => {
         jest
-          .spyOn(cartsService, 'findUnpurchasedByUserId')
+          .spyOn(cartsService, 'findActiveCartByUserId')
           .mockResolvedValue(cartDtoMock);
       });
       it('should create cart item', async () => {
@@ -292,7 +284,7 @@ describe('CartController', () => {
         expect(item).toEqual(cartItemDtoMock);
       });
       it("should throw BadRequestException if restaurant of item doesn't belong to restaurant of cart", async () => {
-        cartsService.findUnpurchasedByUserId = jest.fn().mockResolvedValueOnce({
+        cartsService.findActiveCartByUserId = jest.fn().mockResolvedValueOnce({
           ...cartDtoMock,
           restaurant: { ...cartDtoMock.restaurant, id: 99 },
         });
@@ -312,7 +304,7 @@ describe('CartController', () => {
       beforeEach(() => {
         jest.spyOn(cartsService, 'create').mockResolvedValue(cartDtoMock);
         jest
-          .spyOn(cartsService, 'findUnpurchasedByUserId')
+          .spyOn(cartsService, 'findActiveCartByUserId')
           .mockResolvedValue(null);
       });
 
@@ -337,7 +329,7 @@ describe('CartController', () => {
   describe('update', () => {
     beforeEach(() => {
       jest
-        .spyOn(cartsService, 'findUnpurchasedByUserId')
+        .spyOn(cartsService, 'findActiveCartByUserId')
         .mockResolvedValue({ ...cartDtoMock, cartItems: [cartItemDtoMock] });
 
       jest
@@ -352,10 +344,10 @@ describe('CartController', () => {
         count: 99,
       });
     });
-    it('should call cartsService.findUnpurchasedByUserId with correct params', async () => {
+    it('should call cartsService.findActiveCartByUserId with correct params', async () => {
       await controller.updateItem(1, { count: 99 }, userDtoMock);
 
-      expect(cartsService.findUnpurchasedByUserId).toHaveBeenCalledWith(
+      expect(cartsService.findActiveCartByUserId).toHaveBeenCalledWith(
         userDtoMock.id,
       );
     });
@@ -365,7 +357,7 @@ describe('CartController', () => {
       expect(cartItemsService.update).toHaveBeenCalledWith(1, { count: 99 });
     });
     it("should throw BadRequestException if unpurchased cart doesn't exists", async () => {
-      cartsService.findUnpurchasedByUserId = jest
+      cartsService.findActiveCartByUserId = jest
         .fn()
         .mockResolvedValueOnce(null);
 
@@ -374,7 +366,7 @@ describe('CartController', () => {
       ).rejects.toThrowError(BadRequestException);
     });
     it("should throw BadRequestException if item doesn't exists in the cart", async () => {
-      cartsService.findUnpurchasedByUserId = jest
+      cartsService.findActiveCartByUserId = jest
         .fn()
         .mockResolvedValueOnce({ ...userDtoMock, cartItems: [] });
 
@@ -391,7 +383,7 @@ describe('CartController', () => {
   describe('deleteItem', () => {
     beforeEach(() => {
       jest
-        .spyOn(cartsService, 'findUnpurchasedByUserId')
+        .spyOn(cartsService, 'findActiveCartByUserId')
         .mockResolvedValue({ ...cartDtoMock, cartItems: [cartItemDtoMock] });
       jest.spyOn(cartItemsService, 'delete').mockResolvedValue(true);
       jest.spyOn(cartsService, 'delete').mockResolvedValue(true);
@@ -402,9 +394,9 @@ describe('CartController', () => {
       });
     });
 
-    it('should call cartsService.findUnpurchasedByUserId with correct params', async () => {
+    it('should call cartsService.findActiveCartByUserId with correct params', async () => {
       await controller.deleteItem(1, userDtoMock);
-      expect(cartsService.findUnpurchasedByUserId).toHaveBeenCalledWith(
+      expect(cartsService.findActiveCartByUserId).toHaveBeenCalledWith(
         userDtoMock.id,
       );
     });
@@ -449,7 +441,7 @@ describe('CartController', () => {
     });
 
     it("should throw BadRequestException if cart doesn't exists", async () => {
-      cartsService.findUnpurchasedByUserId = jest
+      cartsService.findActiveCartByUserId = jest
         .fn()
         .mockResolvedValueOnce(null);
 
@@ -458,7 +450,7 @@ describe('CartController', () => {
       );
     });
     it('should throw BadRequestException if cart is empty', async () => {
-      cartsService.findUnpurchasedByUserId = jest
+      cartsService.findActiveCartByUserId = jest
         .fn()
         .mockResolvedValueOnce({ ...cartDtoMock, cartItems: [] });
 

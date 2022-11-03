@@ -17,7 +17,8 @@ import { UserRole } from '../../user-role';
 import { Roles } from '../../../auth/roles.decorator';
 import { RolesGuard } from '../../../auth/guards/roles.guard';
 import { UserParam } from '../../../auth/user-param.decorator';
-import { UpdateUserDto } from '../../dto/update-user.dto';
+import { UpdateUserPasswordDto } from '../../dto/update-user-password.dto';
+import { UpdateUserAddressDto } from '../../dto/update-user-address.dto';
 
 @Controller('users')
 export class UsersController {
@@ -29,6 +30,11 @@ export class UsersController {
     return this.usersService.create(createUserDto);
   }
 
+  @Get()
+  @UseGuards(JwtAuthGuard)
+  async findSelf(@UserParam() userDto: UserDto): Promise<UserDto> {
+    return this.usersService.findOne(userDto.id);
+  }
   @Get(':id')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.Admin)
@@ -51,10 +57,26 @@ export class UsersController {
   @Patch()
   @UseGuards(JwtAuthGuard, RolesGuard)
   @UsePipes(ValidationPipe)
-  async updateSelf(
+  async updateSelfPassword(
     @UserParam() userDto: UserDto,
-    @Body() updateUserDto: UpdateUserDto,
+    @Body() updateUserPasswordDto: UpdateUserPasswordDto,
   ): Promise<UserDto> {
-    return await this.usersService.update(userDto.id, updateUserDto);
+    return await this.usersService.updatePassword(
+      userDto.id,
+      updateUserPasswordDto,
+    );
+  }
+  @Patch('address')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @UsePipes(ValidationPipe)
+  async updateSelfAddress(
+    @UserParam() userDto: UserDto,
+    @Body()
+    updateUserAddressDto: UpdateUserAddressDto,
+  ): Promise<UserDto> {
+    return await this.usersService.updateAddress(
+      userDto.id,
+      updateUserAddressDto,
+    );
   }
 }

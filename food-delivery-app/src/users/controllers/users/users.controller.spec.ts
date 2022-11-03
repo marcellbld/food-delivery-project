@@ -24,7 +24,7 @@ describe('UsersController', () => {
             findOneByUsername: jest
               .fn()
               .mockReturnValue(UserMocks.userDtoMock()),
-            update: jest.fn().mockReturnValue(UserMocks.userDtoMock()),
+            updatePassword: jest.fn().mockReturnValue(UserMocks.userDtoMock()),
           },
         },
       ],
@@ -54,6 +54,7 @@ describe('UsersController', () => {
         username: 'user1',
         role: UserRole.User,
         createdAt: new Date(1000000000000),
+        address: [1, 1],
       });
     });
     it('should call usersService.findOne with correct params', async () => {
@@ -93,9 +94,9 @@ describe('UsersController', () => {
       expect(usersService.create).toHaveBeenCalledWith(createUserMock);
     });
   });
-  describe('updateSelf', () => {
+  describe('updateSelfPassword', () => {
     it('should return updated user', async () => {
-      const user = await controller.updateSelf(userDtoMock, {
+      const user = await controller.updateSelfPassword(userDtoMock, {
         password: 'newPass',
       });
 
@@ -105,9 +106,9 @@ describe('UsersController', () => {
       const updateUserDto = {
         password: 'newPass',
       };
-      await controller.updateSelf(userDtoMock, updateUserDto);
+      await controller.updateSelfPassword(userDtoMock, updateUserDto);
 
-      expect(usersService.update).toHaveBeenCalledWith(
+      expect(usersService.updatePassword).toHaveBeenCalledWith(
         userDtoMock.id,
         updateUserDto,
       );

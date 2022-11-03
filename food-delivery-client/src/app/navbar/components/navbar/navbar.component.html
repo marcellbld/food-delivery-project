@@ -53,7 +53,8 @@
         <ng-template #LoggedInPanel>
           <li class="nav-item nav-button">
               <a class="nav-link btn text-light rounded-pill py-1 d-md-flex"
-              [ngClass]="this.loggedInUserRole() === 'USER' ? 'btn-primary' : 'btn-orange'"
+              [ngClass]="this.loggedInRole() === 'USER' ? 'btn-primary' :
+                        (this.loggedInRole() === 'COURIER' ? 'btn-green' : 'btn-orange')"
               [routerLink]="['/profile']" routerLinkActive="router-link-active-primary"
               [routerLinkActiveOptions]="{exact:true}"
               data-testid="user-button" >

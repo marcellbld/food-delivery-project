@@ -1,0 +1,37 @@
+<div *ngIf="activeOrder">
+  <p>Active Order</p>
+  <div class="d-flex flex-column justify-content-center align-items-center flex-wrap">
+    <app-cart-order-block
+    [cart]="activeOrder.cart!"
+    [order]="activeOrder"
+    class="cart-block-base"
+    [ngClass]='
+      clickedCartElement == null ? "cart-block" :
+      isElementClicked(activeOrder.cart!.id) ? "cart-block-grow" : "cart-block-shrink"'
+    (click)="clickOnCartBlock($event)"
+    [attr.data-cartid]="activeOrder.cart!.id"
+    [clicked]='isElementClicked(activeOrder.cart!.id)'></app-cart-order-block>
+  </div>
+  <hr>
+</div>
+<div>
+  <p>Orders</p>
+  <div class="d-flex flex-column justify-content-center align-items-center flex-wrap">
+    <ng-container *ngIf="undeliveredCarts && undeliveredCarts.length > 0;else noCarts">
+      <app-cart-order-block *ngFor="let cart of undeliveredCarts"
+      [cart]="cart"
+      class="cart-block-base"
+      [ngClass]='
+        clickedCartElement == null ? "cart-block" :
+        isElementClicked(cart.id) ? "cart-block-grow" : "cart-block-shrink"'
+      (click)="clickOnCartBlock($event)"
+      [attr.data-cartid]="cart.id"
+      [clicked]='isElementClicked(cart.id)'></app-cart-order-block>
+    </ng-container>
+    <ng-template #noCarts>
+      <div>
+        <p>Waiting for orders...</p>
+      </div>
+    </ng-template>
+  </div>
+</div>

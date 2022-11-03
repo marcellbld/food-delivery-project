@@ -75,13 +75,10 @@ export class AuthService {
 
           this.authStorageService.saveUser(result);
           this.setLoginResponse(result);
-          console.log('Login successful');
 
           this.loginSubject.next(true);
         },
         error: (error) => {
-          console.log('Login failed');
-
           return throwError(() => new Error(error));
         },
       })

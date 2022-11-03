@@ -2,7 +2,11 @@ import { Mapper } from '@automapper/core';
 import { InjectMapper } from '@automapper/nestjs';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { EntityRepository } from '@mikro-orm/sqlite';
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { UpdateCartItem } from '../../dto/update-cart-item.dto';
 import { CartItemDto } from '../../dto/cart-item.dto';
 import { CartItem } from '../../entities/cart-item.model';
@@ -44,11 +48,17 @@ export class CartItemsService {
   }
 
   async create(cartId: number, restaurantItemid: number): Promise<CartItemDto> {
-    let cartItem = await this.cartItemRepository.findOne({
-      cart: cartId,
-      item: restaurantItemid,
-    });
+    let cartItem = await this.cartItemRepository.findOne(
+      {
+        cart: cartId,
+        item: restaurantItemid,
+      },
+      { populate: ['cart', 'cart.order'] },
+    );
+
     if (cartItem) {
+      if (cartItem.cart.purchased || cartItem.cart.order)
+        throw new BadRequestException("Can't modify this item.");
       cartItem.count++;
     } else {
       cartItem = this.cartItemRepository.create({
@@ -66,10 +76,16 @@ export class CartItemsService {
     id: number,
     updateCartItem: UpdateCartItem,
   ): Promise<CartItemDto> {
-    const cartItem = await this.cartItemRepository.findOne({
-      id,
-    });
+    const cartItem = await this.cartItemRepository.findOne(
+      {
+        id,
+      },
+      { populate: ['cart'] },
+    );
     if (!cartItem) throw new NotFoundException("Cart item doesn't exists");
+
+    if (cartItem.cart.purchased || cartItem.cart.order)
+      throw new BadRequestException("Can't modify this item.");
 
     cartItem.count = updateCartItem.count;
 
@@ -79,8 +95,14 @@ export class CartItemsService {
   }
 
   async delete(id: number): Promise<boolean> {
-    const cartItem = await this.cartItemRepository.findOne({ id });
+    const cartItem = await this.cartItemRepository.findOne(
+      { id },
+      { populate: ['cart'] },
+    );
     if (!cartItem) throw new NotFoundException("Cart Item doesn't exists");
+
+    if (cartItem.cart.purchased || cartItem.cart.order)
+      throw new BadRequestException("Can't modify this item.");
 
     await this.cartItemRepository.removeAndFlush(cartItem);
 

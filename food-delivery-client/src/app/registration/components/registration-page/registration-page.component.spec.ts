@@ -8,6 +8,8 @@ import { HomePageComponent } from '../../../home/components/home-page/home-page.
 import { LoginPageComponent } from '../../../login/components/login-page/login-page.component';
 import { RegistrationPageComponent } from './registration-page.component';
 import { UserService } from '../../../core/services/user/user.service';
+import { MapAddressService } from '../../../core/services/map-address/map-address.service';
+import { MapService } from '../../../core/services/map/map.service';
 
 describe('RegistrationPageComponent', () => {
   let component: RegistrationPageComponent;
@@ -24,6 +26,9 @@ describe('RegistrationPageComponent', () => {
       isUsernameTaken: jest.fn(),
     } as Partial<UserService>;
 
+    const mapAddressServiceMock = {} as Partial<MapAddressService>;
+    const mapServiceMock = {} as Partial<MapService>;
+
     await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule.withRoutes([
@@ -34,7 +39,11 @@ describe('RegistrationPageComponent', () => {
         SharedModule,
       ],
       declarations: [RegistrationPageComponent],
-      providers: [{ provide: UserService, useValue: userServiceMock }],
+      providers: [
+        { provide: UserService, useValue: userServiceMock },
+        { provide: MapAddressService, useValue: mapAddressServiceMock },
+        { provide: MapService, useValue: mapServiceMock },
+      ],
     }).compileComponents();
 
     router = TestBed.inject(Router);
@@ -161,6 +170,8 @@ describe('RegistrationPageComponent', () => {
         passwordInput.dispatchEvent(new Event('input'));
         passwordConfirmInput.value = 'password';
         passwordConfirmInput.dispatchEvent(new Event('input'));
+
+        component.location = [1, 1];
 
         fixture.detectChanges();
         button = nativeElement.querySelector('button');
@@ -324,6 +335,8 @@ describe('RegistrationPageComponent', () => {
         component.form.get('password')?.setValue('pass');
         component.form.get('passwordConfirm')?.setValue('pass');
 
+        component.location = [1, 1];
+
         component.onClickSignUp();
 
         expect(userService.create).toHaveBeenCalledTimes(1);
@@ -344,6 +357,8 @@ describe('RegistrationPageComponent', () => {
         component.form.get('username')?.setValue('user1');
         component.form.get('password')?.setValue('pass');
         component.form.get('passwordConfirm')?.setValue('pass');
+
+        component.location = [1, 1];
 
         component.onClickSignUp();
 

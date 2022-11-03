@@ -2,10 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { CartService } from '../../../core/services/cart/cart.service';
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { Cart } from '../../../shared/models/cart/cart';
-import { UserRole } from '../../../shared/models/user/user.interface';
+import { UserI, UserRole } from '../../../shared/models/user/user.interface';
 import { RestaurantI } from '../../../shared/models/restaurant/restaurant.interface';
 import { RestaurantService } from '../../../core/services/restaurant/restaurant.service';
 import { ToastService } from '../../../core/services/toast/toast.service';
+import { Coordinate } from 'ol/coordinate';
+import { MapModalService } from '../../../core/services/map-modal/map-modal.service';
+import { UserService } from '../../../core/services/user/user.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -13,17 +16,27 @@ import { ToastService } from '../../../core/services/toast/toast.service';
   styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent implements OnInit {
+  private selfUser: UserI | undefined;
+
   constructor(
     private readonly authService: AuthService,
+    private readonly userService: UserService,
     private readonly cartService: CartService,
     private readonly restaurantService: RestaurantService,
-    private readonly toastService: ToastService
+    private readonly toastService: ToastService,
+    private readonly mapModalService: MapModalService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.authService.isLoggedIn()) {
+      this.userService.findSelf().subscribe((result) => {
+        this.selfUser = result as UserI;
+      });
+    }
+  }
 
   get cart(): Cart | undefined {
-    return this.cartService.selfUnpurchasedCart;
+    return this.cartService.selfActiveCart;
   }
 
   get selfRestaurants(): RestaurantI[] | undefined {
@@ -42,7 +55,22 @@ export class SidebarComponent implements OnInit {
   }
 
   getTotalCost(): number {
-    return this.cartService.selfUnpurchasedCart?.calculateTotalCost()!;
+    return this.cartService.selfActiveCart?.calculateTotalCost()!;
+  }
+
+  isCartWaitingForCourier(): boolean {
+    return (
+      this.cartService.selfActiveCart !== undefined &&
+      this.cartService.selfActiveCart.purchased &&
+      this.cartService.selfActiveCart.order === null
+    );
+  }
+  isCartOnTheWay(): boolean {
+    return (
+      this.cartService.selfActiveCart !== undefined &&
+      this.cartService.selfActiveCart.purchased &&
+      this.cartService.selfActiveCart.order !== null
+    );
   }
 
   get isLoggedIn(): boolean {
@@ -58,6 +86,14 @@ export class SidebarComponent implements OnInit {
 
   clickLogOutButton(): void {
     this.authService.logout();
+  }
+
+  clickOnShowMap(): void {
+    this.mapModalService.showModal({
+      mainCoordinate: this.cart?.restaurant.location,
+      secondaryCoordinate: this.selfUser?.address,
+      route: true,
+    });
   }
 
   clickOnDeleteButton(): void {

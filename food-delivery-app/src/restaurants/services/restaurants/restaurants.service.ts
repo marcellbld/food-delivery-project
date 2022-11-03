@@ -85,7 +85,8 @@ export class RestaurantsService {
   ): Promise<RestaurantDto> {
     try {
       const restaurant = this.restaurantRepository.create(createRestaurantDto);
-
+      restaurant.locationLon = createRestaurantDto.location[0];
+      restaurant.locationLat = createRestaurantDto.location[1];
       if (
         createRestaurantDto.categories &&
         createRestaurantDto.categories.length > 0
@@ -125,6 +126,13 @@ export class RestaurantsService {
       updateRestaurantDto.description ?? restaurant.description;
 
     restaurant.image = image ?? restaurant.image;
+
+    restaurant.locationLon = updateRestaurantDto.location
+      ? updateRestaurantDto.location[0]
+      : restaurant.locationLat;
+    restaurant.locationLat = updateRestaurantDto.location
+      ? updateRestaurantDto.location[1]
+      : restaurant.locationLon;
 
     if (
       updateRestaurantDto.categories &&

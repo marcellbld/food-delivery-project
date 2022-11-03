@@ -39,7 +39,7 @@ export class NavbarComponent implements OnInit {
   loggedInUsername(): string {
     return this.authService.loggedInUser()?.username || '';
   }
-  loggedInUserRole(): string {
+  loggedInRole(): UserRole {
     return this.authService.loggedInUser()?.role || UserRole.User;
   }
 

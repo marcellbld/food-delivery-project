@@ -67,7 +67,7 @@ describe('CartService', () => {
     const setup = (hasUnpurchasedCart: boolean) => {
       jest.spyOn(cartRepository, 'create').mockReturnValue(cartMock);
       jest
-        .spyOn(CartsService.prototype as any, 'findUnpurchasedByUserId')
+        .spyOn(CartsService.prototype as any, 'findActiveCartByUserId')
         .mockImplementationOnce(() => (hasUnpurchasedCart ? {} : null));
     };
     const userId = 1;
@@ -80,13 +80,13 @@ describe('CartService', () => {
 
       expect(cart).toEqual(cartDtoMock);
     });
-    it('should call findUnpurchasedByUserId method with correct params', async () => {
+    it('should call findActiveCartByUserId method with correct params', async () => {
       setup(false);
 
       await service.create(userId, restaurantId);
 
       expect(
-        (CartsService.prototype as any).findUnpurchasedByUserId,
+        (CartsService.prototype as any).findActiveCartByUserId,
       ).toBeCalledWith(userId);
     });
     it('should call cartRepository.create with correct params', async () => {
@@ -136,52 +136,6 @@ describe('CartService', () => {
 
       await expect(service.findOne(cartMock.id)).rejects.toThrowError(
         NotFoundException,
-      );
-    });
-  });
-  describe('findUnpurchasedByUserId', () => {
-    beforeEach(() => {
-      jest.spyOn(cartRepository, 'findOne').mockResolvedValue(cartMock);
-    });
-    it('should return unpurchased cart as CartDto', async () => {
-      const cart = await service.findUnpurchasedByUserId(cartMock.user.id);
-
-      expect(cart).toEqual(cartDtoMock);
-    });
-    it('should call cartRepository.findOne with correct params', async () => {
-      await service.findUnpurchasedByUserId(cartMock.user.id);
-      expect(cartRepository.findOne).toHaveBeenCalledWith(
-        {
-          user: cartMock.user.id,
-          purchased: false,
-        },
-        { populate: ['cartItems', 'cartItems.item', 'user', 'restaurant'] },
-      );
-    });
-  });
-  describe('findAllPurchasedByUserId', () => {
-    beforeEach(() => {
-      jest
-        .spyOn(cartRepository, 'find')
-        .mockResolvedValueOnce(cartPurchasedArrayMock);
-    });
-
-    it('should return purchased carts as CartDto', async () => {
-      const carts = await service.findAllPurchasedByUserId(cartMock.user.id);
-
-      expect(carts).toEqual(cartPurchasedArrayDtoMock);
-    });
-    it('should call cartRepository.find with correct params', async () => {
-      await service.findAllPurchasedByUserId(cartMock.user.id);
-      expect(cartRepository.find).toHaveBeenCalledWith(
-        {
-          user: cartMock.user.id,
-          purchased: true,
-        },
-        {
-          populate: ['cartItems', 'cartItems.item', 'user', 'restaurant'],
-          orderBy: { purchasedDate: QueryOrder.DESC_NULLS_LAST },
-        },
       );
     });
   });

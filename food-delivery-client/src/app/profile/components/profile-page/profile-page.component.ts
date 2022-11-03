@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CartService } from '../../../core/services/cart/cart.service';
 import { Cart } from '../../../shared/models/cart/cart';
@@ -6,6 +6,8 @@ import { UserService } from '../../../core/services/user/user.service';
 import { passwordMatchValidator } from '../../../registration/validators/password-match.validator';
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { UserRole } from '../../../shared/models/user/user.interface';
+import { MapInputComponent } from '../../../shared/components/map-input/map-input.component';
+import { Coordinate } from 'ol/coordinate';
 
 @Component({
   selector: 'app-profile-page',
@@ -13,6 +15,8 @@ import { UserRole } from '../../../shared/models/user/user.interface';
   styleUrls: ['./profile-page.component.scss'],
 })
 export class ProfilePageComponent implements OnInit {
+  @ViewChild('mapInput') mapInput: MapInputComponent | undefined;
+
   changePasswordForm = new FormGroup(
     {
       password: new FormControl('', [
@@ -30,26 +34,39 @@ export class ProfilePageComponent implements OnInit {
   changePasswordApiProgress = false;
   changePasswordSuccess = false;
 
+  changeAddressApiProgress = false;
+  changeAddressSuccess = false;
+
+  location: Coordinate | undefined;
+
   constructor(
     private readonly userService: UserService,
     private readonly cartService: CartService,
     private readonly authService: AuthService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.userService.findSelf().subscribe((result) => {
+      const user = result;
 
-  get purchasedCarts(): Cart[] | undefined {
-    return this.cartService.selfPurchasedCarts;
+      setTimeout(() => {
+        this.location = user.address;
+        if (this.location) {
+          this.mapInput?.locationChanged(this.location);
+        }
+      }, 0);
+    });
   }
 
-  get isLoggedIn(): boolean {
-    return this.authService.isLoggedIn();
+  get deliveredCarts(): Cart[] | undefined {
+    return this.cartService.selfDeliveredCarts;
   }
 
-  get loggedInUsername(): string {
+  loggedInUsername(): string {
     return this.authService.loggedInUser()?.username || '';
   }
-  get loggedInUserRole(): string {
+
+  loggedInRole(): string {
     return this.authService.loggedInUser()?.role || UserRole.User;
   }
 
@@ -68,6 +85,24 @@ export class ProfilePageComponent implements OnInit {
         this.changePasswordForm.reset();
       },
     });
+  }
+  onChangeAddress(): void {
+    if (this.mapInput?.formError || !this.location) return;
+
+    this.changeAddressApiProgress = true;
+
+    this.userService.updateAddress(this.location).subscribe({
+      next: () => {
+        this.changeAddressSuccess = true;
+      },
+      error: () => {},
+      complete: () => {
+        this.changeAddressApiProgress = false;
+      },
+    });
+  }
+  isChangeAddressBtnDisabled(): boolean {
+    return this.mapInput?.formError !== undefined || !this.location;
   }
   isChangePasswordBtnDisabled() {
     const formFilled = this.password?.value && this.passwordConfirm?.value;
@@ -103,5 +138,18 @@ export class ProfilePageComponent implements OnInit {
       }
     }
     return;
+  }
+
+  get postalCodeError() {
+    return this.mapInput?.postalCodeError || null;
+  }
+  get streetError() {
+    return this.mapInput?.streetError || null;
+  }
+  get houseNumberError() {
+    return this.mapInput?.houseNumberError || null;
+  }
+  get invalidAddressError() {
+    return this.mapInput?.invalidAddressError || null;
   }
 }

@@ -1,0 +1,35 @@
+<div class="custom-card"
+  [ngClass]="{'active': order}">
+  <div class="custom-card-inner d-flex flex-column h-100">
+    <div class="custom-card-body py-2">
+      <div *ngIf="clicked">
+        <span class="small-caps text-black-50">Cart</span>
+      </div>
+      <p class="fs-5 pt-1 mb-1"># {{cart.id}}</p>
+      <p class="text-secondary">{{cart.restaurant.name}}</p>
+      <p *ngIf="order">Delivery time: {{order.deliveryTime | date:'shortTime'}} ({{cdTime | date:'mm:ss'}})</p>
+      <div *ngIf="clicked">
+        <hr class="my-0">
+        <div>
+          <span class="small-caps text-black-50">Items</span>
+        </div>
+        <div class="d-flex flex-column justify-content-center mx-2">
+          <app-cart-item-block
+            *ngFor="let item of cart?.cartItems"
+            [cartItem]="item"
+            [modifiable]="false"
+            class="mx-1">
+          </app-cart-item-block>
+        </div>
+        <div class="mt-2 w-100 text-center">
+          <div>
+            <button type="button" class="btn btn-sm btn-circle btn-dark me-2" (click)="onClickShowMapButton()"><i class="bi bi-pin-map-fill"></i></button>
+            <span class="text-secondary">{{locationText}}</span>
+          </div>
+          <button type="button" class="btn edit-btn btn-green btn-md pb-2 rounded-pill" (click)="onClickPickUpButton()"
+            *ngIf="!order">Pick up</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

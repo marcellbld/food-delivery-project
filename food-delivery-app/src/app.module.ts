@@ -12,6 +12,8 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { CategoriesModule } from './categories/categories.module';
 import { CartModule } from './cart/cart.module';
+import { OrdersModule } from './orders/orders.module';
+import { MapModule } from './map/map.module';
 
 @Module({
   imports: [
@@ -27,6 +29,8 @@ import { CartModule } from './cart/cart.module';
     AuthModule,
     UsersModule,
     CartModule,
+    OrdersModule,
+    MapModule,
   ],
   controllers: [],
   providers: [MainAutomapperProfile],

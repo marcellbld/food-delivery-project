@@ -20,14 +20,14 @@ describe('CartController (e2e)', () => {
     await resetDb();
   });
 
-  describe('findUnpurchasedByUser (GET /carts/unpurchased)', () => {
-    const GET_UNPURCHASED_CART_URL = '/carts/unpurchased';
+  describe('findActiveByUser (GET /carts/active)', () => {
+    const GET_ACTIVE_CART_URL = '/carts/active';
 
     it('should return self unpurchased cart as User - return 200', async () => {
       const token = await setupTokenForUser();
 
       return request(app.getHttpServer())
-        .get(GET_UNPURCHASED_CART_URL)
+        .get(GET_ACTIVE_CART_URL)
         .set('Authorization', 'Bearer ' + token)
         .expect(200)
         .then((res: request.Response) => {
@@ -36,6 +36,7 @@ describe('CartController (e2e)', () => {
             id: 1,
             purchased: false,
             purchasedDate: null,
+            order: null,
             restaurant: {
               id: 1,
               name: 'Test Restaurant',
@@ -43,6 +44,7 @@ describe('CartController (e2e)', () => {
               createdAt: expect.anything(),
               image: null,
               categories: [],
+              location: [1, 1],
             },
             cartItems: [
               {
@@ -77,6 +79,7 @@ describe('CartController (e2e)', () => {
               role: 'USER',
               username: 'tuser1',
               createdAt: expect.anything(),
+              address: [1, 1],
             },
           });
         });
@@ -85,7 +88,7 @@ describe('CartController (e2e)', () => {
       const token = await setupTokenForUser2();
 
       return request(app.getHttpServer())
-        .get(GET_UNPURCHASED_CART_URL)
+        .get(GET_ACTIVE_CART_URL)
         .set('Authorization', 'Bearer ' + token)
         .expect(200)
         .then((res: request.Response) => {
@@ -98,19 +101,19 @@ describe('CartController (e2e)', () => {
       const token = await setupTokenForOwner();
 
       return request(app.getHttpServer())
-        .get(GET_UNPURCHASED_CART_URL)
+        .get(GET_ACTIVE_CART_URL)
         .set('Authorization', 'Bearer ' + token)
         .expect(403);
     });
   });
-  describe('findAllPurchasedByUser (GET /carts/purchased)', () => {
-    const GET_PURCHASED_CARTS_URL = '/carts/purchased';
+  describe('findAllDeliveredByUser (GET /carts/delivered)', () => {
+    const GET_DELIVERED_CARTS_URL = '/carts/delivered';
 
-    it('should return self purchased carts as User - return 200', async () => {
+    it('should return self delivered carts as User - return 200', async () => {
       const token = await setupTokenForUser();
 
       return request(app.getHttpServer())
-        .get(GET_PURCHASED_CARTS_URL)
+        .get(GET_DELIVERED_CARTS_URL)
         .set('Authorization', 'Bearer ' + token)
         .expect(200)
         .then((res: request.Response) => {
@@ -120,6 +123,13 @@ describe('CartController (e2e)', () => {
             id: 2,
             purchased: true,
             purchasedDate: expect.anything(),
+            order: {
+              id: 1,
+              commission: 0.1,
+              createdAt: expect.anything(),
+              deliveryTime: expect.anything(),
+              cart: expect.anything(),
+            },
             restaurant: {
               id: 1,
               name: 'Test Restaurant',
@@ -127,12 +137,14 @@ describe('CartController (e2e)', () => {
               createdAt: expect.anything(),
               image: null,
               categories: [],
+              location: [1, 1],
             },
             user: {
               id: 2,
               username: 'tuser1',
               role: 'USER',
               createdAt: expect.anything(),
+              address: [1, 1],
             },
             cartItems: [
               {
@@ -150,47 +162,13 @@ describe('CartController (e2e)', () => {
               },
             ],
           });
-          expect(carts).toContainEqual({
-            id: 3,
-            purchased: true,
-            purchasedDate: expect.anything(),
-            restaurant: {
-              id: 1,
-              name: 'Test Restaurant',
-              description: 'Test Restaurant Description',
-              createdAt: expect.anything(),
-              image: null,
-              categories: [],
-            },
-            user: {
-              id: 2,
-              username: 'tuser1',
-              role: 'USER',
-              createdAt: expect.anything(),
-            },
-            cartItems: [
-              {
-                id: 4,
-                count: 3,
-                item: {
-                  id: 1,
-                  name: 'Test Item 1',
-                  description: 'Test Item Description',
-                  image: null,
-                  price: 1.05,
-                  restaurant: expect.anything(),
-                },
-                price: 3.15,
-              },
-            ],
-          });
         });
     });
     it('should return empty array as User without purchased carts - return 200', async () => {
       const token = await setupTokenForUser2();
 
       return request(app.getHttpServer())
-        .get(GET_PURCHASED_CARTS_URL)
+        .get(GET_DELIVERED_CARTS_URL)
         .set('Authorization', 'Bearer ' + token)
         .expect(200)
         .then((res: request.Response) => {
@@ -203,7 +181,7 @@ describe('CartController (e2e)', () => {
       const token = await setupTokenForOwner();
 
       return request(app.getHttpServer())
-        .get(GET_PURCHASED_CARTS_URL)
+        .get(GET_DELIVERED_CARTS_URL)
         .set('Authorization', 'Bearer ' + token)
         .expect(403);
     });
@@ -224,6 +202,7 @@ describe('CartController (e2e)', () => {
             id: 1,
             purchased: false,
             purchasedDate: null,
+            order: null,
             restaurant: {
               id: 1,
               name: 'Test Restaurant',
@@ -231,6 +210,7 @@ describe('CartController (e2e)', () => {
               createdAt: expect.anything(),
               image: null,
               categories: [],
+              location: [1, 1],
             },
             cartItems: [
               {
@@ -265,6 +245,7 @@ describe('CartController (e2e)', () => {
               role: 'USER',
               username: 'tuser1',
               createdAt: expect.anything(),
+              address: [1, 1],
             },
           });
         });
@@ -282,6 +263,7 @@ describe('CartController (e2e)', () => {
             id: 1,
             purchased: false,
             purchasedDate: null,
+            order: null,
             restaurant: {
               id: 1,
               name: 'Test Restaurant',
@@ -289,6 +271,7 @@ describe('CartController (e2e)', () => {
               createdAt: expect.anything(),
               image: null,
               categories: [],
+              location: [1, 1],
             },
             cartItems: [
               {
@@ -323,6 +306,7 @@ describe('CartController (e2e)', () => {
               role: 'USER',
               username: 'tuser1',
               createdAt: expect.anything(),
+              address: [1, 1],
             },
           });
         });
@@ -397,6 +381,7 @@ describe('CartController (e2e)', () => {
             id: 1,
             purchased: true,
             purchasedDate: expect.anything(),
+            order: null,
             restaurant: {
               id: 1,
               name: 'Test Restaurant',
@@ -404,6 +389,7 @@ describe('CartController (e2e)', () => {
               createdAt: expect.anything(),
               image: null,
               categories: [],
+              location: [1, 1],
             },
             cartItems: [
               {
@@ -438,6 +424,7 @@ describe('CartController (e2e)', () => {
               role: 'USER',
               username: 'tuser1',
               createdAt: expect.anything(),
+              address: [1, 1],
             },
           });
         });

@@ -7,6 +7,7 @@ export const cartMock = () => ({
   cartItems: { toArray: jest.fn() } as any,
   restaurant: RestaurantMocks.restaurantMock(),
   user: UserMocks.userMock(),
+  order: null,
 });
 
 export const cartDtoMock = () => ({
@@ -16,6 +17,7 @@ export const cartDtoMock = () => ({
   cartItems: undefined,
   restaurant: RestaurantMocks.restaurantDtoMock(),
   user: UserMocks.userDtoMock(),
+  order: null,
 });
 
 export const purchasedCartMock = () => ({
@@ -25,6 +27,7 @@ export const purchasedCartMock = () => ({
   cartItems: { toArray: jest.fn() } as any,
   restaurant: RestaurantMocks.restaurantMock(),
   user: UserMocks.userMock(),
+  order: null,
 });
 
 export const purchasedCart2Mock = () => ({
@@ -34,6 +37,7 @@ export const purchasedCart2Mock = () => ({
   cartItems: { toArray: jest.fn() } as any,
   restaurant: RestaurantMocks.restaurantMock(),
   user: UserMocks.userMock(),
+  order: null,
 });
 
 export const purchasedCartDtoMock = () => ({
@@ -43,6 +47,7 @@ export const purchasedCartDtoMock = () => ({
   cartItems: undefined,
   restaurant: RestaurantMocks.restaurantDtoMock(),
   user: UserMocks.userDtoMock(),
+  order: null,
 });
 
 export const purchasedCart2DtoMock = () => ({
@@ -52,4 +57,5 @@ export const purchasedCart2DtoMock = () => ({
   cartItems: undefined,
   restaurant: RestaurantMocks.restaurantDtoMock(),
   user: UserMocks.userDtoMock(),
+  order: null,
 });

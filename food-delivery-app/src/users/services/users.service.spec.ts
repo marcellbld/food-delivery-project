@@ -80,6 +80,8 @@ describe('UsersService', () => {
         username: createUserMock.username,
         role: createUserMock.accountType,
         password: expect.anything(),
+        addressLon: createUserMock.address[0],
+        addressLat: createUserMock.address[1],
       });
     });
     it('should call userRepository.persistAndFlush with correct params', async () => {
@@ -144,7 +146,7 @@ describe('UsersService', () => {
       );
     });
   });
-  describe('update', () => {
+  describe('updatePassword', () => {
     beforeEach(() => {
       jest
         .spyOn(AuthHelper, 'hashPassword')
@@ -155,7 +157,7 @@ describe('UsersService', () => {
     });
 
     it('should update User and return as UserDto', async () => {
-      const user = await service.update(1, { password: 'newPass' });
+      const user = await service.updatePassword(1, { password: 'newPass' });
 
       expect(user).toEqual(userDtoMock);
     });
@@ -166,11 +168,11 @@ describe('UsersService', () => {
         .mockReturnValue(Promise.resolve(null));
 
       await expect(
-        service.update(1, { password: 'newPass' }),
+        service.updatePassword(1, { password: 'newPass' }),
       ).rejects.toThrowError(NotFoundException);
     });
     it('should call usersRepository.persistAndFlush with correct params', async () => {
-      await service.update(1, { password: 'newPass' });
+      await service.updatePassword(1, { password: 'newPass' });
 
       expect(userRepository.persistAndFlush).toHaveBeenCalledWith({
         id: 1,
@@ -180,6 +182,8 @@ describe('UsersService', () => {
         createdAt: new Date(1000000000000),
         ownedRestaurants: {},
         carts: {},
+        addressLon: 1,
+        addressLat: 1,
       });
     });
   });
@@ -203,6 +207,8 @@ describe('UsersService', () => {
         createdAt: new Date(1000000000000),
         ownedRestaurants: {},
         carts: {},
+        addressLat: 1,
+        addressLon: 1,
       });
     });
 

@@ -28,16 +28,38 @@
             <label class="form-label small-caps required mt-2">Account Type</label>
             <div class="text-center">
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" value="User" id="account-type-radio-1" formControlName="accountType">
+                <input class="form-check-input" type="radio" value="USER" id="account-type-radio-1" formControlName="accountType" (change)="accountTypeChanged()">
                 <label class="form-check-label" for="account-type-radio-1">
                   User
                 </label>
               </div>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" value="Owner" id="account-type-radio-2" formControlName="accountType" >
+                <input class="form-check-input" type="radio" value="OWNER" id="account-type-radio-2" formControlName="accountType" (change)="accountTypeChanged()">
                 <label class="form-check-label" for="account-type-radio-2">
                   Owner
                 </label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" value="COURIER" id="account-type-radio-3" formControlName="accountType" (change)="accountTypeChanged()">
+                <label class="form-check-label" for="account-type-radio-3">
+                  Courier
+                </label>
+              </div>
+            </div>
+            <div class="mt-2" *ngIf="accountType?.value! === 'USER'">
+              <label class="form-label small-caps required">Address</label>
+              <app-map-input #mapInput [(location)]="location" [icon]="'user.svg'"></app-map-input>
+              <div class="invalid-feedback d-block" *ngIf="invalidAddressError">
+                {{invalidAddressError}}
+              </div>
+              <div class="invalid-feedback d-block" *ngIf="postalCodeError">
+                {{postalCodeError}}
+              </div>
+              <div class="invalid-feedback d-block" *ngIf="streetError">
+                {{streetError}}
+              </div>
+              <div class="invalid-feedback d-block" *ngIf="houseNumberError">
+                {{houseNumberError}}
               </div>
             </div>
 

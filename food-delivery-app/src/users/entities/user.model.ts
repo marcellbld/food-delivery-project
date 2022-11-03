@@ -7,6 +7,7 @@ import {
   Property,
   Unique,
 } from '@mikro-orm/core';
+import { Order } from '../../orders/entities/order.model';
 import { Cart } from '../../cart/entities/cart.model';
 import { Restaurant } from '../../restaurants/entities/restaurant.model';
 import { UserRole } from '../user-role';
@@ -30,6 +31,14 @@ export class User {
   role!: UserRole;
 
   @AutoMap()
+  @Property({ nullable: true })
+  addressLat?: number;
+
+  @AutoMap()
+  @Property({ nullable: true })
+  addressLon?: number;
+
+  @AutoMap()
   @Property({ onCreate: () => new Date() })
   createdAt!: Date;
 
@@ -40,4 +49,8 @@ export class User {
   @AutoMap()
   @OneToMany(() => Cart, (cart) => cart.user)
   carts = new Collection<Cart>(this);
+
+  @AutoMap()
+  @OneToMany(() => Order, (order) => order.courier)
+  courierOrders = new Collection<Order>(this);
 }

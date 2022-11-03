@@ -13,8 +13,8 @@ import { ToastService } from '../toast/toast.service';
   providedIn: 'root',
 })
 export class CartService {
-  selfUnpurchasedCart: Cart | undefined;
-  selfPurchasedCarts: Cart[] | undefined;
+  selfActiveCart: Cart | undefined;
+  selfDeliveredCarts: Cart[] | undefined;
 
   constructor(
     private readonly http: HttpClient,
@@ -26,8 +26,8 @@ export class CartService {
       if (loggedIn) {
         this.loadData();
       } else {
-        this.selfUnpurchasedCart = undefined;
-        this.selfPurchasedCarts = undefined;
+        this.selfActiveCart = undefined;
+        this.selfDeliveredCarts = undefined;
       }
     });
 
@@ -36,39 +36,42 @@ export class CartService {
 
   private loadData() {
     if (this.authService.loggedInUser()?.role === UserRole.User) {
-      this.loadSelfUnpurchasedCart();
-      this.loadSelfPurchasedCarts();
+      this.loadSelfActiveCart();
+      this.loadSelfDeliveredCarts();
     }
   }
 
-  private loadSelfPurchasedCarts(): void {
-    this.findSelfPurchased().subscribe((result: CartI[]) => {
+  private loadSelfDeliveredCarts(): void {
+    this.findSelfDelivered().subscribe((result: CartI[]) => {
       if (result == null || result.length === 0) {
-        this.selfPurchasedCarts = undefined;
+        this.selfDeliveredCarts = undefined;
         return;
       }
 
-      this.selfPurchasedCarts = result.map((result) =>
+      this.selfDeliveredCarts = result.map((result) =>
         Object.assign(new Cart(), result)
       );
     });
   }
-  private loadSelfUnpurchasedCart(): void {
-    this.findSelfUnpurchased().subscribe((result: CartI) => {
+  private loadSelfActiveCart(): void {
+    this.findSelfActive().subscribe((result: CartI) => {
       if (result == null) {
-        this.selfUnpurchasedCart = undefined;
+        this.selfActiveCart = undefined;
         return;
       }
 
-      this.selfUnpurchasedCart = Object.assign(new Cart(), result);
+      this.selfActiveCart = Object.assign(new Cart(), result);
     });
   }
 
-  findSelfPurchased(): Observable<CartI[]> {
-    return this.http.get<CartI[]>(`/api/carts/purchased`);
+  findSelfDelivered(): Observable<CartI[]> {
+    return this.http.get<CartI[]>(`/api/carts/delivered`);
   }
-  findSelfUnpurchased(): Observable<CartI> {
-    return this.http.get<CartI>(`/api/carts/unpurchased`);
+  findSelfActive(): Observable<CartI> {
+    return this.http.get<CartI>(`/api/carts/active`);
+  }
+  findAllUndelivered(): Observable<CartI[]> {
+    return this.http.get<CartI[]>(`/api/carts/undelivered`);
   }
 
   addItemToCart(restaurantItemId: number): Observable<CartItemI> {
@@ -79,10 +82,10 @@ export class CartService {
       .pipe(
         tap(
           (result: CartItemI) => {
-            if (!this.selfUnpurchasedCart) {
-              this.loadSelfUnpurchasedCart();
+            if (!this.selfActiveCart) {
+              this.loadSelfActiveCart();
             } else {
-              this.selfUnpurchasedCart.updateOrAddItem(result);
+              this.selfActiveCart.updateOrAddItem(result);
             }
           },
           (response: HttpErrorResponse) => {
@@ -99,9 +102,9 @@ export class CartService {
     return this.http.delete<boolean>(`/api/carts/items/${id}`).pipe(
       tap((result) => {
         if (result) {
-          this.selfUnpurchasedCart?.deleteItem(id);
-          if (this.selfUnpurchasedCart?.cartItems.length == 0) {
-            this.selfUnpurchasedCart = undefined;
+          this.selfActiveCart?.deleteItem(id);
+          if (this.selfActiveCart?.cartItems.length == 0) {
+            this.selfActiveCart = undefined;
           }
         }
       })
@@ -116,9 +119,9 @@ export class CartService {
       })
       .pipe(
         tap((result: CartItemI) => {
-          if (!this.selfUnpurchasedCart) throw new Error("Cart doesn't exists");
+          if (!this.selfActiveCart) throw new Error("Cart doesn't exists");
 
-          this.selfUnpurchasedCart.updateOrAddItem(result);
+          this.selfActiveCart.updateOrAddItem(result);
         })
       );
   }
@@ -127,21 +130,21 @@ export class CartService {
     return this.http.delete<boolean>(`/api/carts/${id}`).pipe(
       tap((result) => {
         if (result) {
-          this.selfUnpurchasedCart = undefined;
+          this.selfActiveCart = undefined;
         }
       })
     );
   }
   checkoutCart(): Observable<CartI | null> {
-    if (!this.selfUnpurchasedCart) return of(null);
+    if (!this.selfActiveCart) return of(null);
 
     return this.http
-      .patch<CartI>(`/api/carts/${this.selfUnpurchasedCart?.id}`, {})
+      .patch<CartI>(`/api/carts/${this.selfActiveCart?.id}`, {})
       .pipe(
         tap((result) => {
           const resultCart = result as CartI;
           if (resultCart.purchased) {
-            this.selfUnpurchasedCart = undefined;
+            this.selfActiveCart = Object.assign(new Cart(), resultCart);
           }
         })
       );

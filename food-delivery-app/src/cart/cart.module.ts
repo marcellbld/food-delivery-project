@@ -16,5 +16,6 @@ import { RestaurantsModule } from '../restaurants/restaurants.module';
   ],
   providers: [CartsService, CartItemsService],
   controllers: [CartController],
+  exports: [CartsService],
 })
 export class CartModule {}

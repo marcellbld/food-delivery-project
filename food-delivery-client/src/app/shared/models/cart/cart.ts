@@ -1,3 +1,4 @@
+import { OrderI } from '../order/order.interface';
 import { RestaurantI } from '../restaurant/restaurant.interface';
 import { UserI } from '../user/user.interface';
 import { CartItemI } from './cart-item.interface';
@@ -10,6 +11,7 @@ export class Cart implements CartI {
   restaurant!: RestaurantI;
   cartItems!: CartItemI[];
   user!: UserI;
+  order?: OrderI;
   constructor() {}
 
   findItem(restaurantItemId: number): CartItemI | undefined {

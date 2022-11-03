@@ -33,19 +33,27 @@ export class CartController {
     private readonly restaurantItemsService: RestaurantItemsService,
   ) {}
 
-  @Get('unpurchased')
+  @Get('active')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.User)
-  async findUnpurchasedByUser(@UserParam() user: UserDto): Promise<CartDto> {
-    const cart = await this.cartsService.findUnpurchasedByUserId(user.id);
+  async findActiveByUser(@UserParam() user: UserDto): Promise<CartDto> {
+    const cart = await this.cartsService.findActiveCartByUserId(user.id);
     return cart;
   }
 
-  @Get('purchased')
+  @Get('delivered')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.User)
-  async findAllPurchasedByUser(@UserParam() user: UserDto): Promise<CartDto[]> {
-    const carts = await this.cartsService.findAllPurchasedByUserId(user.id);
+  async findAllDeliveredByUser(@UserParam() user: UserDto): Promise<CartDto[]> {
+    const carts = await this.cartsService.findAllDeliveredByUserId(user.id);
+    return carts;
+  }
+
+  @Get('undelivered')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.Courier)
+  async findAllUndelivered(): Promise<CartDto[]> {
+    const carts = await this.cartsService.findAllUndelivered();
     return carts;
   }
 
@@ -87,7 +95,6 @@ export class CartController {
     const cart = await this.cartsService.findOne(id);
     if (user.role === UserRole.User && cart.user.id !== user.id)
       throw new ForbiddenException();
-    if (cart.purchased) throw new BadRequestException();
 
     return await this.cartsService.delete(id);
   }
@@ -99,27 +106,22 @@ export class CartController {
     @Body() createCartItem: CreateCartItemDto,
     @UserParam() user: UserDto,
   ): Promise<CartItemDto> {
-    let unpurchasedCart = await this.cartsService.findUnpurchasedByUserId(
-      user.id,
-    );
+    let activeCart = await this.cartsService.findActiveCartByUserId(user.id);
+
     const item = await this.restaurantItemsService.findOne(
       createCartItem.restaurantItemId,
     );
-    if (!unpurchasedCart) {
-      unpurchasedCart = await this.cartsService.create(
-        user.id,
-        item.restaurant.id,
-      );
-    } else if (unpurchasedCart.restaurant.id !== item.restaurant.id) {
+    if (!activeCart) {
+      activeCart = await this.cartsService.create(user.id, item.restaurant.id);
+    } else if (activeCart.restaurant.id !== item.restaurant.id) {
       throw new BadRequestException(
         'You already have a cart at other restaurant. Please delete it first!',
       );
+    } else if (activeCart.purchased || activeCart.order) {
+      throw new BadRequestException('This cart has already purchased.');
     }
 
-    const cartItem = await this.cartItemsService.create(
-      unpurchasedCart.id,
-      item.id,
-    );
+    const cartItem = await this.cartItemsService.create(activeCart.id, item.id);
 
     return cartItem;
   }
@@ -132,7 +134,7 @@ export class CartController {
     @Body() updateCartItem: UpdateCartItem,
     @UserParam() user: UserDto,
   ): Promise<CartItemDto> {
-    const selfCart = await this.cartsService.findUnpurchasedByUserId(user.id);
+    const selfCart = await this.cartsService.findActiveCartByUserId(user.id);
     if (!selfCart) throw new BadRequestException("You can't update this item.");
     const foundItem = selfCart.cartItems.find((item) => item.id === id);
 
@@ -155,7 +157,7 @@ export class CartController {
     @Param('id', ParseIntPipe) id: number,
     @UserParam() user: UserDto,
   ): Promise<boolean> {
-    const selfCart = await this.cartsService.findUnpurchasedByUserId(user.id);
+    const selfCart = await this.cartsService.findActiveCartByUserId(user.id);
     if (!selfCart) throw new BadRequestException("You can't delete this item.");
 
     const foundItem = selfCart.cartItems.find((item) => item.id === id);

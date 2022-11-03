@@ -1,0 +1,9 @@
+<div class="map-container">
+  <app-map [mainCoordinate]="location" [clickable]="true" (mainCoordinateChange)="locationChanged($event)" [featureIcons]="[icon]"></app-map>
+</div>
+<input type="text" id="postalCode" class="form-control" [class.is-invalid]="postalCodeError || invalidAddressError" 
+OnlyNumber [maxLength]="4" placeholder="Postal Code" [formControl]="postalCode" (change)="addressInput()">
+<input type="text" id="street" class="form-control" [class.is-invalid]="streetError || invalidAddressError" 
+placeholder="Street" [formControl]="street" (change)="addressInput()">
+<input type="text" id="houseNumber" class="form-control" [class.is-invalid]="houseNumberError || invalidAddressError" 
+placeholder="House Number" [formControl]="houseNumber" (change)="addressInput()">

@@ -41,7 +41,7 @@ describe('SidebarComponent', () => {
       cart: jest.fn(),
     } as unknown as Partial<AuthService>;
     const cartServiceMock = {
-      selfUnpurchasedCart: {
+      selfActiveCart: {
         calculateTotalCost: jest.fn(),
       } as Partial<Cart>,
       deleteSelfCart: jest.fn(),
@@ -89,8 +89,8 @@ describe('SidebarComponent', () => {
       role: UserRole.User,
       createdAt: new Date('now'),
     });
-    cartService.selfUnpurchasedCart = cartMock;
-    cartService.selfUnpurchasedCart.calculateTotalCost = jest
+    cartService.selfActiveCart = cartMock;
+    cartService.selfActiveCart.calculateTotalCost = jest
       .fn()
       .mockReturnValue(12.5);
 
@@ -222,7 +222,7 @@ describe('SidebarComponent', () => {
       });
       describe('No Cart', () => {
         beforeEach(() => {
-          cartService.selfUnpurchasedCart = null;
+          cartService.selfActiveCart = undefined;
           fixture.detectChanges();
         });
         it('should not display restaurant link', () => {
@@ -263,7 +263,7 @@ describe('SidebarComponent', () => {
         cartService.deleteSelfCart = jest
           .fn()
           .mockImplementationOnce((_: number): Observable<boolean> => {
-            cartService.selfUnpurchasedCart = null;
+            cartService.selfActiveCart = undefined;
             return of(true);
           });
       });
@@ -374,7 +374,7 @@ describe('SidebarComponent', () => {
       });
       describe('No Cart', () => {
         beforeEach(() => {
-          cartService.selfUnpurchasedCart = null;
+          cartService.selfActiveCart = undefined;
         });
         it('should return undefined', () => {
           const cart = component.cart;
@@ -393,7 +393,7 @@ describe('SidebarComponent', () => {
       });
       describe('No Cart', () => {
         beforeEach(() => {
-          cartService.selfUnpurchasedCart = null;
+          cartService.selfActiveCart = undefined;
         });
         it('should return true', () => {
           const result = component.isCartEmpty();
@@ -403,9 +403,9 @@ describe('SidebarComponent', () => {
       });
     });
     describe('getTotalCost', () => {
-      it('should call cartService.selfUnpurchasedCart.calculateTotalCost()', () => {
+      it('should call cartService.selfActiveCart.calculateTotalCost()', () => {
         const spyObj = jest.spyOn(
-          cartService.selfUnpurchasedCart,
+          cartService.selfActiveCart,
           'calculateTotalCost'
         );
         spyObj.mockReset();
@@ -413,13 +413,11 @@ describe('SidebarComponent', () => {
         component.getTotalCost();
 
         expect(
-          cartService.selfUnpurchasedCart.calculateTotalCost
+          cartService.selfActiveCart.calculateTotalCost
         ).toHaveBeenCalled();
       });
       it('should return totalCost', () => {
-        cartService.selfUnpurchasedCart.calculateTotalCost.mockReturnValue(
-          15.5
-        );
+        cartService.selfActiveCart.calculateTotalCost.mockReturnValue(15.5);
 
         const totalCost = component.getTotalCost();
 
@@ -443,7 +441,7 @@ describe('SidebarComponent', () => {
         cartService.deleteSelfCart = jest
           .fn()
           .mockImplementationOnce((_: number): Observable<boolean> => {
-            cartService.selfUnpurchasedCart = null;
+            cartService.selfActiveCart = undefined;
             return of(true);
           });
 
@@ -459,7 +457,7 @@ describe('SidebarComponent', () => {
         cartService.checkoutCart = jest
           .fn()
           .mockImplementationOnce((_: number): Observable<boolean> => {
-            cartService.selfUnpurchasedCart = null;
+            cartService.selfActiveCart = undefined;
             return of(true);
           });
 

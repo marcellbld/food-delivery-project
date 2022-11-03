@@ -43,6 +43,7 @@ describe('RestaurantsController (e2e)', () => {
               { id: 3, name: 'Secondary 1', primary: false },
             ],
             image: null,
+            location: [1, 1],
           });
           for (let i = 1; i < 3; i++) {
             expect(restaurants[i]).toEqual({
@@ -52,6 +53,7 @@ describe('RestaurantsController (e2e)', () => {
               createdAt: expect.anything(),
               categories: [],
               image: null,
+              location: [1, 1],
             });
           }
         });
@@ -73,6 +75,7 @@ describe('RestaurantsController (e2e)', () => {
               { id: 3, name: 'Secondary 1', primary: false },
             ],
             image: null,
+            location: [1, 1],
           });
           for (let i = 1; i < 3; i++) {
             expect(restaurants[i]).toEqual({
@@ -82,6 +85,7 @@ describe('RestaurantsController (e2e)', () => {
               createdAt: expect.anything(),
               categories: [],
               image: null,
+              location: [1, 1],
             });
           }
         });
@@ -102,6 +106,7 @@ describe('RestaurantsController (e2e)', () => {
               createdAt: expect.anything(),
               categories: [],
               image: null,
+              location: [1, 1],
             });
           }
         });
@@ -137,6 +142,7 @@ describe('RestaurantsController (e2e)', () => {
               { id: 3, name: 'Secondary 1', primary: false },
             ],
             image: null,
+            location: [1, 1],
           });
           for (let i = 1; i < 3; i++) {
             expect(restaurants[i]).toEqual({
@@ -146,6 +152,7 @@ describe('RestaurantsController (e2e)', () => {
               createdAt: expect.anything(),
               categories: [],
               image: null,
+              location: [1, 1],
             });
           }
         });
@@ -198,6 +205,7 @@ describe('RestaurantsController (e2e)', () => {
               { id: 3, name: 'Secondary 1', primary: false },
             ],
             image: null,
+            location: [1, 1],
           });
         });
     });
@@ -218,6 +226,7 @@ describe('RestaurantsController (e2e)', () => {
           name: 'New Restaurant',
           description: 'New Restaurant Description',
           categories: '[1,3]',
+          location: '[1,1]',
         })
         .expect(201)
         .then((res: request.Response) => {
@@ -232,6 +241,7 @@ describe('RestaurantsController (e2e)', () => {
               { id: 3, name: 'Secondary 1', primary: false },
             ],
             image: null,
+            location: [1, 1],
           });
         });
     });
@@ -245,6 +255,7 @@ describe('RestaurantsController (e2e)', () => {
           owner: 4,
           description: 'New Restaurant Description 2',
           categories: '[1,3]',
+          location: '[1,1]',
         })
         .expect(201)
         .then((res: request.Response) => {
@@ -259,6 +270,7 @@ describe('RestaurantsController (e2e)', () => {
               { id: 3, name: 'Secondary 1', primary: false },
             ],
             image: null,
+            location: [1, 1],
           });
         });
     });
@@ -271,6 +283,7 @@ describe('RestaurantsController (e2e)', () => {
           name: 'New Restaurant 3',
           description: 'New Restaurant Description 3',
           categories: '[1,3]',
+          location: '[1,1]',
         })
         .expect(403);
     });
@@ -281,6 +294,7 @@ describe('RestaurantsController (e2e)', () => {
           name: 'New Restaurant 3',
           description: 'New Restaurant Description 3',
           categories: '[1,3]',
+          location: '[1,1]',
         })
         .expect(401);
     });
@@ -293,6 +307,7 @@ describe('RestaurantsController (e2e)', () => {
           name: 'Test Restaurant',
           description: 'New Restaurant Description',
           categories: '[1,3]',
+          location: '[1,1]',
         })
         .expect(400);
     });
@@ -304,6 +319,7 @@ describe('RestaurantsController (e2e)', () => {
         .send({
           description: 'New Restaurant Description 3',
           categories: '[1,3]',
+          location: '[1,1]',
         })
         .expect(400);
     });
@@ -320,6 +336,7 @@ describe('RestaurantsController (e2e)', () => {
         .send({
           description: 'Updated Description',
           categories: '[4]',
+          location: '[1,1]',
         })
         .expect(200)
         .then((res) => {
@@ -331,6 +348,7 @@ describe('RestaurantsController (e2e)', () => {
             createdAt: expect.anything(),
             categories: [{ id: 4, name: 'Secondary 2', primary: false }],
             image: null,
+            location: [1, 1],
           });
         });
     });
@@ -342,6 +360,7 @@ describe('RestaurantsController (e2e)', () => {
         .send({
           description: 'Updated Description',
           categories: '[1]',
+          location: '[1,1]',
         })
         .expect(200)
         .then((res) => {
@@ -353,6 +372,7 @@ describe('RestaurantsController (e2e)', () => {
             createdAt: expect.anything(),
             categories: [{ id: 1, name: 'Primary 1', primary: true }],
             image: null,
+            location: [1, 1],
           });
         });
     });
@@ -364,6 +384,7 @@ describe('RestaurantsController (e2e)', () => {
         .send({
           description: 'Updated Description',
           categories: '[1]',
+          location: '[1,1]',
         })
         .expect(400);
     });
@@ -375,6 +396,7 @@ describe('RestaurantsController (e2e)', () => {
         .send({
           description: 'Updated Description',
           categories: '[4]',
+          location: '[1,1]',
         })
         .expect(403);
     });
@@ -386,6 +408,7 @@ describe('RestaurantsController (e2e)', () => {
         .send({
           description: 'Updated Description',
           categories: '[4]',
+          location: '[1,1]',
         })
         .expect(403);
     });
@@ -395,6 +418,7 @@ describe('RestaurantsController (e2e)', () => {
         .send({
           description: 'Updated Description',
           categories: '[4]',
+          location: '[1,1]',
         })
         .expect(401);
     });
@@ -470,7 +494,7 @@ describe('RestaurantsController (e2e)', () => {
               name: `Test Item ${i + 1}`,
               description: 'Test Item Description',
               price: i + 1 + 0.05,
-              restaurant: { id: 1, categories: [] },
+              restaurant: { id: 1, categories: [], location: [null, null] },
               image: null,
             });
           }
@@ -504,7 +528,7 @@ describe('RestaurantsController (e2e)', () => {
               name: `Test Item ${i + 1}`,
               description: 'Test Item Description',
               price: i + 1 + 0.05,
-              restaurant: { id: 1, categories: [] },
+              restaurant: { id: 1, categories: [], location: [null, null] },
               image: null,
             });
           }
@@ -547,6 +571,7 @@ describe('RestaurantsController (e2e)', () => {
               createdAt: expect.anything(),
               categories: [],
               image: null,
+              location: [1, 1],
             },
             price: 1.99,
             image: null,
@@ -577,6 +602,7 @@ describe('RestaurantsController (e2e)', () => {
               createdAt: expect.anything(),
               categories: [],
               image: null,
+              location: [1, 1],
             },
             price: 2.99,
             image: null,
@@ -661,6 +687,7 @@ describe('RestaurantsController (e2e)', () => {
               createdAt: expect.anything(),
               categories: [],
               image: null,
+              location: [1, 1],
             },
             price: 5.99,
             image: null,
@@ -696,6 +723,7 @@ describe('RestaurantsController (e2e)', () => {
               createdAt: expect.anything(),
               categories: [],
               image: null,
+              location: [1, 1],
             },
             price: 10.54,
             image: null,
@@ -727,6 +755,7 @@ describe('RestaurantsController (e2e)', () => {
               createdAt: expect.anything(),
               categories: [],
               image: null,
+              location: [1, 1],
             },
             price: 20.54,
             image: null,

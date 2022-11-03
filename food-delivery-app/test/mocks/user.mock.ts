@@ -4,6 +4,7 @@ export const createUserMock = () => ({
   username: 'user1',
   password: 'pass1',
   accountType: UserRole.User,
+  address: [1, 1],
 });
 
 export const userMock = () => ({
@@ -14,6 +15,8 @@ export const userMock = () => ({
   createdAt: new Date(1000000000000),
   ownedRestaurants: {} as any,
   carts: {} as any,
+  addressLon: 1,
+  addressLat: 1,
 });
 
 export const userDtoMock = () => ({
@@ -21,4 +24,5 @@ export const userDtoMock = () => ({
   username: 'user1',
   role: UserRole.User,
   createdAt: new Date(1000000000000),
+  address: [1, 1],
 });

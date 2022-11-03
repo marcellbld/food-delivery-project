@@ -7,6 +7,8 @@ import { RestaurantService } from './services/restaurant/restaurant.service';
 import { RestaurantItemService } from './services/restaurant-item/restaurant-item.service';
 import { AuthStorageService } from './services/auth-storage/auth-storage.service';
 import { ToastService } from './services/toast/toast.service';
+import { MapAddressService } from './services/map-address/map-address.service';
+import { MapModalService } from './services/map-modal/map-modal.service';
 
 @NgModule({
   declarations: [],
@@ -19,6 +21,8 @@ import { ToastService } from './services/toast/toast.service';
     RestaurantItemService,
     CartService,
     ToastService,
+    MapAddressService,
+    MapModalService,
   ],
 })
 export class CoreModule {}

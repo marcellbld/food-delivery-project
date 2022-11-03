@@ -23,6 +23,8 @@ export class ProdSeeder extends Seeder {
           username: `user${i + 1}`,
           password: await hashPassword('pass'),
           role: UserRole.User,
+          addressLon: 19.04980834146211,
+          addressLat: 47.49839263327843,
         }),
       );
     }
@@ -33,6 +35,16 @@ export class ProdSeeder extends Seeder {
           username: `owner${i + 1}`,
           password: await hashPassword('pass'),
           role: UserRole.Owner,
+        }),
+      );
+    }
+    const couriers = [];
+    for (let i = 0; i < 2; i++) {
+      couriers.push(
+        em.create(User, {
+          username: `courier${i + 1}`,
+          password: await hashPassword('pass'),
+          role: UserRole.Courier,
         }),
       );
     }
@@ -58,6 +70,8 @@ export class ProdSeeder extends Seeder {
         name: 'Test Restaurant',
         description: 'Test Restaurant Description',
         owner: owners[0],
+        locationLat: 47.502837766383294,
+        locationLon: 19.04717848426026,
         categories: [1, 2, 3, 4],
       }),
     );
@@ -67,6 +81,8 @@ export class ProdSeeder extends Seeder {
         name: 'Test Restaurant 2',
         description: 'Test Restaurant Description 2',
         owner: owners[1],
+        locationLat: 47.50215474954456,
+        locationLon: 19.04960806009421,
       }),
     );
     restaurants.push(
@@ -75,6 +91,8 @@ export class ProdSeeder extends Seeder {
         name: 'Test Restaurant 3',
         description: 'Test Restaurant Description 3',
         owner: owners[0],
+        locationLat: 47.50422866176311,
+        locationLon: 19.048248127736755,
       }),
     );
     restaurants.push(
@@ -83,6 +101,8 @@ export class ProdSeeder extends Seeder {
         name: 'Mc Donalds',
         description: 'Mc Donalds Description',
         owner: owners[0],
+        locationLat: 47.50422866176311,
+        locationLon: 19.048248127736755,
       }),
     );
     restaurants.push(
@@ -91,6 +111,8 @@ export class ProdSeeder extends Seeder {
         name: 'Burger King (Corvin)',
         description: 'Burger King (Corvin) Description',
         owner: owners[0],
+        locationLat: 47.50422866176311,
+        locationLon: 19.048248127736755,
       }),
     );
     restaurants.push(
@@ -99,6 +121,8 @@ export class ProdSeeder extends Seeder {
         name: 'Pesti Pipi',
         description: 'Pesti Pipi Description',
         owner: owners[0],
+        locationLat: 47.50422866176311,
+        locationLon: 19.048248127736755,
       }),
     );
 
@@ -145,32 +169,6 @@ export class ProdSeeder extends Seeder {
       count: 2,
       cart: carts[0],
       item: restaurantItems[1],
-    });
-    carts.push(
-      em.create(Cart, {
-        purchased: true,
-        purchasedDate: new Date(),
-        restaurant: restaurants[0],
-        user: users[0],
-      }),
-    );
-    em.create(CartItem, {
-      count: 2,
-      cart: carts[1],
-      item: restaurantItems[0],
-    });
-    carts.push(
-      em.create(Cart, {
-        purchased: true,
-        purchasedDate: new Date(),
-        restaurant: restaurants[0],
-        user: users[0],
-      }),
-    );
-    em.create(CartItem, {
-      count: 3,
-      cart: carts[2],
-      item: restaurantItems[0],
     });
   }
 }

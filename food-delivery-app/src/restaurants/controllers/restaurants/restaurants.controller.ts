@@ -77,7 +77,11 @@ export class RestaurantsController {
   async create(
     @Body({
       transform: (val) => {
-        return { ...val, categories: JSON.parse(val.categories) };
+        return {
+          ...val,
+          categories: JSON.parse(val.categories),
+          location: JSON.parse(val.location),
+        };
       },
     })
     createRestaurantDto: CreateRestaurantDto,
@@ -121,7 +125,11 @@ export class RestaurantsController {
     @Param('id') id: number,
     @Body({
       transform: (val) => {
-        return { ...val, categories: JSON.parse(val.categories) };
+        return {
+          ...val,
+          categories: JSON.parse(val.categories),
+          location: JSON.parse(val.location),
+        };
       },
     })
     updateRestaurantDto: UpdateRestaurantDto,

@@ -145,7 +145,6 @@ describe('CreateRestaurantItemPageComponent', () => {
       });
       it('should disable the Create button initially', () => {
         const button = nativeElement.querySelector('button');
-        console.log(button);
 
         expect(button?.disabled).toBeTruthy();
       });

@@ -48,6 +48,7 @@
         <ng-container *ngIf="!isCartEmpty();else emptyCart">
           <app-cart-item-block *ngFor="let cartItem of cart?.cartItems" [cartItem]="cartItem"
             class="mb-2 w-100"
+            [modifiable]="!(isCartWaitingForCourier() || isCartOnTheWay())"
           >
             {{cartItem.item.id}}
           </app-cart-item-block>
@@ -57,6 +58,18 @@
         </ng-template>
         
       </div>
+    </div>
+    <div class="offcanvas-header border-bottom mx-4 justify-content-between" *ngIf="isCartWaitingForCourier()">
+      <span><b>Waiting for courier...</b></span> <span class="spinner-border spinner-border-sm" role="status"></span>
+    </div>
+    <div class="offcanvas-header border-bottom mx-4 justify-content-between" *ngIf="isCartOnTheWay()">
+      <span><b>Waiting for delivery...</b></span> <span class="spinner-border spinner-border-sm" role="status"></span>
+    </div>
+    <div class="offcanvas-header border-bottom mx-4 justify-content-between" *ngIf="isCartOnTheWay()">
+      <div>
+        <button type="button" class="btn btn-sm btn-circle btn-dark me-2" (click)="clickOnShowMap()"><i class="bi bi-pin-map-fill"></i></button>
+      </div>
+      <span><b>Track your order</b></span>
     </div>
     <div class="offcanvas-header border-bottom mx-4">
       <h5 class="small-caps text-black-50 mb-0" data-testid="header-checkout">
@@ -71,7 +84,7 @@
         <div class="d-flex flex-row justify-content-around">
           <button type="button" data-testid="checkout-btn" class="btn btn-primary text-light rounded-pill py-1"
           (click)="clickOnCheckoutButton()"
-          [disabled]="isCartEmpty()">
+          [disabled]="isCartEmpty() || isCartWaitingForCourier() || isCartOnTheWay()">
             <i class="bi bi-wallet-fill me-1"></i>
             <span>Checkout</span>
           </button>
@@ -82,7 +95,7 @@
           data-testid="cart-delete-btn"
           class="btn btn-red p-3 py-2"
           (click)="clickOnDeleteButton()"
-          [disabled]="isCartEmpty()">
+          [disabled]="isCartEmpty() || isCartOnTheWay()">
           <i class="bi bi-trash3-fill"></i>
         </button>
       </div>
@@ -120,4 +133,3 @@
     </div>
   </ng-template>
 </div>
-

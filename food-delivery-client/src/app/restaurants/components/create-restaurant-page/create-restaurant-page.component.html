@@ -45,11 +45,27 @@
             </div>
             
             <div class="mb-3">
-              <label for="file" class="form-label">Main Image</label>
+              <label for="file" class="form-label small-caps">Main Image</label>
               <div class="text-center mb-2" [style.display]="uploadedImageURL ? 'block' : 'none'">
                 <img class="rounded-3" [src]="uploadedImageURL" width="150px">
               </div>
               <input class="form-control" type="file" accept='.png, .jpg, .jpeg' id="file" (change)="onUploadedImageChange($event)">
+            </div>
+            <div class="mb-3">
+              <label class="form-label small-caps required">Location</label>
+              <app-map-input #mapInput [(location)]="location" [icon]="'shop.svg'"></app-map-input>
+              <div class="invalid-feedback d-block" *ngIf="invalidAddressError">
+                {{invalidAddressError}}
+              </div>
+              <div class="invalid-feedback d-block" *ngIf="postalCodeError">
+                {{postalCodeError}}
+              </div>
+              <div class="invalid-feedback d-block" *ngIf="streetError">
+                {{streetError}}
+              </div>
+              <div class="invalid-feedback d-block" *ngIf="houseNumberError">
+                {{houseNumberError}}
+              </div>
             </div>
 
             <div class="text-center mt-3 w-100">

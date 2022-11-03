@@ -11,6 +11,9 @@ import { CartItemBlockComponent } from './components/cart-item-block/cart-item-b
 import { RestaurantRowBlockComponent } from './components/restaurant-row-block/restaurant-row-block.component';
 import { ScrollListComponent } from './components/scroll-list/scroll-list.component';
 import { PriceInputComponent } from './components/price-input/price-input.component';
+import { MapComponent } from './components/map/map.component';
+import { OnlyNumberDirective } from './directives/only-number.directive';
+import { MapInputComponent } from './components/map-input/map-input.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +24,9 @@ import { PriceInputComponent } from './components/price-input/price-input.compon
     RestaurantRowBlockComponent,
     ScrollListComponent,
     PriceInputComponent,
+    MapComponent,
+    OnlyNumberDirective,
+    MapInputComponent,
   ],
   imports: [
     CommonModule,
@@ -42,6 +48,9 @@ import { PriceInputComponent } from './components/price-input/price-input.compon
     RestaurantRowBlockComponent,
     ScrollListComponent,
     PriceInputComponent,
+    MapComponent,
+    OnlyNumberDirective,
+    MapInputComponent,
   ],
   providers: [CurrencyPipe],
 })

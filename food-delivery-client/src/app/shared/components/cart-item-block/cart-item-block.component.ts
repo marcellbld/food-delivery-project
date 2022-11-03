@@ -11,6 +11,7 @@ import { getRestaurantItemImageUrl } from '../../utils/image-url-helper';
 })
 export class CartItemBlockComponent implements OnInit {
   @Input() cartItem: CartItemI | null = null;
+  @Input() modifiable: boolean = true;
 
   constructor(private readonly cartService: CartService) {}
 
