@@ -1,10 +1,10 @@
 INSERT INTO user (id, username, password, role, created_at) VALUES(1, 'admin', '$2b$12$dTkw6z/oIiL8E7J8HzwMs.AdshfaJjBsyq1w53waZvfhwH0Wu0n4C', 'ADMIN', DATE('now'));
 INSERT INTO user (id, username, password, role, address_lat, address_lon, created_at) VALUES(2, 'tuser1', '$2b$12$KDOUfDo.1eO3WEb2/PM.Bu7oaay6kmbXqEfJs7rRyMAqTABSuYyjO', 'USER', 47.49839263327843, 19.04980834146211, DATE('now'));
-INSERT INTO user (id, username, password, role, created_at) VALUES(3, 'tuser2', '$2b$12$KDOUfDo.1eO3WEb2/PM.Bu7oaay6kmbXqEfJs7rRyMAqTABSuYyjO', 'USER', 47.49839263327843, 19.04980834146211, DATE('now'));
-INSERT INTO user (id, username, password, role, created_at) VALUES(4, 'tuser3', '$2b$12$KDOUfDo.1eO3WEb2/PM.Bu7oaay6kmbXqEfJs7rRyMAqTABSuYyjO', 'USER', 47.49839263327843, 19.04980834146211, DATE('now'));
+INSERT INTO user (id, username, password, role, address_lat, address_lon, created_at) VALUES(3, 'tuser2', '$2b$12$KDOUfDo.1eO3WEb2/PM.Bu7oaay6kmbXqEfJs7rRyMAqTABSuYyjO', 'USER', 47.49839263327843, 19.04980834146211, DATE('now'));
+INSERT INTO user (id, username, password, role, address_lat, address_lon, created_at) VALUES(4, 'tuser3', '$2b$12$KDOUfDo.1eO3WEb2/PM.Bu7oaay6kmbXqEfJs7rRyMAqTABSuYyjO', 'USER', 47.49839263327843, 19.04980834146211, DATE('now'));
 INSERT INTO user (id, username, password, role, created_at) VALUES(5, 'towner1', '$2b$12$KDOUfDo.1eO3WEb2/PM.Bu7oaay6kmbXqEfJs7rRyMAqTABSuYyjO', 'OWNER', DATE('now'));
 INSERT INTO user (id, username, password, role, created_at) VALUES(6, 'towner2', '$2b$12$KDOUfDo.1eO3WEb2/PM.Bu7oaay6kmbXqEfJs7rRyMAqTABSuYyjO', 'OWNER', DATE('now'));
-INSERT INTO user (id, username, password, role, created_at) VALUES(7, 'tuser4', '$2b$12$KDOUfDo.1eO3WEb2/PM.Bu7oaay6kmbXqEfJs7rRyMAqTABSuYyjO', 'USER', 47.49839263327843, 19.04980834146211, DATE('now'));
+INSERT INTO user (id, username, password, role, address_lat, address_lon, created_at) VALUES(7, 'tuser4', '$2b$12$KDOUfDo.1eO3WEb2/PM.Bu7oaay6kmbXqEfJs7rRyMAqTABSuYyjO', 'USER', 47.49839263327843, 19.04980834146211, DATE('now'));
 INSERT INTO category VALUES (1, 'Primary 1', 1);
 INSERT INTO category VALUES (2, 'Primary 2', 1);
 INSERT INTO category VALUES (3, 'Secondary 1', 0);
