@@ -5,10 +5,6 @@
 > :warning:
 > You may wait a few seconds for the backend because of Heroku
 
-[Frontend](https://github.com/marcellbld/food-delivery-project/tree/main/food-delivery-client)
-
-[Backend](https://github.com/marcellbld/food-delivery-project/tree/main/food-delivery-app)
-
 ## About
 This project is about ordering online foods from restaurants. Please note that this project is made for presentation purpose.
 
@@ -23,3 +19,8 @@ This application let you register as **User/Courier/Owner**. As a User you have 
 - Bootstrap 5
 - ArcGIS
 - OpenLayers 7
+
+# Documentation
+[Frontend](https://github.com/marcellbld/food-delivery-project/tree/main/food-delivery-client)
+
+[Backend](https://github.com/marcellbld/food-delivery-project/tree/main/food-delivery-app)
