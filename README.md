@@ -8,9 +8,9 @@ This application let you register as **User/Courier/Owner**. As a User you have 
 - As a **Courier** you can see and pick up orders. After pick up, you can see the route between **User** and the restaurant.
 - As an **Owner** you can manager your restaurants or create a new one. When you create a restaurant you can upload image, set categories and set location. On your existing restaurants you can add items, delete items and modify the existing ones. When you create an item you can upload image and set price.
 
-## Application
+## Demo
 [Demo](https://mb-food-delivery-client.herokuapp.com)
-<br>:warning: You may wait a few seconds for the backend because of Heroku
+:warning: You may wait a few seconds for the backend because of Heroku
 
 ## Technologies used
 - NestJS
