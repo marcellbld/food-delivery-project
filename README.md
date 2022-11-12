@@ -20,7 +20,7 @@ This application let you register as **User/Courier/Owner**. As a User you have 
 - ArcGIS
 - OpenLayers 7
 
-# Documentation
+## Documentation
 [Frontend](https://github.com/marcellbld/food-delivery-project/tree/main/food-delivery-client)
 
 [Backend](https://github.com/marcellbld/food-delivery-project/tree/main/food-delivery-app)
