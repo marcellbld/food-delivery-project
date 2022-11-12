@@ -1,6 +1,4 @@
 # Food Delivery App
-
-## Application
 [Demo](https://mb-food-delivery-client.herokuapp.com)
 > :warning:
 > You may wait a few seconds for the backend because of Heroku
