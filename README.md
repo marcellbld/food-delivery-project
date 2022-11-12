@@ -11,7 +11,8 @@ This application let you register as **User/Courier/Owner**. As a User you have 
 ## Demo
 [Demo](https://mb-food-delivery-client.herokuapp.com)
 :warning: You may wait a few seconds for the backend because of Heroku
-
+| WARNING: be careful to baz the quux before initializing the retro encabulator! |
+| --- |
 ## Technologies used
 - NestJS
 - Angular
