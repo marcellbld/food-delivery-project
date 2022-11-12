@@ -10,8 +10,7 @@ This application let you register as **User/Courier/Owner**. As a User you have 
 
 ## Application
 [Demo](https://mb-food-delivery-client.herokuapp.com)
-
-*You may wait a few seconds for the backend because of Heroku*
+>:warning: You may wait a few seconds for the backend because of Heroku
 
 ## Technologies used
 - NestJS
