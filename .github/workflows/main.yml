@@ -26,7 +26,7 @@ jobs:
       - name: Deploy to Github Pages
         uses: AhsanAyaz/angular-deploy-gh-pages-actions@v1.3.2 ## replace by latest version without it you will see Expected format {org}/{repo}[/path]@ref. Actual 'AhsanAyaz/angular-deploy-gh-pages-actions',Input string was not in a correct format.
         with:
-          angular_project_dir: food-delivery-project/food-delivery-client/
+          angular_project_dir: ./food-delivery-project/food-delivery-client/
           github_access_token: ${{ secrets.ACCESS_TOKEN }} # see the Configuration section for how you can create secrets
           build_configuration: prod # The build environment for the app. please look configurations in your angular.json
           base_href: /food-delivery-project/   # make sure this corresponds to https://<your_username>.github.io/<base_href>/
