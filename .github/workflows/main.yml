@@ -13,14 +13,15 @@ jobs:
       run:
         working-directory: food-delivery-client
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Setup Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: 14
           cache-dependency-path: food-delivery-client/package-lock.json
       - name: Install dependencies
-        run: npm i
-      - run: npm run build
+        run: npm ci
+      - name: Build
+        run: npm run build
       - name: Run tests
         run: npm run test
