@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "node ./dist/server/server.js",
-    "start:dev": "ng serve",
+    "start:dev": "ng serve", 
     "build": "ng build --prod",
     "build-heroku": "ng build && tsc -p tsconfig.server.json",
     "watch": "ng build --watch --configuration development",
