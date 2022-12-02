@@ -7,42 +7,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  backend:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: food-delivery-app
-    steps:
-      - uses: actions/checkout@v2
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: 14
-          cache-dependency-path: food-delivery-app/package-lock.json
-      - name: Install dependencies
-        run: npm i
-      - name: Run tests
-        run: npm run test
-      - name: Run e2e tests
-        run: npm run test:e2e
-  backend-deploy:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: food-delivery-app
-    needs: backend
-    concurrency: heroku-deploy
-    steps:
-      - uses: actions/checkout@v2
-      - name: Build and deploy on Heroku
-        uses: akhileshns/heroku-deploy@v3.12.12
-        with:
-          appdir: food-delivery-app
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: mb-food-delivery-app
-          heroku_email: boti.marcell@gmail.com
   frontend:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     defaults:
       run:
         working-directory: food-delivery-client
@@ -55,21 +21,6 @@ jobs:
           cache-dependency-path: food-delivery-client/package-lock.json
       - name: Install dependencies
         run: npm i
+      - run: npm run build --if-present
       - name: Run tests
         run: npm run test
-  frontend-deploy:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: food-delivery-client
-    needs: frontend
-    concurrency: heroku-deploy
-    steps:
-      - uses: actions/checkout@v2
-      - name: Build and deploy on Heroku
-        uses: akhileshns/heroku-deploy@v3.12.12
-        with:
-          appdir: food-delivery-client
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: mb-food-delivery-client
-          heroku_email: boti.marcell@gmail.com
