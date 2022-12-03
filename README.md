@@ -19,7 +19,7 @@ This application let you register as **User/Courier/Owner**. As a User you have 
 ## Demo
 [Try the app](https://mb-food-delivery-client.herokuapp.com)
 > :warning:
-> You may wait a few seconds for the backend because of Heroku
+> You may wait a few seconds because of Heroku
 
 Pre-made accounts:
 | Username | Password |
