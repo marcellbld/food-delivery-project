@@ -131,7 +131,7 @@ export class DevSeeder extends Seeder {
       restaurantItems.push(
         em.create(RestaurantItem, {
           id: i + 1,
-          name: `Test Item ${i + 1} XXL XXS`,
+          name: `Test Item ${i + 1}`,
           image: null,
           description: 'Test Item Description',
           price: 0.05 + (i + 1),
