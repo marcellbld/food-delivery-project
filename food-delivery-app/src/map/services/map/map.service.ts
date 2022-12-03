@@ -3,8 +3,7 @@ import * as arcgisRest from '@esri/arcgis-rest-routing';
 
 @Injectable()
 export class MapService {
-  key =
-    'AAPK9e60e6f1bb634ecdbb5fddc882d1fe08MxEyVo0nv-YWKCjoYOXG8_DJjUH8YdLPRQAEEUB7CreAye9ouOU73yBHQPNOvOgR';
+  key = process.env.ARCGIS_KEY;
 
   async findRoute(
     start: [number, number],
