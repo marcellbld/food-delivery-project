@@ -1,7 +1,5 @@
 # Food Delivery App
-[Demo](https://mb-food-delivery-client.herokuapp.com)
-> :warning:
-> You may wait a few seconds for the backend because of Heroku
+[Demo](#demo)
 
 ## About
 This project is about ordering online foods from restaurants. Please note that this project is made for presentation purpose.
@@ -17,6 +15,20 @@ This application let you register as **User/Courier/Owner**. As a User you have 
 - Bootstrap 5
 - ArcGIS
 - OpenLayers 7
+
+## Demo
+[Try the app](https://mb-food-delivery-client.herokuapp.com)
+> :warning:
+> You may wait a few seconds for the backend because of Heroku
+
+Pre-made accounts:
+| Username | Password |
+| --- | --- |
+| user1 | pass |
+| user2 | pass |
+| owner1 | pass |
+| owner2 | pass |
+| courier1 | pass |
 
 ## Documentation
 [Frontend](https://github.com/marcellbld/food-delivery-project/tree/main/food-delivery-client)
