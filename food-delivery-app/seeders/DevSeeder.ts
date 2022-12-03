@@ -9,7 +9,7 @@ import { Cart } from '../src/cart/entities/cart.model';
 import { CartItem } from '../src/cart/entities/cart-item.model';
 import { hashPassword } from '../src/auth/utils/auth-helper';
 
-export class ProdSeeder extends Seeder {
+export class DevSeeder extends Seeder {
   async run(em: EntityManager): Promise<void> {
     const admin = em.create(User, {
       username: 'admin',
@@ -51,35 +51,16 @@ export class ProdSeeder extends Seeder {
 
     const categories = [];
     categories.push(
-      em.create(Category, { id: 1, name: 'Fast Food', primary: true }),
-      em.create(Category, { id: 2, name: 'Café', primary: true }),
-      em.create(Category, { id: 3, name: 'Fine Dining', primary: true }),
-      em.create(Category, { id: 4, name: 'American', primary: true }),
-      em.create(Category, { id: 5, name: 'Indian', primary: true }),
-      em.create(Category, { id: 6, name: 'French', primary: true }),
-      em.create(Category, { id: 7, name: 'Italian', primary: true }),
-      em.create(Category, { id: 8, name: 'Mexican', primary: true }),
-      em.create(Category, { id: 9, name: 'Chinese', primary: true }),
-      em.create(Category, { id: 10, name: 'Burger', primary: false }),
-      em.create(Category, { id: 11, name: 'Pizza', primary: false }),
-      em.create(Category, { id: 12, name: 'Salad', primary: false }),
-      em.create(Category, { id: 13, name: 'Hot Dog', primary: false }),
-      em.create(Category, { id: 14, name: 'Chicken', primary: false }),
-      em.create(Category, { id: 15, name: 'Pasta', primary: false }),
-      em.create(Category, { id: 16, name: 'Dessert', primary: false }),
-      em.create(Category, { id: 17, name: 'Sandwich', primary: false }),
-      em.create(Category, { id: 18, name: 'Gyros', primary: false }),
-      em.create(Category, { id: 19, name: 'Sushi', primary: false }),
-      em.create(Category, { id: 20, name: 'Fish', primary: false }),
-      em.create(Category, { id: 21, name: 'Vegan', primary: false }),
-      em.create(Category, { id: 22, name: 'Kebab', primary: false }),
-      em.create(Category, { id: 23, name: 'Steak', primary: false }),
-      em.create(Category, { id: 24, name: 'Bakery', primary: false }),
-      em.create(Category, { id: 25, name: 'BBQ', primary: false }),
-      em.create(Category, { id: 26, name: 'Ice Cream', primary: false }),
-      em.create(Category, { id: 27, name: 'Waffle', primary: false }),
-      em.create(Category, { id: 28, name: 'Pancake', primary: false }),
-      em.create(Category, { id: 29, name: 'International', primary: true }),
+      em.create(Category, { id: 1, name: 'Primary 1', primary: true }),
+    );
+    categories.push(
+      em.create(Category, { id: 2, name: 'Primary 2', primary: true }),
+    );
+    categories.push(
+      em.create(Category, { id: 3, name: 'Secondary 1', primary: false }),
+    );
+    categories.push(
+      em.create(Category, { id: 4, name: 'Secondary 2', primary: false }),
     );
 
     const restaurants = [];
