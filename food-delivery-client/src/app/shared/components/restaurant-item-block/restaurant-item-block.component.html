@@ -14,7 +14,8 @@
       <div class="flex-grow-1">
           <div class="h-100 d-flex flex-column" style="height: 3rem;"
           [ngClass]="rowLayout ? 'justify-content-around align-items-start': 'justify-content-center align-items-center'">
-          <p class="pt-1 mb-1 text-start">{{restaurantItem.name}}</p>
+          <div class="d-inline-block text-nowrap text-truncate" style="max-width: 85%">{{restaurantItem.name}} asd</div>
+          <!-- <p class="pt-1 mb-1 text-start" [ngClass]="{'text-nowrap overflow-hidden text-truncate': !rowLayout}">{{restaurantItem.name}} asd</p> -->
           <p *ngIf="rowLayout" class="text-secondary mb-0 text-start">{{restaurantItem.description}}</p>
         </div>
         <p *ngIf="!rowLayout" class="text-secondary mb-0 fs-6">{{restaurantItem.price | currency:'USD'}}</p>
