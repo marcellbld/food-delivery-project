@@ -86,29 +86,32 @@ export class ProdSeeder extends Seeder {
     restaurants.push(
       em.create(Restaurant, {
         id: 1,
-        name: 'Test Restaurant',
-        description: 'Test Restaurant Description',
+        name: 'The Grand Rose',
+        description:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ac viverra odio. Fusce ullamcorper libero sed enim rutrum tincidunt.',
         owner: owners[0],
         locationLat: 47.502837766383294,
         locationLon: 19.04717848426026,
-        categories: [1, 2, 3, 4],
+        categories: [3, 29],
       }),
     );
     restaurants.push(
       em.create(Restaurant, {
         id: 2,
-        name: 'Test Restaurant 2',
-        description: 'Test Restaurant Description 2',
+        name: 'Babylon Burger',
+        description:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ac viverra odio. Fusce ullamcorper libero sed enim rutrum tincidunt.',
         owner: owners[1],
         locationLat: 47.50215474954456,
         locationLon: 19.04960806009421,
+        categories: [1, 10, 11, 13, 25],
       }),
     );
     restaurants.push(
       em.create(Restaurant, {
         id: 3,
-        name: 'Test Restaurant 3',
-        description: 'Test Restaurant Description 3',
+        name: 'Empty Restaurant',
+        description: 'Completely Empty',
         owner: owners[0],
         locationLat: 47.50422866176311,
         locationLon: 19.048248127736755,
@@ -117,54 +120,92 @@ export class ProdSeeder extends Seeder {
     restaurants.push(
       em.create(Restaurant, {
         id: 4,
-        name: 'Mc Donalds',
-        description: 'Mc Donalds Description',
+        name: 'Little Italy',
+        description: 'Little Italy Description',
         owner: owners[0],
         locationLat: 47.50422866176311,
         locationLon: 19.048248127736755,
+        categories: [7, 11, 15],
       }),
     );
     restaurants.push(
       em.create(Restaurant, {
         id: 5,
-        name: 'Burger King (Corvin)',
-        description: 'Burger King (Corvin) Description',
+        name: 'Corner Gyros',
+        description: 'Corner Gyros Description',
         owner: owners[0],
         locationLat: 47.50422866176311,
         locationLon: 19.048248127736755,
-      }),
-    );
-    restaurants.push(
-      em.create(Restaurant, {
-        id: 6,
-        name: 'Pesti Pipi',
-        description: 'Pesti Pipi Description',
-        owner: owners[0],
-        locationLat: 47.50422866176311,
-        locationLon: 19.048248127736755,
+        categories: [18, 22, 17, 10, 13, 14, 26],
       }),
     );
 
     const restaurantItems = [];
-    for (let i = 0; i < 3; i++) {
-      restaurantItems.push(
-        em.create(RestaurantItem, {
-          id: i + 1,
-          name: `Test Item ${i + 1}`,
-          image: null,
-          description: 'Test Item Description',
-          price: 0.05 + (i + 1),
-          restaurant: restaurants[0],
-        }),
-      );
-    }
+    restaurantItems.push(
+      em.create(RestaurantItem, {
+        id: 1,
+        name: `Roasted Parmesan Boar`,
+        image: null,
+        description: 'Roasted Parmesan Boar Description',
+        price: 10.5,
+        restaurant: restaurants[0],
+      }),
+      em.create(RestaurantItem, {
+        id: 2,
+        name: `Dried Garlic & Ginger Lobster`,
+        image: null,
+        description: 'Dried Garlic & Ginger Lobster Description',
+        price: 12.25,
+        restaurant: restaurants[0],
+      }),
+      em.create(RestaurantItem, {
+        id: 3,
+        name: `Steamed Butter Salmon`,
+        image: null,
+        description: 'Steamed Butter Salmon BoarDescription',
+        price: 8.0,
+        restaurant: restaurants[0],
+      }),
+    );
     restaurantItems.push(
       em.create(RestaurantItem, {
         id: 4,
-        name: `Test Item 4`,
+        name: `Lime Mammoth Burger`,
         image: null,
-        description: 'Test Item Description',
+        description: 'Item Description',
         price: 4.05,
+        restaurant: restaurants[1],
+      }),
+      em.create(RestaurantItem, {
+        id: 5,
+        name: `Lime Mammoth Burger XXL`,
+        image: null,
+        description: 'Item Description',
+        price: 7.1,
+        restaurant: restaurants[1],
+      }),
+      em.create(RestaurantItem, {
+        id: 6,
+        name: `Coke`,
+        image: null,
+        description: 'Item Description',
+        price: 1.5,
+        restaurant: restaurants[1],
+      }),
+      em.create(RestaurantItem, {
+        id: 7,
+        name: `Zero Coke`,
+        image: null,
+        description: 'Item Description',
+        price: 1.5,
+        restaurant: restaurants[1],
+      }),
+      em.create(RestaurantItem, {
+        id: 8,
+        name: `Lemonade`,
+        image: null,
+        description: 'Item Description',
+        price: 1.75,
         restaurant: restaurants[1],
       }),
     );
