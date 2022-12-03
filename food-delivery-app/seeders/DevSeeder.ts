@@ -68,8 +68,7 @@ export class DevSeeder extends Seeder {
       em.create(Restaurant, {
         id: 1,
         name: 'Test Restaurant',
-        description:
-          'Test Restaurant Description. Test Restaurant Description. Test Restaurant Description. Test Restaurant Description. Test Restaurant Description. Test Restaurant Description',
+        description: 'Test Restaurant Description',
         owner: owners[0],
         locationLat: 47.502837766383294,
         locationLon: 19.04717848426026,
@@ -80,7 +79,7 @@ export class DevSeeder extends Seeder {
       em.create(Restaurant, {
         id: 2,
         name: 'Test Restaurant 2',
-        description: '',
+        description: 'Test Restaurant Description 2',
         owner: owners[1],
         locationLat: 47.50215474954456,
         locationLon: 19.04960806009421,
