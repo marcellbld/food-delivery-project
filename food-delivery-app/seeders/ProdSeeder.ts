@@ -39,7 +39,7 @@ export class ProdSeeder extends Seeder {
       );
     }
     const couriers = [];
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < 1; i++) {
       couriers.push(
         em.create(User, {
           username: `courier${i + 1}`,
