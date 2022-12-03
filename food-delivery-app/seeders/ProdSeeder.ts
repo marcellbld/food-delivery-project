@@ -111,7 +111,7 @@ export class ProdSeeder extends Seeder {
       em.create(Restaurant, {
         id: 3,
         name: 'Empty Restaurant',
-        description: 'Completely Empty',
+        description: '',
         owner: owners[0],
         locationLat: 47.50422866176311,
         locationLon: 19.048248127736755,

@@ -17,7 +17,7 @@
         <span class="small-caps text-black-50">Restaurant</span>
       </div>
       <p class="fs-5 pt-1 mb-1">  {{restaurant?.name}}</p>
-      <p class="text-secondary">{{restaurant?.description}}</p>
+      <p class="text-secondary" [ngClass]="{'text-nowrap overflow-hidden text-truncate': !clicked}">{{restaurant?.description || '&zwnj;'}}</p>
       <hr class="my-0" *ngIf="clicked">
       <div *ngIf="clicked">
         <span class="small-caps text-black-50">Categories</span>
