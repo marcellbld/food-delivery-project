@@ -17,9 +17,7 @@ This application let you register as **User/Courier/Owner**. As a User you have 
 - OpenLayers 7
 
 ## Demo
-[Try the app](https://mb-food-delivery-client.herokuapp.com)
-> :warning:
-> You may wait a few seconds because of Heroku
+Not available right now
 
 Pre-made accounts:
 | Username | Password |
